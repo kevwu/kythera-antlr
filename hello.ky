@@ -1,0 +1,49 @@
+// Hello, Kythera!
+
+/*
+Block-level comment.
+The purpose of this file is to demonstrate the syntax of Kythera.
+*/
+
+// basic operations
+
+let a = 2 // int is inferred
+let b = a + 2
+let c = new int // declaration without initialization
+
+// function definition
+
+let sum = (int a, int b) {
+    return a + b
+}[int]
+
+let d = sum(a,b)
+
+// lambda
+(int a, int b) {
+    return a - b
+}[int](a, b) // evaluates to 2 - 4 = -2
+
+let myName = "Kevin"
+
+// control structures
+if a < 0 {
+    print("Will not print.")
+}
+
+if a > 0 {
+    print("Will print.")
+}
+
+// object
+name Cat {
+    int size
+    string name
+    fn()[string] roar
+    fn(obj target) pounce
+}
+
+// extend object
+name Lion extends Cat {
+
+}
