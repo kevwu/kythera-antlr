@@ -9,6 +9,8 @@ public class Main {
 			while((t = tokenizer.read_token())!= null) {
 				System.out.println(t);
 			}
+
+			System.out.println("End of file.");
 	    } else {
     		System.out.println("Usage: kythera [program.ky]");
 	    }

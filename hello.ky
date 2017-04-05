@@ -38,8 +38,8 @@ if a > 0 {
 // object
 name Cat {
     int size
-    string name
-    fn()[string] roar
+    str name
+    fn()[str] roar
     fn(obj target) pounce
 }
 

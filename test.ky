@@ -9,7 +9,7 @@ spans multiple lines
 */
 
 // declaration
-let a = 0;
+let a = 0
 
 // declaration with indent
-    let b = 0;
+    let b = 0

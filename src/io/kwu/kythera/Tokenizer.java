@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Creates a stream of tokens.
@@ -21,25 +24,21 @@ public class Tokenizer {
 	 */
 	public Token read_token() {
 		if(this.cStream.eof) {
-			System.out.println("End of file.");
 			return null;
 		}
 
 		char c = this.cStream.next();
-		String cs = Character.toString(c); // cs = character as string
+		String cs; // cs = character as string
 
 		// consumables (text that isn't turned into a token)
 		while(c == ' ' || c == '\t' || c == '\n' || c == '/') {
 			// consume whitespace
 			if(c == ' ' || c == '\t' || c == '\n') {
-				System.out.println("Skipping whitespace.");
 				c = this.cStream.next();
 				while(c == ' ' || c == '\t' || c == '\n') {
 					c = this.cStream.next();
 				}
-			}
-
-			// single-line comment
+			} else // single-line comment
 			if(c == '/' && this.cStream.peek() == '/') {
 				c = this.cStream.next();
 				while(c != '\n') {
@@ -48,8 +47,7 @@ public class Tokenizer {
 
 				// consume the newline as well
 				c = this.cStream.next();
-			}
-
+			} else
 			// multi-line comment
 			if(c == '/' && this.cStream.peek() == '*') {
 				// consume until */ found
@@ -65,6 +63,9 @@ public class Tokenizer {
 				c = this.cStream.next();
 			}
 		}
+
+		// set cs after consuming has been done. (whitespace/comment consumption does not need the String form)
+		cs = Character.toString(c);
 
 		// newline
 		if(c == '\n') {
@@ -99,12 +100,13 @@ public class Tokenizer {
 			boolean decimalSeen = false;
 
 			// keep reading until we get something that's not a number
-			char n = this.cStream.next();
-			while(("0123456789").contains(Character.toString(n)) || (n == '.' && !decimalSeen)) {
-				numString = numString.concat(Character.toString(n));
-				n = this.cStream.next();
+			if(!this.cStream.eof) {
+				char n = this.cStream.next();
+				while(!this.cStream.eof && (("0123456789").contains(Character.toString(n)) || (n == '.' && !decimalSeen))) {
+					numString = numString.concat(Character.toString(n));
+					n = this.cStream.next();
+				}
 			}
-
 			return new Token(TokenKind.NUMBER, numString);
 		}
 
@@ -114,25 +116,50 @@ public class Tokenizer {
 			String stringString = cs;
 
 			// keep reading until unescaped
-			char n = this.cStream.next();
-			while(n != '"') {
-				stringString = stringString.concat(Character.toString(n));
-				n = this.cStream.next();
+			if(!this.cStream.eof) {
+				char n = this.cStream.next();
+				while(!this.cStream.eof && n != '"') {
+					stringString = stringString.concat(Character.toString(n));
+					n = this.cStream.next();
+				}
+
+				// grab closing brace
+				if(!this.cStream.eof) {
+					stringString = stringString.concat(Character.toString(n));
+				} else {
+					// unexpected EOF
+					// TODO standardize token errors
+					System.out.println("Error: Unexpected EOF");
+				}
 			}
+
+			// consume closing bracket
 
 			return new Token(TokenKind.STRING, stringString);
 		}
 
 		// TODO keywords need to be defined elsewhere. This is not the place for that.
-		final String keywords = "true false type typeof let if for while extends implements interface import export include";
+		final List<String> keywords = new ArrayList<>(Arrays.asList(
+			"true", "false",
+			"type", "typeof",
+			"int", "float", "str", "fn", "obj",
+			"let", "new", "name",
+			"if", "for", "while",
+			"extends", "implements", "interface",
+			"import", "export", "include",
+			"return"
+			));
 
 		String word = cs;
 
 		// either a keyword or an identifier. Read in the whole thing
-		char n = this.cStream.next();
-		while(!("[]{}()<>=+-/*%").contains(Character.toString(n))) {
-			word = word.concat(Character.toString(n));
-			n = this.cStream.next();
+
+		if(!this.cStream.eof) {
+			char n = this.cStream.next();
+			while(!this.cStream.eof && !("[]{}()<>=+-/*% \t\n").contains(Character.toString(n))) {
+				word = word.concat(Character.toString(n));
+				n = this.cStream.next();
+			}
 		}
 
 		if(keywords.contains(word)) {
@@ -150,7 +177,7 @@ public class Tokenizer {
 		private int pos = 0;
 		private int col = 0;
 		private int line = 1;
-		private boolean eof;
+		private boolean eof = false;
 
 		public CharStreamReader(String filePath) {
 			// plain and simple, will worry about using streams for bigger files later
@@ -165,14 +192,24 @@ public class Tokenizer {
 		}
 
 		public char peek() {
-			System.out.println("Peeking " + raw.charAt(pos));
+			if(eof) {
+				System.out.println("Cannot peek, EOF!");
+				System.out.println(raw.length() + "," + pos);
+				return (char)-1;
+			}
+//			System.out.println("Peeking " + raw.charAt(pos));
 			return raw.charAt(pos);
 		}
 
 		public char next() {
-			char c = raw.charAt(pos);
+			if(eof) {
+				System.out.println("Cannot next, EOF!");
+				System.out.println(raw.length() + "," + pos);
+				return (char)-1;
+			}
 
-			System.out.println("Nexting " + c);
+			char c = raw.charAt(pos);
+//			System.out.println("Nexting " + c);
 
 			if(c == '\n') {
 				line += 1;
@@ -182,11 +219,17 @@ public class Tokenizer {
 			}
 
 			pos += 1;
+
+			if(pos >= raw.length()) {
+//				System.out.println("Reached EOF.");
+				eof = true;
+			}
+
 			return c;
 		}
 
 		public boolean eof() {
-			return pos == raw.length();
+			return eof;
 		}
 
 		public String loc() {
