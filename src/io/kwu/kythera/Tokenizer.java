@@ -6,7 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.regex.Pattern;
 
+/**
+ * Creates a stream of tokens.
+ */
 public class Tokenizer {
 	CharStreamReader cStream;
 
@@ -18,7 +22,64 @@ public class Tokenizer {
 		cStream = new CharStreamReader(filePath);
 	}
 
+	/**
+	 *
+	 * @return the next token in the feed, or null if it's the end.
+	 */
 	public Token read_token() {
+		if(this.cStream.eof) {
+			System.out.println("End of file.");
+			return null;
+		}
+
+		// TODO I know there must be better ways to do this, I just want it to work first.
+
+		char c = this.cStream.next();
+		System.out.println("Got " + c);
+
+		String cs = Character.toString(c);
+
+		// punctuation
+		if(("[]{}()").contains(cs)) {
+
+			return new Token(TokenKind.PUNC, cs);
+		}
+
+		// operator
+		if(("<>=!+-/*%").contains(cs)) {
+
+		}
+
+		// number
+		if(("0123456789").contains(cs)) {
+			// number
+
+			// whether a decimal has been encountered
+			boolean decimal = false;
+
+			// keep reading until we get something that's not a number
+		}
+
+		// string
+		if(c == '"') {
+			// keep reading until unescaped "
+		}
+
+		// TODO keywords need to be defined elsewhere. This is not the place for that.
+		final String keywords = "true false type typeof let if for while extends implements interface import export include";
+
+		// keyword
+		if(keywords.contains(cs)) {
+
+		}
+
+		// identifier
+		if(("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890").contains(cs)) {
+
+			// keep reading as long as it's alphanumeric, including - or _
+		}
+
+
 		return null;
 	}
 
