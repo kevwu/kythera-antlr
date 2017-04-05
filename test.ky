@@ -1,0 +1,15 @@
+// line comment
+// another line comment
+
+/* single-line block comment */
+
+/*
+this block comment
+spans multiple lines
+*/
+
+// declaration
+let a = 0;
+
+// declaration with indent
+    let b = 0;

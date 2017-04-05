@@ -1,12 +1,9 @@
 package io.kwu.kythera;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.regex.Pattern;
 
 /**
  * Creates a stream of tokens.
@@ -14,11 +11,7 @@ import java.util.regex.Pattern;
 public class Tokenizer {
 	CharStreamReader cStream;
 
-	public Tokenizer() {
-
-	}
-
-	public void read(String filePath) {
+	public Tokenizer(String filePath) {
 		cStream = new CharStreamReader(filePath);
 	}
 
@@ -32,66 +25,131 @@ public class Tokenizer {
 			return null;
 		}
 
-		// TODO I know there must be better ways to do this, I just want it to work first.
-
 		char c = this.cStream.next();
-		System.out.println("Got " + c);
+		String cs = Character.toString(c); // cs = character as string
 
-		String cs = Character.toString(c);
+		// consumables (text that isn't turned into a token)
+		while(c == ' ' || c == '\t' || c == '\n' || c == '/') {
+			// consume whitespace
+			if(c == ' ' || c == '\t' || c == '\n') {
+				System.out.println("Skipping whitespace.");
+				c = this.cStream.next();
+				while(c == ' ' || c == '\t' || c == '\n') {
+					c = this.cStream.next();
+				}
+			}
+
+			// single-line comment
+			if(c == '/' && this.cStream.peek() == '/') {
+				c = this.cStream.next();
+				while(c != '\n') {
+					c = this.cStream.next();
+				}
+
+				// consume the newline as well
+				c = this.cStream.next();
+			}
+
+			// multi-line comment
+			if(c == '/' && this.cStream.peek() == '*') {
+				// consume until */ found
+				c = this.cStream.next();
+				while(!(c == '*' && this.cStream.peek() == '/')) {
+					c = this.cStream.next();
+				}
+
+				// advance past the closing */
+				c = this.cStream.next();
+
+				// consume newline
+				c = this.cStream.next();
+			}
+		}
+
+		// newline
+		if(c == '\n') {
+			return new Token(TokenKind.EOL, cs);
+		}
 
 		// punctuation
 		if(("[]{}()").contains(cs)) {
-
-			return new Token(TokenKind.PUNC, cs);
+			return new Token(TokenKind.PUNCT, cs);
 		}
 
 		// operator
 		if(("<>=!+-/*%").contains(cs)) {
+			String opString;
 
+			char p = this.cStream.peek();
+			// as it turns out, every single one of these characters could be followed by = to make a valid operator.
+
+			if(p == '=') {
+				this.cStream.next();
+				return new Token(TokenKind.OPERATOR, cs + p);
+			} else {
+				return new Token(TokenKind.OPERATOR, cs);
+			}
 		}
 
 		// number
 		if(("0123456789").contains(cs)) {
-			// number
+			String numString = cs;
 
 			// whether a decimal has been encountered
-			boolean decimal = false;
+			boolean decimalSeen = false;
 
 			// keep reading until we get something that's not a number
+			char n = this.cStream.next();
+			while(("0123456789").contains(Character.toString(n)) || (n == '.' && !decimalSeen)) {
+				numString = numString.concat(Character.toString(n));
+				n = this.cStream.next();
+			}
+
+			return new Token(TokenKind.NUMBER, numString);
 		}
 
 		// string
 		if(c == '"') {
-			// keep reading until unescaped "
+			// wheeeeee
+			String stringString = cs;
+
+			// keep reading until unescaped
+			char n = this.cStream.next();
+			while(n != '"') {
+				stringString = stringString.concat(Character.toString(n));
+				n = this.cStream.next();
+			}
+
+			return new Token(TokenKind.STRING, stringString);
 		}
 
 		// TODO keywords need to be defined elsewhere. This is not the place for that.
 		final String keywords = "true false type typeof let if for while extends implements interface import export include";
 
-		// keyword
-		if(keywords.contains(cs)) {
+		String word = cs;
 
+		// either a keyword or an identifier. Read in the whole thing
+		char n = this.cStream.next();
+		while(!("[]{}()<>=+-/*%").contains(Character.toString(n))) {
+			word = word.concat(Character.toString(n));
+			n = this.cStream.next();
 		}
 
-		// identifier
-		if(("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890").contains(cs)) {
-
-			// keep reading as long as it's alphanumeric, including - or _
+		if(keywords.contains(word)) {
+			return new Token(TokenKind.KEYWORD, word);
+		} else {
+			return new Token(TokenKind.VARIABLE, word);
 		}
-
-
-		return null;
 	}
 
-
 	/**
-	 * For handling stream-like behavior for the input file.
+	 * stream-like behavior for handling the input file.
 	 */
 	public class CharStreamReader {
 		private String raw;
 		private int pos = 0;
 		private int col = 0;
-		private int line = 0;
+		private int line = 1;
 		private boolean eof;
 
 		public CharStreamReader(String filePath) {
@@ -107,11 +165,14 @@ public class Tokenizer {
 		}
 
 		public char peek() {
+			System.out.println("Peeking " + raw.charAt(pos));
 			return raw.charAt(pos);
 		}
 
 		public char next() {
 			char c = raw.charAt(pos);
+
+			System.out.println("Nexting " + c);
 
 			if(c == '\n') {
 				line += 1;
