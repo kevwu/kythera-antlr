@@ -13,16 +13,16 @@ let c = new int // declaration without initialization
 
 // function definition
 
-let sum = (int a, int b) {
+let sum = (int a, int b) [int] {
     return a + b
-}[int]
+}
 
 let d = sum(a,b)
 
 // lambda
-(int a, int b) {
+(int a, int b) [int] {
     return a - b
-}[int](a, b) // evaluates to 2 - 4 = -2
+}(a, b) // evaluates to 2 - 4 = -2
 
 let myName = "Kevin"
 
