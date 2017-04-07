@@ -1,4 +1,5 @@
 /* Draft EBNF for Kythera */
+/* This grammar built using version ANTLR 4.6. */
 grammar Kythera;
 
 options {
@@ -12,10 +13,6 @@ options {
 @parser::header {
     package io.kwu.kythera.antlr;
 }
-
-WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
-// valid identifier for type or variable
-fragment ID: ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
 
 /*** Language keywords ***/
 LET: 'let'; // variable assignment
@@ -57,18 +54,26 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-objLiteral: '{' ((Type Identifier) | (Identifier '=' expression))+ '}';
+//objLiteral: '{' ((Type Identifier) | (Identifier '=' expression))+ '}';
 
-fnLiteral: '(' (Type Identifier)+ ')' '{' (statement)+ '}';
+//fnLiteral: '(' (Type Identifier)+ ')' '{' (statement)+ '}';
 
-literal: IntLiteral | FloatLiteral| StrLiteral | objLiteral | fnLiteral;
+Literal: IntLiteral | FloatLiteral | StrLiteral;
 
 /* Type */
 Type: BOOL | INT | FLOAT | FN | OBJ | NamedType;
 
-NamedType: ID;
+LINE_COMMENT: '//' (.)+? '\n' -> skip;
+BLOCK_COMMENT: '/*' (.)+?  '*/' -> skip;
+WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
+// valid identifier for type or variable
 
-Identifier: ID;
+fragment Letter: [a-zA-Z$_];
+fragment Alphanum: [a-zA-Z0-9$_];
+
+NamedType: Letter (Alphanum)+;
+
+Identifier: Letter (Alphanum)+;
 
 /* Statements and Expressions */
 
@@ -78,14 +83,15 @@ Identifier: ID;
 // some of these are inline by necessity (otherwise we get left recursion problems)
 expression
     :   statement // statements evaluate as expressions
+    |   Identifier
+    |   Literal
     |   expression BOOLEAN_OPERATOR expression // boolean expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnExpression
-    |   (Identifier | literal)
     ;
 
-fnExpression: Identifier '(' (Identifier | literal)+ ')'; // TODO this is wrong
+fnExpression: Identifier '(' (Identifier | Literal)+ ')'; // TODO this is wrong
 
 // statements
 statement
@@ -129,6 +135,7 @@ whileStatement: WHILE '(' expression ')' '{' (expression)+ '}';
 breakStatement: BREAK;
 continueStatement: CONTINUE;
 returnStatement: RETURN expression;
+
 
 /* Top-level */
 program: (expression)+;

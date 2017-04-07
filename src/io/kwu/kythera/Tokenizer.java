@@ -19,11 +19,10 @@ public class Tokenizer {
 	}
 
 	/**
-	 *
 	 * @return the next token in the feed, or null if it's the end.
 	 */
 	public Token read_token() {
-		if(this.cStream.eof) {
+		if (this.cStream.eof) {
 			return null;
 		}
 
@@ -31,60 +30,60 @@ public class Tokenizer {
 		String cs; // cs = character as string
 
 		// consumables (text that isn't turned into a token)
-		while(c == ' ' || c == '\t' || c == '\n' || c == '/') {
+		while (c == ' ' || c == '\t' || c == '\n' || c == '/') {
 			// consume whitespace
-			if(c == ' ' || c == '\t' || c == '\n') {
+			if (c == ' ' || c == '\t' || c == '\n') {
 				c = this.cStream.next();
-				while(c == ' ' || c == '\t' || c == '\n') {
+				while (c == ' ' || c == '\t' || c == '\n') {
 					c = this.cStream.next();
 				}
 			} else // single-line comment
-			if(c == '/' && this.cStream.peek() == '/') {
-				c = this.cStream.next();
-				while(c != '\n') {
+				if (c == '/' && this.cStream.peek() == '/') {
 					c = this.cStream.next();
-				}
+					while (c != '\n') {
+						c = this.cStream.next();
+					}
 
-				// consume the newline as well
-				c = this.cStream.next();
-			} else
-			// multi-line comment
-			if(c == '/' && this.cStream.peek() == '*') {
-				// consume until */ found
-				c = this.cStream.next();
-				while(!(c == '*' && this.cStream.peek() == '/')) {
+					// consume the newline as well
 					c = this.cStream.next();
-				}
+				} else
+					// multi-line comment
+					if (c == '/' && this.cStream.peek() == '*') {
+						// consume until */ found
+						c = this.cStream.next();
+						while (!(c == '*' && this.cStream.peek() == '/')) {
+							c = this.cStream.next();
+						}
 
-				// advance past the closing */
-				c = this.cStream.next();
+						// advance past the closing */
+						c = this.cStream.next();
 
-				// consume newline
-				c = this.cStream.next();
-			}
+						// consume newline
+						c = this.cStream.next();
+					}
 		}
 
 		// set cs after consuming has been done. (whitespace/comment consumption does not need the String form)
 		cs = Character.toString(c);
 
 		// newline
-		if(c == '\n') {
+		if (c == '\n') {
 			return new Token(TokenKind.EOL, cs);
 		}
 
 		// punctuation
-		if(("[]{}()").contains(cs)) {
+		if (("[]{}()").contains(cs)) {
 			return new Token(TokenKind.PUNCT, cs);
 		}
 
 		// operator
-		if(("<>=!+-/*%").contains(cs)) {
+		if (("<>=!+-/*%").contains(cs)) {
 			String opString;
 
 			char p = this.cStream.peek();
 			// as it turns out, every single one of these characters could be followed by = to make a valid operator.
 
-			if(p == '=') {
+			if (p == '=') {
 				this.cStream.next();
 				return new Token(TokenKind.OPERATOR, cs + p);
 			} else {
@@ -93,16 +92,16 @@ public class Tokenizer {
 		}
 
 		// number
-		if(("0123456789").contains(cs)) {
+		if (("0123456789").contains(cs)) {
 			String numString = cs;
 
 			// whether a decimal has been encountered
 			boolean decimalSeen = false;
 
 			// keep reading until we get something that's not a number
-			if(!this.cStream.eof) {
+			if (!this.cStream.eof) {
 				char n = this.cStream.next();
-				while(!this.cStream.eof && (("0123456789").contains(Character.toString(n)) || (n == '.' && !decimalSeen))) {
+				while (!this.cStream.eof && (("0123456789").contains(Character.toString(n)) || (n == '.' && !decimalSeen))) {
 					numString = numString.concat(Character.toString(n));
 					n = this.cStream.next();
 				}
@@ -111,20 +110,20 @@ public class Tokenizer {
 		}
 
 		// string
-		if(c == '"') {
+		if (c == '"') {
 			// wheeeeee
 			String stringString = cs;
 
 			// keep reading until unescaped
-			if(!this.cStream.eof) {
+			if (!this.cStream.eof) {
 				char n = this.cStream.next();
-				while(!this.cStream.eof && n != '"') {
+				while (!this.cStream.eof && n != '"') {
 					stringString = stringString.concat(Character.toString(n));
 					n = this.cStream.next();
 				}
 
 				// grab closing brace
-				if(!this.cStream.eof) {
+				if (!this.cStream.eof) {
 					stringString = stringString.concat(Character.toString(n));
 				} else {
 					// unexpected EOF
@@ -148,21 +147,21 @@ public class Tokenizer {
 			"extends", "implements", "interface",
 			"import", "export", "include",
 			"return"
-			));
+		));
 
 		String word = cs;
 
 		// either a keyword or an identifier. Read in the whole thing
 
-		if(!this.cStream.eof) {
+		if (!this.cStream.eof) {
 			char n = this.cStream.next();
-			while(!this.cStream.eof && !("[]{}()<>=+-/*% \t\n").contains(Character.toString(n))) {
+			while (!this.cStream.eof && !("[]{}()<>=+-/*% \t\n").contains(Character.toString(n))) {
 				word = word.concat(Character.toString(n));
 				n = this.cStream.next();
 			}
 		}
 
-		if(keywords.contains(word)) {
+		if (keywords.contains(word)) {
 			return new Token(TokenKind.KEYWORD, word);
 		} else {
 			return new Token(TokenKind.VARIABLE, word);
@@ -183,35 +182,35 @@ public class Tokenizer {
 			// plain and simple, will worry about using streams for bigger files later
 			try {
 				raw = new String(Files.readAllBytes(Paths.get(filePath)));
-			} catch(FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 				System.out.println("File not found.");
 				System.out.println(e);
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.out.println(e);
 			}
 		}
 
 		public char peek() {
-			if(eof) {
+			if (eof) {
 				System.out.println("Cannot peek, EOF!");
 				System.out.println(raw.length() + "," + pos);
-				return (char)-1;
+				return (char) -1;
 			}
 //			System.out.println("Peeking " + raw.charAt(pos));
 			return raw.charAt(pos);
 		}
 
 		public char next() {
-			if(eof) {
+			if (eof) {
 				System.out.println("Cannot next, EOF!");
 				System.out.println(raw.length() + "," + pos);
-				return (char)-1;
+				return (char) -1;
 			}
 
 			char c = raw.charAt(pos);
 //			System.out.println("Nexting " + c);
 
-			if(c == '\n') {
+			if (c == '\n') {
 				line += 1;
 				col = 0;
 			} else {
@@ -220,7 +219,7 @@ public class Tokenizer {
 
 			pos += 1;
 
-			if(pos >= raw.length()) {
+			if (pos >= raw.length()) {
 //				System.out.println("Reached EOF.");
 				eof = true;
 			}

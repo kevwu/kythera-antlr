@@ -10,36 +10,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface KytheraListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#objLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void enterObjLiteral(KytheraParser.ObjLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#objLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void exitObjLiteral(KytheraParser.ObjLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#fnLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void enterFnLiteral(KytheraParser.FnLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#fnLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void exitFnLiteral(KytheraParser.FnLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterLiteral(KytheraParser.LiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitLiteral(KytheraParser.LiteralContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link KytheraParser#expression}.
 	 * @param ctx the parse tree
 	 */
