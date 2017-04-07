@@ -35,10 +35,8 @@ FN: 'fn';
 OBJ: 'obj';
 
 // operators
-OPERATOR: BOOLEAN_OPERATOR | ASSIGNMENT_OPERATOR | NOT_OPERATOR | ARITH_OPERATOR;
-
-BOOLEAN_OPERATOR: '==' | '<' | '>' | '<=' | '>=';
 ASSIGNMENT_OPERATOR: '=';
+BOOLEAN_OPERATOR: '==' | '<' | '>' | '<=' | '>=';
 NOT_OPERATOR: '!';
 ARITH_OPERATOR: '+' | '-' | '*' | '/' | '%';
 
@@ -54,26 +52,19 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-//objLiteral: '{' ((Type Identifier) | (Identifier '=' expression))+ '}';
+objLiteral: '{' ((Type identifier) | (identifier '=' expression))+ '}';
 
-//fnLiteral: '(' (Type Identifier)+ ')' '{' (statement)+ '}';
+fnLiteral: '(' (Type identifier)+ ')' '{' (statement)+ '}';
 
-Literal: IntLiteral | FloatLiteral | StrLiteral;
+literal: IntLiteral | FloatLiteral | StrLiteral | objLiteral | fnLiteral;
 
 /* Type */
-Type: BOOL | INT | FLOAT | FN | OBJ | NamedType;
+Type: BOOL | INT | FLOAT | FN | OBJ;
 
-LINE_COMMENT: '//' (.)+? '\n' -> skip;
-BLOCK_COMMENT: '/*' (.)+?  '*/' -> skip;
-WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;
-// valid identifier for type or variable
+identifier: Identifier;
 
-fragment Letter: [a-zA-Z$_];
-fragment Alphanum: [a-zA-Z0-9$_];
-
-NamedType: Letter (Alphanum)+;
-
-Identifier: Letter (Alphanum)+;
+// lexically, identifiers are the same as types
+Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*;
 
 /* Statements and Expressions */
 
@@ -83,15 +74,15 @@ Identifier: Letter (Alphanum)+;
 // some of these are inline by necessity (otherwise we get left recursion problems)
 expression
     :   statement // statements evaluate as expressions
-    |   Identifier
-    |   Literal
+    |   identifier
+    |   literal
     |   expression BOOLEAN_OPERATOR expression // boolean expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnExpression
     ;
 
-fnExpression: Identifier '(' (Identifier | Literal)+ ')'; // TODO this is wrong
+fnExpression: identifier '(' (identifier | literal)+ ')'; // TODO this is wrong
 
 // statements
 statement
@@ -108,13 +99,13 @@ exportStatement: 'export' StrLiteral;
 
 // statements involving variables
 variableStatement: declarationStatement | assignmentStatement | nameStatement;
-declarationStatement: LET Identifier ASSIGNMENT_OPERATOR expression;
-assignmentStatement: Identifier ASSIGNMENT_OPERATOR expression;
+declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
+assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
 nameStatement // like "typedef" in C/C++
-    : NAME Identifier Type
-    | NAME Identifier IMPLEMENTS (Identifier)+ Type
-    | NAME Identifier EXTENDS Identifier Type
-    | NAME Identifier EXTENDS Identifier IMPLEMENTS (Identifier)+ Type
+    : NAME identifier Type
+    | NAME identifier IMPLEMENTS (identifier)+ Type
+    | NAME identifier EXTENDS identifier Type
+    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ Type
     ;
 
 // control flow statements
@@ -136,6 +127,9 @@ breakStatement: BREAK;
 continueStatement: CONTINUE;
 returnStatement: RETURN expression;
 
-
 /* Top-level */
 program: (expression)+;
+
+LINE_COMMENT: '//' (.)+? '\n' -> skip;
+BLOCK_COMMENT: '*//*' (.)+?  '*//*' -> skip;
+WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;

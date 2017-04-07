@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.6
+// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.6
 
     package io.kwu.kythera.antlr;
 
@@ -13,6 +13,54 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * of the available methods.
  */
 public class KytheraBaseListener implements KytheraListener {
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjLiteral(KytheraParser.ObjLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjLiteral(KytheraParser.ObjLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFnLiteral(KytheraParser.FnLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFnLiteral(KytheraParser.FnLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLiteral(KytheraParser.LiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteral(KytheraParser.LiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifier(KytheraParser.IdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifier(KytheraParser.IdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

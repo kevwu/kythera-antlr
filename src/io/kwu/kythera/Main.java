@@ -5,6 +5,7 @@ import io.kwu.kythera.antlr.KytheraParser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Vocabulary;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Main {
@@ -12,10 +13,11 @@ public class Main {
 		if(args.length == 1) {
 			try {
 //				KytheraLexer lexer = new KytheraLexer(new ANTLRFileStream(args[0]));
-				KytheraLexer lexer = new KytheraLexer(new ANTLRInputStream("let a = 0"));
+				KytheraLexer lexer = new KytheraLexer(new ANTLRInputStream("{ int a }"));
 				CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 				KytheraParser parser = new KytheraParser(tokenStream);
-				ParseTree t = parser.expression();
+				ParseTree t = parser.program();
+				System.out.println(t.toStringTree(parser));
 			} catch(Exception e) {
 				System.out.println(e);
 			}

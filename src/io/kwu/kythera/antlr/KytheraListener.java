@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.6
+// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.6
 
     package io.kwu.kythera.antlr;
 
@@ -9,6 +9,46 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  * {@link KytheraParser}.
  */
 public interface KytheraListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#objLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjLiteral(KytheraParser.ObjLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#objLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjLiteral(KytheraParser.ObjLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#fnLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterFnLiteral(KytheraParser.FnLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#fnLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitFnLiteral(KytheraParser.FnLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteral(KytheraParser.LiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteral(KytheraParser.LiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifier(KytheraParser.IdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifier(KytheraParser.IdentifierContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#expression}.
 	 * @param ctx the parse tree
