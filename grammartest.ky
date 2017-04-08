@@ -40,34 +40,35 @@ a + b
 !myBool
 
 // if statement
-if(a == b) {
+if a == b {
     2 + 2
 }
 
 // if-if-else
-if(a == b) {
+if a == b {
     1 + 2
-} else if(a == c) {
+} else if a == c {
     2 + 3
 } else {
     3 + 4
 }
 
 // if-else
-if (a == b) {
+if a == b {
     3 + 3
 } else {
     3 + 4
 }
 
 // for
-for(let i = 0; i < 10; i + 1) {
+for let i = 0; i < 10; i + 1 {
     1+1
 }
 
 // while
-while(a == b) {
+while a == b {
     1+1
+    c = d
 }
 
 // name statements

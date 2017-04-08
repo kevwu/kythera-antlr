@@ -132,16 +132,16 @@ nameStatement // like "typedef" in C/C++
 // control flow statements
 controlFlowStatement: ifStatement | forStatement | whileStatement | breakStatement | continueStatement | returnStatement;
 ifStatement:
-    IF '(' expression ')'
+    IF expression
     '{' (expression)+ '}'
     (
-        ELSE IF '(' expression ')'
+        ELSE IF expression
         '{' (expression)+ '}'
     )*
     ( ELSE '{' (expression)+ '}')?
     ;
-forStatement: FOR '(' expression ';' expression ';' expression ')' '{' (expression)+ '}';
-whileStatement: WHILE '(' expression ')' '{' (expression)+ '}';
+forStatement: FOR expression ';' expression ';' expression '{' (expression)+ '}';
+whileStatement: WHILE expression '{' (expression)+ '}';
 breakStatement: BREAK;
 continueStatement: CONTINUE;
 returnStatement: RETURN expression;
