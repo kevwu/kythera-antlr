@@ -38,8 +38,12 @@ CONTINUE: 'continue';
 BOOL: 'bool';
 INT: 'int';
 FLOAT: 'float';
+STR: 'str';
 FN: 'fn';
 OBJ: 'obj';
+objType: OBJ '{' (type identifier)+ '}';
+
+fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
 
 // operators
 ASSIGNMENT_OPERATOR: '=';
@@ -51,6 +55,13 @@ ARITH_OPERATOR: '+' | '-' | '*' | '/' | '%';
 EXTENDS: 'extends';
 IMPLEMENTS: 'implements';
 INTERFACE: 'interface';
+THIS: 'this';
+
+// Structural punctuation
+PUNCT: '{' | '}' | '[' | ']'| '(' | ')' | '.' | '<' | '>';
+
+TRUE: 'true';
+FALSE: 'false';
 
 /*** Literals ***/
 IntLiteral: ('0'..'9')+;
@@ -59,14 +70,14 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-objLiteral: '{' ((Type identifier) | (identifier '=' expression))+ '}';
+objLiteral: '{' ((type identifier) | (identifier '=' expression))+ '}';
 
-fnLiteral: '(' (Type identifier)+ ')' '{' (statement)+ '}';
+fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
 literal: IntLiteral | FloatLiteral | StrLiteral | objLiteral | fnLiteral;
 
 /* Type */
-Type: BOOL | INT | FLOAT | FN | OBJ;
+type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier;
 
 identifier: Identifier;
 
@@ -86,10 +97,12 @@ expression
     |   expression BOOLEAN_OPERATOR expression // boolean expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
-    |   fnExpression
+    |   fnCallExpression
+    |   TRUE
+    |   FALSE
     ;
 
-fnExpression: identifier '(' (identifier | literal)+ ')'; // TODO this is wrong
+fnCallExpression: (identifier | fnLiteral) '(' ((expression) (',' expression)*)? ')';
 
 // statements
 statement
@@ -102,32 +115,31 @@ statement
 packageStatement: importStatement | includeStatement | exportStatement;
 importStatement: 'import' StrLiteral;
 includeStatement: 'include' StrLiteral;
-exportStatement: 'export' StrLiteral;
+exportStatement: 'export' identifier;
 
 // statements involving variables
 variableStatement: declarationStatement | assignmentStatement | nameStatement;
 declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
 assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
 nameStatement // like "typedef" in C/C++
-    : NAME identifier Type
-    | NAME identifier IMPLEMENTS (identifier)+ Type
-    | NAME identifier EXTENDS identifier Type
-    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ Type
+    : NAME identifier type
+    | NAME identifier IMPLEMENTS (identifier)+ objType
+    | NAME identifier EXTENDS identifier objType
+    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ objType
+    | NAME identifier INTERFACE identifier objType
     ;
 
 // control flow statements
 controlFlowStatement: ifStatement | forStatement | whileStatement | breakStatement | continueStatement | returnStatement;
-ifStatement: IF '(' expression ')'
+ifStatement:
+    IF '(' expression ')'
     '{' (expression)+ '}'
     (
-        // multiple possible else-if blocks
-        (
-            ELSE IF '(' expression ')'
-            '{' (expression)+ '}'
-        )+
-        // one final else
-        (ELSE '{' (expression)+ '}')?
-    )?;
+        ELSE IF '(' expression ')'
+        '{' (expression)+ '}'
+    )*
+    ( ELSE '{' (expression)+ '}')?
+    ;
 forStatement: FOR '(' expression ';' expression ';' expression ')' '{' (expression)+ '}';
 whileStatement: WHILE '(' expression ')' '{' (expression)+ '}';
 breakStatement: BREAK;

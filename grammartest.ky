@@ -1,3 +1,92 @@
 // line comment
+/* Block level
+multi line
+comment */
 
+
+// boolean literal
+let myBool = false
+// integer literal
 let a = 0
+// float literal
+let b = 2.0
+// string literal
+let myStr = "hello"
+// object literal
+let myObj = {
+    int a
+    b = 2.0
+}
+// function literal
+let myFn = (int x) [str] {
+    let a = 0
+}
+
+// function call
+aFunction()
+aFunction(2)
+aFunction(2, "beep beep meme creep")
+
+// anonymous function call
+(int a) [int] {
+    return a + 2
+}(3)
+
+// boolean expression
+a == b
+// arithmetic expression
+a + b
+// boolean negation
+!myBool
+
+// if statement
+if(a == b) {
+    2 + 2
+}
+
+// if-if-else
+if(a == b) {
+    1 + 2
+} else if(a == c) {
+    2 + 3
+} else {
+    3 + 4
+}
+
+// if-else
+if (a == b) {
+    3 + 3
+} else {
+    3 + 4
+}
+
+// for
+for(let i = 0; i < 10; i + 1) {
+    1+1
+}
+
+// while
+while(a == b) {
+    1+1
+}
+
+// name statements
+name myType int
+name myFnType fn(int)[str]
+name myObjType obj{
+    int ab
+    str b
+}
+name mySubObj extends myObjType obj{
+    myFnType asdf
+}
+
+name myObjType implements myInterface obj{
+    int a
+}
+
+// package statements
+import "myThing"
+include "./myFile"
+
+export a

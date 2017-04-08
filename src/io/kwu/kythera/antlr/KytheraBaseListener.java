@@ -18,6 +18,30 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterObjType(KytheraParser.ObjTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjType(KytheraParser.ObjTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFnType(KytheraParser.FnTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFnType(KytheraParser.FnTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterObjLiteral(KytheraParser.ObjLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -54,6 +78,18 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterType(KytheraParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(KytheraParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIdentifier(KytheraParser.IdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -78,13 +114,13 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFnExpression(KytheraParser.FnExpressionContext ctx) { }
+	@Override public void enterFnCallExpression(KytheraParser.FnCallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFnExpression(KytheraParser.FnExpressionContext ctx) { }
+	@Override public void exitFnCallExpression(KytheraParser.FnCallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -10,6 +10,26 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface KytheraListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link KytheraParser#objType}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjType(KytheraParser.ObjTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#objType}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjType(KytheraParser.ObjTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#fnType}.
+	 * @param ctx the parse tree
+	 */
+	void enterFnType(KytheraParser.FnTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#fnType}.
+	 * @param ctx the parse tree
+	 */
+	void exitFnType(KytheraParser.FnTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KytheraParser#objLiteral}.
 	 * @param ctx the parse tree
 	 */
@@ -40,6 +60,16 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitLiteral(KytheraParser.LiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KytheraParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(KytheraParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(KytheraParser.TypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KytheraParser#identifier}.
 	 * @param ctx the parse tree
 	 */
@@ -60,15 +90,15 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitExpression(KytheraParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#fnExpression}.
+	 * Enter a parse tree produced by {@link KytheraParser#fnCallExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterFnExpression(KytheraParser.FnExpressionContext ctx);
+	void enterFnCallExpression(KytheraParser.FnCallExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link KytheraParser#fnExpression}.
+	 * Exit a parse tree produced by {@link KytheraParser#fnCallExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitFnExpression(KytheraParser.FnExpressionContext ctx);
+	void exitFnCallExpression(KytheraParser.FnCallExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#statement}.
 	 * @param ctx the parse tree
