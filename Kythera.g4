@@ -1,5 +1,5 @@
 /* Draft EBNF for Kythera */
-/* This grammar built using version ANTLR 4.6. */
+/* This grammar is built using ANTLR v4.6. */
 grammar Kythera;
 
 options {
@@ -13,6 +13,13 @@ options {
 @parser::header {
     package io.kwu.kythera.antlr;
 }
+
+
+COMMENT
+    :   ( '//' ~('\r' | '\n')* '\r'? '\n'
+        | '/*' .*? '*/'
+        ) -> skip
+    ;
 
 /*** Language keywords ***/
 LET: 'let'; // variable assignment
@@ -130,6 +137,4 @@ returnStatement: RETURN expression;
 /* Top-level */
 program: (expression)+;
 
-LINE_COMMENT: '//' (.)+? '\n' -> skip;
-BLOCK_COMMENT: '*//*' (.)+?  '*//*' -> skip;
 WHITESPACE: (' ' | '\t' | '\r' | '\n') -> skip;

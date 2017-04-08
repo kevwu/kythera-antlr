@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.6
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.6
 
     package io.kwu.kythera.antlr;
 

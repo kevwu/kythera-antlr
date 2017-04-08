@@ -5,15 +5,14 @@ import io.kwu.kythera.antlr.KytheraParser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Vocabulary;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Main {
 	public static void main(String[] args) {
 		if(args.length == 1) {
 			try {
-//				KytheraLexer lexer = new KytheraLexer(new ANTLRFileStream(args[0]));
-				KytheraLexer lexer = new KytheraLexer(new ANTLRInputStream("{ int a }"));
+				KytheraLexer lexer = new KytheraLexer(new ANTLRFileStream(args[0]));
+//				KytheraLexer lexer = new KytheraLexer(new ANTLRInputStream("asdf"));
 				CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 				KytheraParser parser = new KytheraParser(tokenStream);
 				ParseTree t = parser.program();
