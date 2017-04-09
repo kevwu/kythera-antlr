@@ -1,5 +1,5 @@
 /* Draft EBNF for Kythera */
-/* This grammar is built using ANTLR v4.6. */
+/* This grammar is built using ANTLR v4.7. */
 grammar Kythera;
 
 options {
@@ -35,13 +35,14 @@ BREAK: 'break';
 CONTINUE: 'continue';
 
 // built-in types
+NEW: 'new';
+
 BOOL: 'bool';
 INT: 'int';
 FLOAT: 'float';
 STR: 'str';
 FN: 'fn';
 OBJ: 'obj';
-NULL: 'null'; // null is both a type and a literal
 objType: OBJ '{' (type identifier)+ '}';
 
 fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
@@ -75,12 +76,14 @@ objLiteral: '{' ((type identifier) | (identifier '=' expression))+ '}';
 
 fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
+NULL: 'null';
+
 literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral;
 
 /* Type */
-type: BOOL | INT | FLOAT | STR | NULL | fnType | objType | Identifier;
+type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier | type '[' ']';
 
-identifier: Identifier;
+identifier: Identifier | Identifier '[' IntLiteral ']';
 
 // lexically, identifiers are the same as types
 Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*;
@@ -120,7 +123,10 @@ exportStatement: 'export' identifier;
 
 // statements involving variables
 variableStatement: declarationStatement | assignmentStatement | nameStatement;
-declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
+declarationStatement
+    :   LET identifier ASSIGNMENT_OPERATOR expression
+    |   LET identifier ASSIGNMENT_OPERATOR NEW type
+    ;
 assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
 nameStatement // like "typedef" in C/C++
     : NAME identifier type
