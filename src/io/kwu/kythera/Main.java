@@ -4,7 +4,8 @@ import io.kwu.kythera.antlr.KytheraLexer;
 import io.kwu.kythera.antlr.KytheraParser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Main {
 	public static void main(String[] args) {
@@ -13,8 +14,9 @@ public class Main {
 				KytheraLexer lexer = new KytheraLexer(new ANTLRFileStream(args[0]));
 				CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 				KytheraParser parser = new KytheraParser(tokenStream);
-				ParseTree t = parser.program();
-				System.out.println(t.toStringTree(parser));
+				ParserRuleContext tree = parser.program();
+//				ParseTreeWalker walker = new ParseTreeWalker();
+				ParseTreeWalker.DEFAULT.walk(new KytheraWalker(parser), tree);
 			} catch(Exception e) {
 				System.out.println(e);
 			}

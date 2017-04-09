@@ -21,6 +21,8 @@ let myObj = {
 let myFn = (int x) [str] {
     let a = 0
 }
+// null
+let n = null
 
 // function call
 aFunction()
