@@ -43,6 +43,8 @@ FLOAT: 'float';
 STR: 'str';
 FN: 'fn';
 OBJ: 'obj';
+ARR: 'arr';
+
 objType: OBJ '{' (type identifier)+ '}';
 
 fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
@@ -76,12 +78,14 @@ objLiteral: '{' ((type identifier) | (identifier '=' expression))+ '}';
 
 fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
+arrLiteral: type '[' (literal)*? ']';
+
 NULL: 'null';
 
-literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral;
+literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral | arrLiteral;
 
 /* Type */
-type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier | type '[' ']';
+type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier | type '[' IntLiteral ']';
 
 identifier: Identifier | Identifier '[' IntLiteral ']';
 

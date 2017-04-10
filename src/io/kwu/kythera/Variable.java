@@ -1,14 +1,22 @@
 package io.kwu.kythera;
 
+// messy and probably dangerous.
+// variable typing needs a thoughtful rework.
 public abstract class Variable {
-	private String identifier;
-	private Object value; // ooh dangerous
-	public abstract String toString();
-	
-	public class IntVariable extends Variable {
-		@Override
-		public String toString() {
-			return null;
-		}
+	protected final String identifier;
+	protected Object value;
+
+	public Variable(final String identifier, Object value) {
+		this.identifier = identifier;
+		this.value = value;
 	}
+	public String toString() {
+		return value.toString();
+	}
+	public void setVar(Object value) {
+		this.value = value;
+	};
+	public Object getVar() {
+		return this.value;
+	};
 }

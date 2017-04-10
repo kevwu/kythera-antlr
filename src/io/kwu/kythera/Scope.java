@@ -14,6 +14,7 @@ public class Scope extends HashMap<String, Variable> {
 		} else {
 			level = 0;
 		}
+
 	}
 
 	public boolean inScope(String var) {
@@ -40,5 +41,9 @@ public class Scope extends HashMap<String, Variable> {
 		} else {
 			return null;
 		}
+	}
+
+	public Scope parent() {
+		return this.parent;
 	}
 }
