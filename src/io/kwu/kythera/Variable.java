@@ -3,9 +3,9 @@ package io.kwu.kythera;
 // messy and probably dangerous.
 // variable typing needs a thoughtful rework.
 public class Variable {
-	protected final String identifier;
-	protected Object value;
-	protected final VarType type;
+	private final String identifier;
+	private Object value;
+	private final VarType type;
 
 	public Variable(final VarType type, final String identifier, Object value) {
 		this.type = type;

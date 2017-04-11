@@ -7,10 +7,10 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import java.util.HashMap;
 
 public class KytheraWalker extends KytheraBaseListener {
-	KytheraParser parser;
-	Scope rootScope;
-	Scope currentScope;
-	HashMap<ParserRuleContext, Scope> scopes;
+	private KytheraParser parser;
+	private Scope rootScope;
+	private Scope currentScope;
+	private HashMap<ParserRuleContext, Scope> scopes;
 
 	public KytheraWalker(KytheraParser parser) {
 		this.parser = parser;
@@ -28,6 +28,18 @@ public class KytheraWalker extends KytheraBaseListener {
 		scopes.put(null, rootScope);
 	}
 
+	@Override public void enterDeclarationStatement(KytheraParser.DeclarationStatementContext ctx) {
+		System.out.println("Entering declaration: " + ctx.getText());
+		assert(ctx.identifier() != null);
+		String identifier = ctx.identifier().getText();
+		if(ctx.NEW() == null) {
+			System.out.println("Initialized by literal.");
+			assert(ctx.expression() != null);
+		} else {
+			System.out.println("Initialized by 'new'.");
+		}
+	}
+
 	@Override
 	public void enterAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
 		System.out.println("Assignment: " + ctx.toStringTree(parser));
@@ -35,7 +47,7 @@ public class KytheraWalker extends KytheraBaseListener {
 
 	@Override
 	public void enterFnLiteral(KytheraParser.FnLiteralContext ctx) {
-		System.out.println("Entered FN literal: " + ctx);
+		System.out.println("Entered FN literal: " + ctx.getText());
 		Scope fnScope = new Scope(this.currentScope);
 		this.scopes.put(ctx, fnScope);
 		this.currentScope = fnScope;
@@ -43,7 +55,7 @@ public class KytheraWalker extends KytheraBaseListener {
 
 	@Override
 	public void exitFnLiteral(KytheraParser.FnLiteralContext ctx) {
-		System.out.println("Exited FN literal: " + ctx);
+		System.out.println("Exited FN literal: " + ctx.getText());
 		// switch back to parent scope
 		Scope fnScope = this.scopes.get(ctx);
 		this.currentScope = fnScope.parent();

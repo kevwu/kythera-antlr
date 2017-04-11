@@ -1,6 +1,7 @@
 package io.kwu.kythera;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 // oooooooooohhhh boy
 public abstract class VarType {
@@ -32,8 +33,8 @@ public abstract class VarType {
 	public static VarType NullVarType = new VarType("null") {};
 
 	public class FnVarType extends VarType {
-		protected final ArrayList<VarType> argList;
-		protected final VarType returnType;
+		private final ArrayList<VarType> argList;
+		private final VarType returnType;
 
 		public FnVarType(String type) {
 			super(type);
@@ -59,6 +60,26 @@ public abstract class VarType {
 	}
 
 	public class ObjVarType extends VarType {
-		protected final ArrayList<VarType> propList;
+		private final HashMap<String, VarType> fields;
+
+		public ObjVarType(String type) {
+			super(type);
+			this.fields = null;
+		}
+
+		public ObjVarType(String type, HashMap<String, VarType> fields) {
+			super(type);
+			this.fields = fields;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			if(!(other instanceof VarType.ObjVarType)) {
+				return false;
+			}
+
+			VarType.ObjVarType otherVar = (VarType.ObjVarType) other;
+			return otherVar.fields.equals(this.fields);
+		}
 	}
 }

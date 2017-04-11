@@ -18,7 +18,7 @@ public class Main {
 //				ParseTreeWalker walker = new ParseTreeWalker();
 				ParseTreeWalker.DEFAULT.walk(new KytheraWalker(parser), tree);
 			} catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Usage: kythera [program.ky]");
