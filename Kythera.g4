@@ -51,7 +51,7 @@ fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
 
 // operators
 ASSIGNMENT_OPERATOR: '=';
-BOOLEAN_OPERATOR: '==' | '<' | '>' | '<=' | '>=';
+BOOLEAN_OPERATOR: '==' | '!=' | '<' | '>' | '<=' | '>=';
 NOT_OPERATOR: '!';
 ARITH_OPERATOR: '+' | '-' | '*' | '/' | '%';
 

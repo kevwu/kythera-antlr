@@ -1,6 +1,6 @@
 package io.kwu.kythera;
 
-public class Value {
+public class Value implements Comparable<Value> {
 	private final Object value;
 	private final Type type;
 
@@ -11,7 +11,7 @@ public class Value {
 
 	@Override
 	public String toString() {
-		return value.toString();
+		return type.toString() + ": " + value.toString();
 	}
 
 	public Object getVal() {
@@ -32,6 +32,19 @@ public class Value {
 		return value.equals(otherVal.value) && type.equals(otherVal.type);
 	}
 
+	@Override
+	public int compareTo(Value o) {
+		if(!(o.value instanceof Comparable)) {
+			throw new ClassCastException();
+		}
+
+		if(!(this.value instanceof  Comparable)) {
+			throw new ClassCastException();
+		}
+
+		return ((Comparable) this.value).compareTo(o.value);
+	}
+
 	// static values
 
 	// null
@@ -40,4 +53,13 @@ public class Value {
 	// boolean true/false
 	public static Value TRUE = new Value(Type.boolType, Boolean.TRUE);
 	public static Value FALSE = new Value(Type.boolType, Boolean.FALSE);
+
+	// ez creation from Java boolean primitive
+	public static Value fromBool(boolean val) {
+		if(val) {
+			return Value.TRUE;
+		} else {
+			return Value.FALSE;
+		}
+	}
 }

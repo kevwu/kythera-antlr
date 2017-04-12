@@ -62,6 +62,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return new Type.ObjType(text);
 		}
 
+		// TODO throw real error
 		System.out.println("Parser somehow received invalid type.");
 		return null;
 	}
@@ -70,18 +71,15 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitProgram(KytheraParser.ProgramContext ctx) {
 		List<KytheraParser.ExpressionContext> expressions = ctx.expression();
 		for (KytheraParser.ExpressionContext exp : expressions) {
-			exp.accept(this);
+			System.out.println("{{{ " + exp.getText() + " }}}");
+			System.out.println("[[[ " + exp.accept(this).toString() + " ]]]");
 		}
 		return null;
 	}
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
-		System.out.println("{{{ " + ctx.getText() + " }}}");
-
 		if (ctx.identifier() != null) {
-			System.out.println("Identifier-only expression: " + ctx.identifier().getText());
-
 			if(this.currentScope.hasVar(ctx.identifier().getText())) {
 				System.out.println(this.currentScope.getVar(ctx.identifier().getText()));
 				return this.currentScope.getVar(ctx.identifier().getText());
@@ -145,19 +143,42 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
 
-			System.out.println(lhs);
-			System.out.println(rhs);
-/*
 			switch(ctx.BOOLEAN_OPERATOR().getText()) {
 				case "==":
-					if(lhs.equals(rhs)) {
-						return Value.TRUE;
+					return Value.fromBool(lhs.equals(rhs));
+				case "!=":
+					return Value.fromBool(!(lhs.equals(rhs)));
+				case "<":
+					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
 					} else {
-						return Value.FALSE;
+						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
+						return null;
+					}
+				case ">":
+					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
+					} else {
+						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
+						return null;
+					}
+				case "<=":
+					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
+					} else {
+						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
+						return null;
+					}
+				case ">=":
+					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
+					} else {
+						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
+						return null;
 					}
 				default:
 					System.out.println("Unimplemented boolean statement.");
-			}*/
+			}
 		}
 
 		if (ctx.statement() != null) {
@@ -180,14 +201,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
-		System.out.println("Assignment statement");
 		assert(ctx.identifier() != null);
 		assert(ctx.expression() != null);
 
 		String identifier = ctx.identifier().getText();
-		System.out.println("::::");
-		System.out.println(ctx.identifier().getText());
-		System.out.println(ctx.expression().getText());
 
 		if(!this.currentScope.hasVar(identifier)) {
 			// TODO throw actual exception
@@ -220,27 +237,21 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		return null;
 	}
 
-
-	@Override public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
-		System.out.println("Declaration statement");
-
+	@Override
+	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
 		assert(declStatement.LET() != null);
 		String identifier = declStatement.identifier().getText();
-		System.out.println(identifier);
-
 		Value result;
 
-		// either "new [type]" or literal
+		// either "new [type]" or expression
 		if(declStatement.NEW() != null) {
-			System.out.println("Initialized by new: " + declStatement.type().getText());
-
 			// get the type
 			result = new Value(
 				getTypeFromText(declStatement.type().getText()),
 				null
 			);
 		} else  {
-			System.out.println("Initialized by expression: " + declStatement.expression().getText());
+			// initialize from expression
 			result = declStatement.expression().accept(this);
 		}
 

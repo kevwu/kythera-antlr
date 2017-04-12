@@ -21,6 +21,11 @@ public abstract class Type {
 			return otherVar.type.equals(this.type);
 	}
 
+	@Override
+	public String toString() {
+		return this.type;
+	}
+
 	// types with the same form (e.g. all ints will be "int")
 
 	public static Type intType = new Type("int") {};

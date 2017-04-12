@@ -1,11 +1,14 @@
 // tests variable statements
-let a = 0
-a
+let a = true
+let b = false
 
-let myBool = false
-myBool
-
-myBool = true
-a = 2
-myBool
 a
+b
+
+a == b
+
+let c = true
+
+a == c
+
+a != b
