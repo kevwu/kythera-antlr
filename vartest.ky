@@ -1,0 +1,11 @@
+// tests variable statements
+let a = 0
+a
+
+let myBool = false
+myBool
+
+myBool = true
+a = 2
+myBool
+a

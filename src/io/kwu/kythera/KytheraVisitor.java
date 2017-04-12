@@ -93,8 +93,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if (ctx.literal() != null) {
-			System.out.println("Literal");
-
 			if(ctx.literal().IntLiteral() != null) {
 				return new Value(
 					Type.intType,
@@ -130,10 +128,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			if(ctx.literal().objLiteral() != null) {
 				System.out.println("Object literal (not yet implemented)");
+				return ctx.literal().objLiteral().accept(this);
 			}
 
 			if(ctx.literal().fnLiteral() != null) {
 				System.out.println("Function literal (not yet implemented)");
+				return ctx.literal().fnLiteral().accept(this);
 			}
 
 			return null;
@@ -151,7 +151,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			switch(ctx.BOOLEAN_OPERATOR().getText()) {
 				case "==":
 					if(lhs.equals(rhs)) {
-						return Value.TRdeclStatement.identifier().getText(UE;
+						return Value.TRUE;
 					} else {
 						return Value.FALSE;
 					}
@@ -174,50 +174,41 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-		System.out.println("Unhandled expression.");
+		System.out.println("Unhandled expression: " + ctx.getText());
 		return null;
 	}
 
 	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
-		System.out.println("Assignment statement.");
-		return null;
+		System.out.println("Assignment statement");
+		assert(ctx.identifier() != null);
+		assert(ctx.expression() != null);
+
+		String identifier = ctx.identifier().getText();
+		System.out.println("::::");
+		System.out.println(ctx.identifier().getText());
+		System.out.println(ctx.expression().getText());
+
+		if(!this.currentScope.hasVar(identifier)) {
+			// TODO throw actual exception
+			System.out.println("ERROR: Assigning to variable that does not exist" + identifier);
+			return null;
+		} else {
+			Value newValue = ctx.expression().accept(this);
+			this.currentScope.setVar(identifier, newValue);
+			// an assignment statement (as an expression) returns the new value that the variable has taken.
+			return newValue;
+		}
 	}
 
 	@Override
 	public Value visitVariableStatement(KytheraParser.VariableStatementContext ctx) {
 		if(ctx.assignmentStatement() != null) {
-			System.out.println("Assignment statement");
-			return null;
+			return ctx.assignmentStatement().accept(this);
 		}
 
 		if(ctx.declarationStatement() != null) {
-			System.out.println("Declaration statement");
-			KytheraParser.DeclarationStatementContext declStatement = ctx.declarationStatement();
-			assert(declStatement.LET() != null);
-			String identifier = declStatement.identifier().getText();
-			System.out.println(identifier);
-
-			Value result;
-
-			// either "new [type]" or literal
-			if(declStatement.NEW() != null) {
-				System.out.println("Initialized by new: " + declStatement.type().getText());
-
-				// get the type
-				result = new Value(
-					getTypeFromText(declStatement.type().getText()),
-					null
-				);
-			} else  {
-				System.out.println("Initialized by expression: " + declStatement.expression().getText());
-				result = declStatement.expression().accept(this);
-			}
-
-			this.currentScope.setVar(identifier, result);
-
-			// a declaration statement (as an expression) evaluates to the value that the newborn variable was set to.
-			return result;
+			return ctx.declarationStatement().accept(this);
 		}
 
 		if(ctx.nameStatement() != null) {
@@ -225,8 +216,38 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
-		System.out.println("Unhandled variable statement.");
+		System.out.println("Unhandled variable statement: " + ctx.getText());
 		return null;
+	}
+
+
+	@Override public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
+		System.out.println("Declaration statement");
+
+		assert(declStatement.LET() != null);
+		String identifier = declStatement.identifier().getText();
+		System.out.println(identifier);
+
+		Value result;
+
+		// either "new [type]" or literal
+		if(declStatement.NEW() != null) {
+			System.out.println("Initialized by new: " + declStatement.type().getText());
+
+			// get the type
+			result = new Value(
+				getTypeFromText(declStatement.type().getText()),
+				null
+			);
+		} else  {
+			System.out.println("Initialized by expression: " + declStatement.expression().getText());
+			result = declStatement.expression().accept(this);
+		}
+
+		this.currentScope.setVar(identifier, result);
+
+		// a declaration statement (as an expression) evaluates to the value that the newborn variable was set to.
+		return result;
 	}
 
 	@Override
