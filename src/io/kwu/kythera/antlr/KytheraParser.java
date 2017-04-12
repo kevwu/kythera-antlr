@@ -135,6 +135,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitObjType(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitObjType(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ObjTypeContext objType() throws RecognitionException {
@@ -198,6 +203,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitFnType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitFnType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -300,6 +310,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitObjLiteral(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitObjLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ObjLiteralContext objLiteral() throws RecognitionException {
@@ -392,6 +407,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitFnLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitFnLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -502,6 +522,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitArrLiteral(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitArrLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ArrLiteralContext arrLiteral() throws RecognitionException {
@@ -571,6 +596,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -678,6 +708,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -799,6 +834,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitIdentifier(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitIdentifier(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final IdentifierContext identifier() throws RecognitionException {
@@ -876,6 +916,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitExpression(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1023,6 +1068,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitFnCallExpression(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitFnCallExpression(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FnCallExpressionContext fnCallExpression() throws RecognitionException {
@@ -1117,6 +1167,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -1193,6 +1248,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitPackageStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitPackageStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final PackageStatementContext packageStatement() throws RecognitionException {
@@ -1252,6 +1312,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitImportStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitImportStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ImportStatementContext importStatement() throws RecognitionException {
@@ -1290,6 +1355,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitIncludeStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitIncludeStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1331,6 +1401,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitExportStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitExportStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1378,6 +1453,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitVariableStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitVariableStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1449,6 +1529,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitDeclarationStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitDeclarationStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DeclarationStatementContext declarationStatement() throws RecognitionException {
@@ -1519,6 +1604,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitAssignmentStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitAssignmentStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AssignmentStatementContext assignmentStatement() throws RecognitionException {
@@ -1574,6 +1664,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitNameStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitNameStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1728,6 +1823,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitControlFlowStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitControlFlowStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ControlFlowStatementContext controlFlowStatement() throws RecognitionException {
@@ -1820,6 +1920,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitIfStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitIfStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1952,6 +2057,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitForStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitForStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ForStatementContext forStatement() throws RecognitionException {
@@ -2024,6 +2134,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitWhileStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitWhileStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WhileStatementContext whileStatement() throws RecognitionException {
@@ -2082,6 +2197,11 @@ public class KytheraParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitBreakStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitBreakStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BreakStatementContext breakStatement() throws RecognitionException {
@@ -2118,6 +2238,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitContinueStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitContinueStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2158,6 +2283,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitReturnStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitReturnStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2202,6 +2332,11 @@ public class KytheraParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitProgram(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitProgram(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

@@ -28,15 +28,19 @@ public class KytheraWalker extends KytheraBaseListener {
 		scopes.put(null, rootScope);
 	}
 
-	@Override public void enterDeclarationStatement(KytheraParser.DeclarationStatementContext ctx) {
+	@Override
+	public void enterDeclarationStatement(KytheraParser.DeclarationStatementContext ctx) {
 		System.out.println("Entering declaration: " + ctx.getText());
-		assert(ctx.identifier() != null);
+		assert (ctx.identifier() != null);
 		String identifier = ctx.identifier().getText();
-		if(ctx.NEW() == null) {
+		if (ctx.NEW() == null) {
 			System.out.println("Initialized by literal.");
-			assert(ctx.expression() != null);
+			assert (ctx.expression() != null);
+			System.out.println(ctx.expression());
 		} else {
 			System.out.println("Initialized by 'new'.");
+			assert (ctx.type() != null);
+			System.out.println("Type: " + ctx.type().getText());
 		}
 	}
 
