@@ -37,12 +37,6 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFnLiteral(KytheraParser.FnLiteralContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#arrLiteral}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrLiteral(KytheraParser.ArrLiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link KytheraParser#literal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

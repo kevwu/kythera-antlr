@@ -28,11 +28,11 @@ let n = null
 let n = new int
 
 // arrays
-let myArr = new int[10]
+// let myArr = new int[10]
 // TODO the line below silently fails:
 // let myArr = new int[]
-a = myArr[10]
-myArr[10] = 2
+// a = myArr[10]
+// myArr[10] = 2
 
 // function call
 aFunction()

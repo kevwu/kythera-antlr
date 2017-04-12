@@ -66,18 +66,6 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArrLiteral(KytheraParser.ArrLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArrLiteral(KytheraParser.ArrLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterLiteral(KytheraParser.LiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}

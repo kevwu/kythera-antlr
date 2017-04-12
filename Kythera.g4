@@ -78,16 +78,16 @@ objLiteral: '{' ((type identifier) | (identifier '=' expression))+ '}';
 
 fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
-arrLiteral: type '[' (literal)*? ']';
+//arrLiteral: type '[' (literal)*? ']';
 
 NULL: 'null';
 
-literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral | arrLiteral;
+literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral;
 
 /* Type */
-type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier | type '[' IntLiteral ']';
+type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier ;
 
-identifier: Identifier | Identifier '[' IntLiteral ']';
+identifier: Identifier;
 
 // lexically, identifiers are the same as types
 Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*;

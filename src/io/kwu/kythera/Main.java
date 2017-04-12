@@ -46,7 +46,12 @@ public class Main {
 
 					@Override
 					public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
-						System.out.println("Parse ambiguity.");
+						System.out.println("Parse ambiguity: " + dfa.toString(parser.getVocabulary()));
+						Token decisionStart = parser.getInputStream().get(i);
+						Token ambiguityStart = parser.getInputStream().get(i1);
+
+						System.out.println("Decision start:" + decisionStart.getText() + " at " + decisionStart.getLine() + "," + decisionStart.getCharPositionInLine());
+						System.out.println("Ambiguity start: " + ambiguityStart.getText() + " at " + decisionStart.getLine() + "," + decisionStart.getCharPositionInLine());
 					}
 
 					@Override
