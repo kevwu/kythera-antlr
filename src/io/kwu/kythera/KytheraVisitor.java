@@ -72,7 +72,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		List<KytheraParser.ExpressionContext> expressions = ctx.expression();
 		for (KytheraParser.ExpressionContext exp : expressions) {
 			System.out.println("{{{ " + exp.getText() + " }}}");
-			System.out.println("[[[ " + exp.accept(this).toString() + " ]]]");
+			Value result = exp.accept(this);
+			if(result != null) {
+				System.out.println("[[[ " + result.toString() + " ]]]");
+			} else {
+				System.out.println("Expression resulted in null, probably due to an error");
+			}
 		}
 		return null;
 	}

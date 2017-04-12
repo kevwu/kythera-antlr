@@ -11,7 +11,7 @@ public class Value implements Comparable<Value> {
 
 	@Override
 	public String toString() {
-		return type.toString() + ": " + value.toString();
+		return type.toString() + ": " + (value != null ? value.toString() : "null");
 	}
 
 	public Object getVal() {
