@@ -292,6 +292,10 @@ public class KytheraParser extends Parser {
 		public IdentifierContext identifier(int i) {
 			return getRuleContext(IdentifierContext.class,i);
 		}
+		public List<TerminalNode> ASSIGNMENT_OPERATOR() { return getTokens(KytheraParser.ASSIGNMENT_OPERATOR); }
+		public TerminalNode ASSIGNMENT_OPERATOR(int i) {
+			return getToken(KytheraParser.ASSIGNMENT_OPERATOR, i);
+		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}

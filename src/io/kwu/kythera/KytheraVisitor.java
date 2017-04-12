@@ -34,31 +34,31 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	}
 
 	private Type getTypeFromText(String text) {
-		if(text.equals("int")) {
+		if (text.equals("int")) {
 			return Type.intType;
 		}
 
-		if(text.equals("float")) {
+		if (text.equals("float")) {
 			return Type.floatType;
 		}
 
-		if(text.equals("str")) {
+		if (text.equals("str")) {
 			return Type.strType;
 		}
 
-		if(text.equals("bool")) {
+		if (text.equals("bool")) {
 			return Type.strType;
 		}
 
-		if(text.equals("null")) {
+		if (text.equals("null")) {
 			return Type.nullType;
 		}
 
-		if(text.startsWith("fn")) {
+		if (text.startsWith("fn")) {
 			return new Type.FnType(text);
 		}
 
-		if(text.startsWith("obj")) {
+		if (text.startsWith("obj")) {
 			return new Type.ObjType(text);
 		}
 
@@ -73,7 +73,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		for (KytheraParser.ExpressionContext exp : expressions) {
 			System.out.println("{{{ " + exp.getText() + " }}}");
 			Value result = exp.accept(this);
-			if(result != null) {
+			if (result != null) {
 				System.out.println("[[[ " + result.toString() + " ]]]");
 			} else {
 				System.out.println("Expression resulted in null, probably due to an error");
@@ -85,8 +85,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
 		if (ctx.identifier() != null) {
-			if(this.currentScope.hasVar(ctx.identifier().getText())) {
-				System.out.println(this.currentScope.getVar(ctx.identifier().getText()));
+			if (this.currentScope.hasVar(ctx.identifier().getText())) {
 				return this.currentScope.getVar(ctx.identifier().getText());
 			} else {
 				// TODO throw a proper exception
@@ -96,46 +95,44 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if (ctx.literal() != null) {
-			if(ctx.literal().IntLiteral() != null) {
+			if (ctx.literal().IntLiteral() != null) {
 				return new Value(
 					Type.intType,
 					Integer.parseInt(ctx.literal().IntLiteral().getText())
 				);
 			}
 
-			if(ctx.literal().FloatLiteral() != null) {
+			if (ctx.literal().FloatLiteral() != null) {
 				return new Value(
 					Type.floatType,
 					Double.parseDouble(ctx.literal().FloatLiteral().getText())
 				);
 			}
 
-			if(ctx.literal().StrLiteral() != null) {
+			if (ctx.literal().StrLiteral() != null) {
 				return new Value(
 					Type.strType,
 					ctx.literal().StrLiteral().getText().replaceAll("\"", "")
 				);
 			}
 
-			if(ctx.literal().NULL() != null) {
+			if (ctx.literal().NULL() != null) {
 				return Value.NULL;
 			}
 
-			if(ctx.literal().TRUE() != null) {
+			if (ctx.literal().TRUE() != null) {
 				return Value.TRUE;
 			}
 
-			if(ctx.literal().FALSE() != null) {
+			if (ctx.literal().FALSE() != null) {
 				return Value.FALSE;
 			}
 
-			if(ctx.literal().objLiteral() != null) {
-				System.out.println("Object literal (not yet implemented)");
+			if (ctx.literal().objLiteral() != null) {
 				return ctx.literal().objLiteral().accept(this);
 			}
 
-			if(ctx.literal().fnLiteral() != null) {
-				System.out.println("Function literal (not yet implemented)");
+			if (ctx.literal().fnLiteral() != null) {
 				return ctx.literal().fnLiteral().accept(this);
 			}
 
@@ -148,34 +145,34 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
 
-			switch(ctx.BOOLEAN_OPERATOR().getText()) {
+			switch (ctx.BOOLEAN_OPERATOR().getText()) {
 				case "==":
 					return Value.fromBool(lhs.equals(rhs));
 				case "!=":
 					return Value.fromBool(!(lhs.equals(rhs)));
 				case "<":
-					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
 						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case ">":
-					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
 						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case "<=":
-					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
 						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case ">=":
-					if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
 						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
@@ -206,16 +203,17 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
-		assert(ctx.identifier() != null);
-		assert(ctx.expression() != null);
+		assert (ctx.identifier() != null);
+		assert (ctx.expression() != null);
 
 		String identifier = ctx.identifier().getText();
 
-		if(!this.currentScope.hasVar(identifier)) {
+		if (!this.currentScope.hasVar(identifier)) {
 			// TODO throw actual exception
 			System.out.println("ERROR: Assigning to variable that does not exist" + identifier);
 			return null;
 		} else {
+			// TODO type check before assignment
 			Value newValue = ctx.expression().accept(this);
 			this.currentScope.setVar(identifier, newValue);
 			// an assignment statement (as an expression) returns the new value that the variable has taken.
@@ -225,15 +223,15 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitVariableStatement(KytheraParser.VariableStatementContext ctx) {
-		if(ctx.assignmentStatement() != null) {
+		if (ctx.assignmentStatement() != null) {
 			return ctx.assignmentStatement().accept(this);
 		}
 
-		if(ctx.declarationStatement() != null) {
+		if (ctx.declarationStatement() != null) {
 			return ctx.declarationStatement().accept(this);
 		}
 
-		if(ctx.nameStatement() != null) {
+		if (ctx.nameStatement() != null) {
 			System.out.println("name statement");
 			return null;
 		}
@@ -244,18 +242,18 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
-		assert(declStatement.LET() != null);
+		assert (declStatement.LET() != null);
 		String identifier = declStatement.identifier().getText();
 		Value result;
 
 		// either "new [type]" or expression
-		if(declStatement.NEW() != null) {
+		if (declStatement.NEW() != null) {
 			// get the type
 			result = new Value(
 				getTypeFromText(declStatement.type().getText()),
 				null
 			);
-		} else  {
+		} else {
 			// initialize from expression
 			result = declStatement.expression().accept(this);
 		}
@@ -270,5 +268,35 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx) {
 		System.out.println("Control flow statement");
 		return null;
+	}
+
+	@Override
+	public Value visitObjLiteral(KytheraParser.ObjLiteralContext ctx) {
+		System.out.println("Object literal");
+
+		List<KytheraParser.IdentifierContext> identifList = ctx.identifier();
+		for(KytheraParser.IdentifierContext identif: identifList) {
+			System.out.println(identif.getText());
+		}
+
+		return null;
+	}
+
+	@Override
+	public Value visitObjType(KytheraParser.ObjTypeContext ctx) {
+		System.out.println("Object type (not yet implemented)");
+		return null;
+	}
+
+	@Override
+	public Value visitFnLiteral(KytheraParser.FnLiteralContext ctx) {
+		System.out.println("Function literal (not yet implemented)");
+		return null;
+	}
+
+	@Override
+	public Value visitFnType(KytheraParser.FnTypeContext ctx) {
+		System.out.println("Object type: " + ctx.getText());
+		return visitChildren(ctx);
 	}
 }

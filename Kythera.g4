@@ -74,7 +74,7 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-objLiteral: '{' ((type identifier) | (identifier '=' expression))+ '}';
+objLiteral: '{' ((type identifier) | (identifier ASSIGNMENT_OPERATOR expression))+ '}';
 
 fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
