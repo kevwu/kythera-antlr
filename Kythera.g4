@@ -82,7 +82,7 @@ fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement
 
 NULL: 'null';
 
-literal: IntLiteral | FloatLiteral | StrLiteral | NULL | objLiteral | fnLiteral;
+literal: IntLiteral | FloatLiteral | StrLiteral | NULL | TRUE | FALSE | objLiteral | fnLiteral;
 
 /* Type */
 type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier ;
@@ -106,8 +106,6 @@ expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnCallExpression
-    |   TRUE
-    |   FALSE
     ;
 
 fnCallExpression: (identifier | fnLiteral) '(' ((expression) (',' expression)*)? ')';

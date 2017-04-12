@@ -2,7 +2,7 @@ package io.kwu.kythera;
 
 import java.util.HashMap;
 
-public class Scope extends HashMap<String, Variable> {
+public class Scope extends HashMap<String, Value> {
 	final private Scope parent;
 	final private int level;
 
@@ -29,17 +29,27 @@ public class Scope extends HashMap<String, Variable> {
 		}
 	}
 
-	public void setVar(String identifier, Variable variable) {
-		this.put(identifier, variable);
+	public void setVar(String identifier, Value value) {
+		this.put(identifier, value);
 	}
 
-	public Variable getVar(String identifier) {
+	public Value getVar(String identifier) {
 		if(this.containsKey(identifier)) {
 			return this.get(identifier);
 		} else if(this.parent != null) {
 			return this.parent.getVar(identifier);
 		} else {
 			return null;
+		}
+	}
+
+	public boolean hasVar(String identifier) {
+		if(this.containsKey(identifier)) {
+			return true;
+		} else if(this.parent != null) {
+			return this.parent.hasVar(identifier);
+		} else {
+			return false;
 		}
 	}
 

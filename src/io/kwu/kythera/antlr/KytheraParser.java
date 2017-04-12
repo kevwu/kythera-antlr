@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -505,6 +505,8 @@ public class KytheraParser extends Parser {
 		public TerminalNode FloatLiteral() { return getToken(KytheraParser.FloatLiteral, 0); }
 		public TerminalNode StrLiteral() { return getToken(KytheraParser.StrLiteral, 0); }
 		public TerminalNode NULL() { return getToken(KytheraParser.NULL, 0); }
+		public TerminalNode TRUE() { return getToken(KytheraParser.TRUE, 0); }
+		public TerminalNode FALSE() { return getToken(KytheraParser.FALSE, 0); }
 		public ObjLiteralContext objLiteral() {
 			return getRuleContext(ObjLiteralContext.class,0);
 		}
@@ -534,7 +536,7 @@ public class KytheraParser extends Parser {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_literal);
 		try {
-			setState(130);
+			setState(132);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IntLiteral:
@@ -565,17 +567,31 @@ public class KytheraParser extends Parser {
 				match(NULL);
 				}
 				break;
-			case T__0:
+			case TRUE:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(128);
+				match(TRUE);
+				}
+				break;
+			case FALSE:
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(129);
+				match(FALSE);
+				}
+				break;
+			case T__0:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(130);
 				objLiteral();
 				}
 				break;
 			case T__2:
-				enterOuterAlt(_localctx, 6);
+				enterOuterAlt(_localctx, 8);
 				{
-				setState(129);
+				setState(131);
 				fnLiteral();
 				}
 				break;
@@ -629,55 +645,55 @@ public class KytheraParser extends Parser {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_type);
 		try {
-			setState(139);
+			setState(141);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case BOOL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(132);
+				setState(134);
 				match(BOOL);
 				}
 				break;
 			case INT:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(133);
+				setState(135);
 				match(INT);
 				}
 				break;
 			case FLOAT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(134);
+				setState(136);
 				match(FLOAT);
 				}
 				break;
 			case STR:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(135);
+				setState(137);
 				match(STR);
 				}
 				break;
 			case FN:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(136);
+				setState(138);
 				fnType();
 				}
 				break;
 			case OBJ:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(137);
+				setState(139);
 				objType();
 				}
 				break;
 			case Identifier:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(138);
+				setState(140);
 				match(Identifier);
 				}
 				break;
@@ -723,7 +739,7 @@ public class KytheraParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(141);
+			setState(143);
 			match(Identifier);
 			}
 		}
@@ -758,8 +774,6 @@ public class KytheraParser extends Parser {
 		public FnCallExpressionContext fnCallExpression() {
 			return getRuleContext(FnCallExpressionContext.class,0);
 		}
-		public TerminalNode TRUE() { return getToken(KytheraParser.TRUE, 0); }
-		public TerminalNode FALSE() { return getToken(KytheraParser.FALSE, 0); }
 		public TerminalNode BOOLEAN_OPERATOR() { return getToken(KytheraParser.BOOLEAN_OPERATOR, 0); }
 		public TerminalNode ARITH_OPERATOR() { return getToken(KytheraParser.ARITH_OPERATOR, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
@@ -801,46 +815,34 @@ public class KytheraParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				{
-				setState(144);
+				setState(146);
 				statement();
 				}
 				break;
 			case 2:
 				{
-				setState(145);
+				setState(147);
 				identifier();
 				}
 				break;
 			case 3:
 				{
-				setState(146);
+				setState(148);
 				literal();
 				}
 				break;
 			case 4:
 				{
-				setState(147);
+				setState(149);
 				match(NOT_OPERATOR);
-				setState(148);
-				expression(4);
+				setState(150);
+				expression(2);
 				}
 				break;
 			case 5:
 				{
-				setState(149);
-				fnCallExpression();
-				}
-				break;
-			case 6:
-				{
-				setState(150);
-				match(TRUE);
-				}
-				break;
-			case 7:
-				{
 				setState(151);
-				match(FALSE);
+				fnCallExpression();
 				}
 				break;
 			}
@@ -861,11 +863,11 @@ public class KytheraParser extends Parser {
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(154);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(155);
 						match(BOOLEAN_OPERATOR);
 						setState(156);
-						expression(7);
+						expression(5);
 						}
 						break;
 					case 2:
@@ -873,11 +875,11 @@ public class KytheraParser extends Parser {
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(157);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(158);
 						match(ARITH_OPERATOR);
 						setState(159);
-						expression(6);
+						expression(4);
 						}
 						break;
 					}
@@ -2241,9 +2243,9 @@ public class KytheraParser extends Parser {
 	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 4);
 		case 1:
-			return precpred(_ctx, 5);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
@@ -2258,8 +2260,8 @@ public class KytheraParser extends Parser {
 		"\3R\13\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\6\4^\n\4\r\4\16\4_\3"+
 		"\4\3\4\3\5\3\5\3\5\3\5\6\5h\n\5\r\5\16\5i\3\5\3\5\3\5\3\5\3\5\7\5q\n\5"+
 		"\f\5\16\5t\13\5\3\5\3\5\3\5\6\5y\n\5\r\5\16\5z\3\5\3\5\3\6\3\6\3\6\3\6"+
-		"\3\6\3\6\5\6\u0085\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7\u008e\n\7\3\b\3"+
-		"\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u009b\n\t\3\t\3\t\3\t\3\t\3"+
+		"\3\6\3\6\3\6\3\6\5\6\u0087\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7\u0090\n"+
+		"\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u009b\n\t\3\t\3\t\3\t\3\t\3"+
 		"\t\3\t\7\t\u00a3\n\t\f\t\16\t\u00a6\13\t\3\n\3\n\5\n\u00aa\n\n\3\n\3\n"+
 		"\3\n\3\n\7\n\u00b0\n\n\f\n\16\n\u00b3\13\n\5\n\u00b5\n\n\3\n\3\n\3\13"+
 		"\3\13\3\13\5\13\u00bc\n\13\3\f\3\f\3\f\5\f\u00c1\n\f\3\r\3\r\3\r\3\16"+
@@ -2277,8 +2279,8 @@ public class KytheraParser extends Parser {
 		"\u0148\n\27\r\27\16\27\u0149\3\27\3\27\3\30\3\30\3\31\3\31\3\32\3\32\3"+
 		"\32\3\33\6\33\u0156\n\33\r\33\16\33\u0157\3\33\5FPr\3\20\34\2\4\6\b\n"+
 		"\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\2\2\2\u0177\2\66\3\2\2"+
-		"\2\4A\3\2\2\2\6U\3\2\2\2\bc\3\2\2\2\n\u0084\3\2\2\2\f\u008d\3\2\2\2\16"+
-		"\u008f\3\2\2\2\20\u009a\3\2\2\2\22\u00a9\3\2\2\2\24\u00bb\3\2\2\2\26\u00c0"+
+		"\2\4A\3\2\2\2\6U\3\2\2\2\bc\3\2\2\2\n\u0086\3\2\2\2\f\u008f\3\2\2\2\16"+
+		"\u0091\3\2\2\2\20\u009a\3\2\2\2\22\u00a9\3\2\2\2\24\u00bb\3\2\2\2\26\u00c0"+
 		"\3\2\2\2\30\u00c2\3\2\2\2\32\u00c5\3\2\2\2\34\u00c8\3\2\2\2\36\u00ce\3"+
 		"\2\2\2 \u00db\3\2\2\2\"\u00dd\3\2\2\2$\u0107\3\2\2\2&\u010f\3\2\2\2(\u0111"+
 		"\3\2\2\2*\u0135\3\2\2\2,\u0143\3\2\2\2.\u014d\3\2\2\2\60\u014f\3\2\2\2"+
@@ -2294,21 +2296,21 @@ public class KytheraParser extends Parser {
 		"\2\2\2jk\3\2\2\2kl\7\6\2\2lm\7\7\2\2mr\5\f\7\2no\7\b\2\2oq\5\f\7\2pn\3"+
 		"\2\2\2qt\3\2\2\2rs\3\2\2\2rp\3\2\2\2su\3\2\2\2tr\3\2\2\2uv\7\t\2\2vx\7"+
 		"\3\2\2wy\5\24\13\2xw\3\2\2\2yz\3\2\2\2zx\3\2\2\2z{\3\2\2\2{|\3\2\2\2|"+
-		"}\7\4\2\2}\t\3\2\2\2~\u0085\7+\2\2\177\u0085\7,\2\2\u0080\u0085\7-\2\2"+
-		"\u0081\u0085\7.\2\2\u0082\u0085\5\6\4\2\u0083\u0085\5\b\5\2\u0084~\3\2"+
-		"\2\2\u0084\177\3\2\2\2\u0084\u0080\3\2\2\2\u0084\u0081\3\2\2\2\u0084\u0082"+
-		"\3\2\2\2\u0084\u0083\3\2\2\2\u0085\13\3\2\2\2\u0086\u008e\7\31\2\2\u0087"+
-		"\u008e\7\32\2\2\u0088\u008e\7\33\2\2\u0089\u008e\7\34\2\2\u008a\u008e"+
-		"\5\4\3\2\u008b\u008e\5\2\2\2\u008c\u008e\7/\2\2\u008d\u0086\3\2\2\2\u008d"+
-		"\u0087\3\2\2\2\u008d\u0088\3\2\2\2\u008d\u0089\3\2\2\2\u008d\u008a\3\2"+
-		"\2\2\u008d\u008b\3\2\2\2\u008d\u008c\3\2\2\2\u008e\r\3\2\2\2\u008f\u0090"+
-		"\7/\2\2\u0090\17\3\2\2\2\u0091\u0092\b\t\1\2\u0092\u009b\5\24\13\2\u0093"+
-		"\u009b\5\16\b\2\u0094\u009b\5\n\6\2\u0095\u0096\7\"\2\2\u0096\u009b\5"+
-		"\20\t\6\u0097\u009b\5\22\n\2\u0098\u009b\7)\2\2\u0099\u009b\7*\2\2\u009a"+
-		"\u0091\3\2\2\2\u009a\u0093\3\2\2\2\u009a\u0094\3\2\2\2\u009a\u0095\3\2"+
-		"\2\2\u009a\u0097\3\2\2\2\u009a\u0098\3\2\2\2\u009a\u0099\3\2\2\2\u009b"+
-		"\u00a4\3\2\2\2\u009c\u009d\f\b\2\2\u009d\u009e\7!\2\2\u009e\u00a3\5\20"+
-		"\t\t\u009f\u00a0\f\7\2\2\u00a0\u00a1\7#\2\2\u00a1\u00a3\5\20\t\b\u00a2"+
+		"}\7\4\2\2}\t\3\2\2\2~\u0087\7+\2\2\177\u0087\7,\2\2\u0080\u0087\7-\2\2"+
+		"\u0081\u0087\7.\2\2\u0082\u0087\7)\2\2\u0083\u0087\7*\2\2\u0084\u0087"+
+		"\5\6\4\2\u0085\u0087\5\b\5\2\u0086~\3\2\2\2\u0086\177\3\2\2\2\u0086\u0080"+
+		"\3\2\2\2\u0086\u0081\3\2\2\2\u0086\u0082\3\2\2\2\u0086\u0083\3\2\2\2\u0086"+
+		"\u0084\3\2\2\2\u0086\u0085\3\2\2\2\u0087\13\3\2\2\2\u0088\u0090\7\31\2"+
+		"\2\u0089\u0090\7\32\2\2\u008a\u0090\7\33\2\2\u008b\u0090\7\34\2\2\u008c"+
+		"\u0090\5\4\3\2\u008d\u0090\5\2\2\2\u008e\u0090\7/\2\2\u008f\u0088\3\2"+
+		"\2\2\u008f\u0089\3\2\2\2\u008f\u008a\3\2\2\2\u008f\u008b\3\2\2\2\u008f"+
+		"\u008c\3\2\2\2\u008f\u008d\3\2\2\2\u008f\u008e\3\2\2\2\u0090\r\3\2\2\2"+
+		"\u0091\u0092\7/\2\2\u0092\17\3\2\2\2\u0093\u0094\b\t\1\2\u0094\u009b\5"+
+		"\24\13\2\u0095\u009b\5\16\b\2\u0096\u009b\5\n\6\2\u0097\u0098\7\"\2\2"+
+		"\u0098\u009b\5\20\t\4\u0099\u009b\5\22\n\2\u009a\u0093\3\2\2\2\u009a\u0095"+
+		"\3\2\2\2\u009a\u0096\3\2\2\2\u009a\u0097\3\2\2\2\u009a\u0099\3\2\2\2\u009b"+
+		"\u00a4\3\2\2\2\u009c\u009d\f\6\2\2\u009d\u009e\7!\2\2\u009e\u00a3\5\20"+
+		"\t\7\u009f\u00a0\f\5\2\2\u00a0\u00a1\7#\2\2\u00a1\u00a3\5\20\t\6\u00a2"+
 		"\u009c\3\2\2\2\u00a2\u009f\3\2\2\2\u00a3\u00a6\3\2\2\2\u00a4\u00a2\3\2"+
 		"\2\2\u00a4\u00a5\3\2\2\2\u00a5\21\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a7\u00aa"+
 		"\5\16\b\2\u00a8\u00aa\5\b\5\2\u00a9\u00a7\3\2\2\2\u00a9\u00a8\3\2\2\2"+
@@ -2369,7 +2371,7 @@ public class KytheraParser extends Parser {
 		"\2\2\2\u014f\u0150\7\27\2\2\u0150\61\3\2\2\2\u0151\u0152\7\25\2\2\u0152"+
 		"\u0153\5\20\t\2\u0153\63\3\2\2\2\u0154\u0156\5\20\t\2\u0155\u0154\3\2"+
 		"\2\2\u0156\u0157\3\2\2\2\u0157\u0155\3\2\2\2\u0157\u0158\3\2\2\2\u0158"+
-		"\65\3\2\2\2\"=FP]_irz\u0084\u008d\u009a\u00a2\u00a4\u00a9\u00b1\u00b4"+
+		"\65\3\2\2\2\"=FP]_irz\u0086\u008f\u009a\u00a2\u00a4\u00a9\u00b1\u00b4"+
 		"\u00bb\u00c0\u00ce\u00db\u00eb\u00fd\u0107\u010f\u0117\u0121\u0127\u012f"+
 		"\u0133\u013f\u0149\u0157";
 	public static final ATN _ATN =

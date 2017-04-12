@@ -1,7 +1,5 @@
 package io.kwu.kythera;
 
-// messy and probably dangerous.
-// variable typing needs a thoughtful rework.
 public class Variable {
 	private final String identifier;
 	private Value value;
@@ -15,11 +13,11 @@ public class Variable {
 		return value.toString();
 	}
 
-	public void setVar(Value value) {
+	public void setVal(Value value) {
 		this.value = value;
 	}
 
-	public Object getVar() {
+	public Value getVal() {
 		return this.value;
 	}
 }

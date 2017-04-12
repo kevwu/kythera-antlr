@@ -3,7 +3,6 @@ package io.kwu.kythera;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// oooooooooohhhh boy
 public abstract class Type {
 	// string representing type as Kythera would see it
 	public final String type;
@@ -30,9 +29,11 @@ public abstract class Type {
 
 	public static Type strType = new Type("str") {};
 
+	public static Type boolType = new Type("bool") {};
+
 	public static Type nullType = new Type("null") {};
 
-	public class FnType extends Type {
+	public static class FnType extends Type {
 		private final ArrayList<Type> argList;
 		private final Type returnType;
 
@@ -59,7 +60,7 @@ public abstract class Type {
 		}
 	}
 
-	public class ObjType extends Type {
+	public static class ObjType extends Type {
 		private final HashMap<String, Type> fields;
 
 		public ObjType(String type) {

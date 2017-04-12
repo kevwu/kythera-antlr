@@ -1,7 +1,5 @@
 package io.kwu.kythera;
 
-import sun.invoke.util.VerifyAccess;
-
 public class Value {
 	private final Object value;
 	private final Type type;
@@ -33,4 +31,13 @@ public class Value {
 		Value otherVal = (Value) other;
 		return value.equals(otherVal.value) && type.equals(otherVal.type);
 	}
+
+	// static values
+
+	// null
+	public static Value NULL = new Value(Type.nullType, null);
+
+	// boolean true/false
+	public static Value TRUE = new Value(Type.boolType, Boolean.TRUE);
+	public static Value FALSE = new Value(Type.boolType, Boolean.FALSE);
 }

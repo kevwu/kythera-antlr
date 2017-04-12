@@ -6,7 +6,6 @@ import io.kwu.kythera.antlr.KytheraParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.util.BitSet;
 
@@ -65,8 +64,6 @@ public class Main {
 					}
 				});
 				ParserRuleContext tree = parser.program();
-//				ParseTreeWalker walker = new ParseTreeWalker();
-//				ParseTreeWalker.DEFAULT.walk(new KytheraWalker(parser), tree);
 				KytheraBaseVisitor visitor = new KytheraVisitor(parser);
 				System.out.println(tree.toStringTree(parser));
 				visitor.visit(tree);

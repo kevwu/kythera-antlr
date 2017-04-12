@@ -6,10 +6,17 @@ comment */
 
 // boolean literal
 let myBool = false
+
+myBool
+
 // integer literal
 let a = 0
+
+a
 // float literal
 let b = 2.0
+
+b
 // string literal
 let myStr = "hello"
 // object literal
