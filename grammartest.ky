@@ -13,10 +13,14 @@ let b = 2.0
 // string literal
 let myStr = "hello"
 // object literal
+
 let myObj = {
     int a
     b = 2.0
 }
+
+a
+
 // function literal
 let myFn = (int x) [str] {
     let a = 0

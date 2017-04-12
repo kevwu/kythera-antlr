@@ -4,20 +4,18 @@ package io.kwu.kythera;
 // variable typing needs a thoughtful rework.
 public class Variable {
 	private final String identifier;
-	private Object value;
-	private final VarType type;
+	private Value value;
 
-	public Variable(final VarType type, final String identifier, Object value) {
-		this.type = type;
+	public Variable(final Type type, final String identifier, Object value) {
 		this.identifier = identifier;
-		this.value = value;
+		this.value = new Value(type, value);
 	}
 
 	public String toString() {
 		return value.toString();
 	}
 
-	public void setVar(Object value) {
+	public void setVar(Value value) {
 		this.value = value;
 	}
 

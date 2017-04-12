@@ -67,7 +67,7 @@ public class Main {
 				ParserRuleContext tree = parser.program();
 //				ParseTreeWalker walker = new ParseTreeWalker();
 //				ParseTreeWalker.DEFAULT.walk(new KytheraWalker(parser), tree);
-				KytheraBaseVisitor visitor = new KytheraVisitor.ProgramVisitor();
+				KytheraBaseVisitor visitor = new KytheraVisitor(parser);
 				System.out.println(tree.toStringTree(parser));
 				visitor.visit(tree);
 			} catch(Exception e) {
