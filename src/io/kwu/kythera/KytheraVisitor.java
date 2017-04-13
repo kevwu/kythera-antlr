@@ -177,8 +177,17 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		} else {
 			// TODO type check before assignment. Do shallow type check only
+			Value currentValue = this.currentScope.getVar(identifier);
+
 			Value newValue = ctx.expression().accept(this);
+
+			if(!currentValue.type.equals(newValue.type)) {
+				System.out.println("ERROR: Assigning type " + newValue.type.toString() + " to variable of type " + currentValue.type.toString());
+				return null;
+			}
+
 			this.currentScope.setVar(identifier, newValue);
+
 			// an assignment statement (as an expression) returns the new value that the variable has taken.
 			return newValue;
 		}

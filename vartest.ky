@@ -1,3 +1,6 @@
 // test identifier type system
 let a = 2
 a = "asdf" // should error
+
+a = 3
+a
