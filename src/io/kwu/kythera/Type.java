@@ -1,5 +1,7 @@
 package io.kwu.kythera;
 
+import io.kwu.kythera.antlr.KytheraParser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,29 +41,25 @@ public abstract class Type {
 	public static Type nullType = new Type("null") {};
 
 	public static class FnType extends Type {
-		private final ArrayList<Type> argList;
+		private final ArrayList<KytheraParser.ExpressionContext> argList;
 		private final Type returnType;
 
 		public FnType(String type) {
-			super(type);
+			super("fn");
 			this.argList = new ArrayList<>();
 			this.returnType = Type.nullType;
 		}
 
-		public FnType(String type, ArrayList<Type> argList, Type returnType) {
-			super(type);
+		public FnType(String type, ArrayList<KytheraParser.ExpressionContext> argList, Type returnType) {
+			super("fn");
 			this.argList = argList;
 			this.returnType = returnType;
 		}
 
-		@Override
-		public boolean equals(Object other) {
-			if(!(other instanceof FnType)) {
-				return false;
-			}
-
-			FnType otherVar = (FnType) other;
-			return otherVar.argList.equals(this.argList) && otherVar.returnType.equals(this.returnType);
+		// check parameters and return in addition to raw type
+		// TODO Implement
+		public boolean subtypeEquals(Object other) {
+			return false;
 		}
 	}
 
@@ -87,5 +85,44 @@ public abstract class Type {
 			ObjType otherVar = (ObjType) other;
 			return otherVar.fields.equals(this.fields);
 		}
+
+		// check fields and names in addition to raw type
+		public boolean subtypeEquals(Object other) {
+			return false;
+		}
+	}
+
+	public static Type getTypeFromText(String text) {
+		if (text.equals("int")) {
+			return Type.intType;
+		}
+
+		if (text.equals("float")) {
+			return Type.floatType;
+		}
+
+		if (text.equals("str")) {
+			return Type.strType;
+		}
+
+		if (text.equals("bool")) {
+			return Type.strType;
+		}
+
+		if (text.equals("null")) {
+			return Type.nullType;
+		}
+
+		if (text.startsWith("fn")) {
+			return new Type.FnType(text);
+		}
+
+		if (text.startsWith("obj")) {
+			return new Type.ObjType(text);
+		}
+
+		// TODO throw real error
+		System.out.println("Parser somehow received invalid type.");
+		return null;
 	}
 }

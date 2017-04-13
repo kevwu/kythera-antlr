@@ -33,40 +33,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		scopes.put(null, rootScope);
 	}
 
-	private Type getTypeFromText(String text) {
-		if (text.equals("int")) {
-			return Type.intType;
-		}
-
-		if (text.equals("float")) {
-			return Type.floatType;
-		}
-
-		if (text.equals("str")) {
-			return Type.strType;
-		}
-
-		if (text.equals("bool")) {
-			return Type.strType;
-		}
-
-		if (text.equals("null")) {
-			return Type.nullType;
-		}
-
-		if (text.startsWith("fn")) {
-			return new Type.FnType(text);
-		}
-
-		if (text.startsWith("obj")) {
-			return new Type.ObjType(text);
-		}
-
-		// TODO throw real error
-		System.out.println("Parser somehow received invalid type.");
-		return null;
-	}
-
 	@Override
 	public Value visitProgram(KytheraParser.ProgramContext ctx) {
 		List<KytheraParser.ExpressionContext> expressions = ctx.expression();
@@ -96,36 +62,33 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		if (ctx.literal() != null) {
 			if (ctx.literal().IntLiteral() != null) {
-				return new Value(
-					Type.intType,
+				return new Value.Int(
 					Integer.parseInt(ctx.literal().IntLiteral().getText())
 				);
 			}
 
 			if (ctx.literal().FloatLiteral() != null) {
-				return new Value(
-					Type.floatType,
+				return new Value.Float(
 					Double.parseDouble(ctx.literal().FloatLiteral().getText())
 				);
 			}
 
 			if (ctx.literal().StrLiteral() != null) {
-				return new Value(
-					Type.strType,
+				return new Value.Str(
 					ctx.literal().StrLiteral().getText().replaceAll("\"", "")
 				);
 			}
 
 			if (ctx.literal().NULL() != null) {
-				return Value.NULL;
+				return Values.NULL;
 			}
 
 			if (ctx.literal().TRUE() != null) {
-				return Value.TRUE;
+				return Values.TRUE;
 			}
 
 			if (ctx.literal().FALSE() != null) {
-				return Value.FALSE;
+				return Values.FALSE;
 			}
 
 			if (ctx.literal().objLiteral() != null) {
@@ -147,33 +110,33 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			switch (ctx.BOOLEAN_OPERATOR().getText()) {
 				case "==":
-					return Value.fromBool(lhs.equals(rhs));
+					return new Value.Bool(lhs.equals(rhs));
 				case "!=":
-					return Value.fromBool(!(lhs.equals(rhs)));
+					return new Value.Bool(!(lhs.equals(rhs)));
 				case "<":
 					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
+						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case ">":
 					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
+						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case "<=":
 					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
+						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
 					}
 				case ">=":
 					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return Value.fromBool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
+						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
 					} else {
 						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
 						return null;
@@ -249,10 +212,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		// either "new [type]" or expression
 		if (declStatement.NEW() != null) {
 			// get the type
-			result = new Value(
-				getTypeFromText(declStatement.type().getText()),
-				null
-			);
+			assert(declStatement.type() != null);
+			result = Value.fromTypeText(declStatement.type().getText(), null);
 		} else {
 			// initialize from expression
 			result = declStatement.expression().accept(this);
