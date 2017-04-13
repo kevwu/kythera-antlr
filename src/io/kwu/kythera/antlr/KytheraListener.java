@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -39,6 +39,16 @@ public interface KytheraListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitObjLiteral(KytheraParser.ObjLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#objLiteralEntry}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#objLiteralEntry}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#fnLiteral}.
 	 * @param ctx the parse tree

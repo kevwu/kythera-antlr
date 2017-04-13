@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -49,6 +49,18 @@ public class KytheraBaseListener implements KytheraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitObjLiteral(KytheraParser.ObjLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

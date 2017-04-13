@@ -274,9 +274,14 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitObjLiteral(KytheraParser.ObjLiteralContext ctx) {
 		System.out.println("Object literal");
 
-		List<KytheraParser.IdentifierContext> identifList = ctx.identifier();
-		for(KytheraParser.IdentifierContext identif: identifList) {
-			System.out.println(identif.getText());
+		List<KytheraParser.ObjLiteralEntryContext> objLiteralEntryContexts = ctx.objLiteralEntry();
+
+		for(KytheraParser.ObjLiteralEntryContext entry : objLiteralEntryContexts) {
+			if(entry.ASSIGNMENT_OPERATOR() != null) {
+				System.out.println("Entry added by assignment");
+			} else {
+				System.out.println("Entry added by signature");
+			}
 		}
 
 		return null;

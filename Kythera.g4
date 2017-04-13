@@ -74,7 +74,9 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-objLiteral: '{' ((type identifier) | (identifier ASSIGNMENT_OPERATOR expression))+ '}';
+objLiteral: '{' (objLiteralEntry)+ '}';
+
+objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
 fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
 
@@ -88,6 +90,7 @@ literal: IntLiteral | FloatLiteral | StrLiteral | NULL | TRUE | FALSE | objLiter
 type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier ;
 
 identifier: Identifier;
+//identifier: Identifier | Identifier '[' IntLiteral ']' | Identifier '.' Identifier
 
 // lexically, identifiers are the same as types
 Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*;
