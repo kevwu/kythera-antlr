@@ -2,7 +2,10 @@ package io.kwu.kythera;
 
 import io.kwu.kythera.antlr.KytheraParser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class Value<V> implements Comparable<Value> {
 	protected final V value;
@@ -88,7 +91,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		return null;
 	}
 
-	public static class Int extends Value {
+	public static class Int extends Value<Integer> {
 		public Int(Integer val) {
 			super(Type.intType, val);
 		}
@@ -98,7 +101,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 	}
 
-	public static class Float extends Value {
+	public static class Float extends Value<Double> {
 		public Float(Double val) {
 			super(Type.floatType, val);
 		}
@@ -108,9 +111,14 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 	}
 
-	public static class Str extends Value {
+	public static class Str extends Value<String> {
 		public Str(String val) {
 			super(Type.strType, val);
+		}
+
+		@Override
+		public String toString() {
+			return this.type + ": \"" + this.value + "\"";
 		}
 	}
 
@@ -126,7 +134,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 	}
 
-	public static class Null extends Value {
+	public static class Null extends Value<Void> {
 		public Null() {
 			super(Type.nullType, null);
 		}
@@ -160,26 +168,32 @@ public abstract class Value<V> implements Comparable<Value> {
 
 		@Override
 		public int compareTo(Value o) {
-			if(!(o.value instanceof Comparable)) {
-				throw new ClassCastException();
-			}
-
-			if(!(this.value instanceof  Comparable)) {
-				throw new ClassCastException();
-			}
-
-			return ((Comparable) this.value).compareTo(o.value);
+			// functions can't be numerically compared.
+			throw new ClassCastException();
 		}
 	}
 
 	// objects handle equality differently
-	public static class Obj extends Value {
-		public Obj() {
-			super(null, null); // placeholder
+	public static class Obj extends Value<HashMap<Identifier, Value>> {
+		public Obj(HashMap<String, Identifier> identifiers, HashMap<Identifier, Value> values) {
+			super(new Type.ObjType(identifiers), values);
 		}
+
 		@Override
 		public String toString() {
-			return type.toString() + ": " + (value != null ? value.toString() : "null");
+			String out = "obj: {\n";
+
+			Set<Map.Entry<Identifier, Value>> entries = value.entrySet();
+			for(Map.Entry<Identifier, Value> entry : entries) {
+				Identifier id = entry.getKey();
+				Value val = entry.getValue();
+
+				out += id.name + " = " + val + "\n";
+			}
+
+			out += "}";
+
+			return out;
 		}
 
 		public Type getType() {
@@ -198,15 +212,8 @@ public abstract class Value<V> implements Comparable<Value> {
 
 		@Override
 		public int compareTo(Value o) {
-			if(!(o.value instanceof Comparable)) {
-				throw new ClassCastException();
-			}
-
-			if(!(this.value instanceof  Comparable)) {
-				throw new ClassCastException();
-			}
-
-			return ((Comparable) this.value).compareTo(o.value);
+			// objects can't be numerically compared
+			throw new ClassCastException();
 		}
 	}
 }

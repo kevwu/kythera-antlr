@@ -13,14 +13,18 @@ public abstract class Type {
 		this.type = type;
 	}
 
+	/*
+	In compound types (fn and obj), equals only checks that the root types are the same.
+	This allows fn and obj variables to take on fns and objs with different signatures.
+	For deep checking of signatures use subtypeEquals.
+	 */
 	@Override
 	public boolean equals(Object other) {
-			if(!(other instanceof Type)) {
-				return false;
-			}
+		if (!(other instanceof Type)) {
+			return false;
+		}
 
-			Type otherVar = (Type) other;
-			return otherVar.type.equals(this.type);
+		return ((Type) other).type.equals(this.type);
 	}
 
 	@Override
@@ -44,13 +48,13 @@ public abstract class Type {
 		private final ArrayList<KytheraParser.ExpressionContext> argList;
 		private final Type returnType;
 
-		public FnType(String type) {
+		public FnType() {
 			super("fn");
 			this.argList = new ArrayList<>();
 			this.returnType = Type.nullType;
 		}
 
-		public FnType(String type, ArrayList<KytheraParser.ExpressionContext> argList, Type returnType) {
+		public FnType(ArrayList<KytheraParser.ExpressionContext> argList, Type returnType) {
 			super("fn");
 			this.argList = argList;
 			this.returnType = returnType;
@@ -64,31 +68,28 @@ public abstract class Type {
 	}
 
 	public static class ObjType extends Type {
-		private final HashMap<String, Type> fields;
+		private HashMap<String, Identifier> identifiers;
 
-		public ObjType(String type) {
-			super(type);
-			this.fields = null;
+		public ObjType() {
+			super("obj");
+			this.identifiers = new HashMap<>();
 		}
 
-		public ObjType(String type, HashMap<String, Type> fields) {
-			super(type);
-			this.fields = fields;
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			if(!(other instanceof ObjType)) {
-				return false;
-			}
-
-			ObjType otherVar = (ObjType) other;
-			return otherVar.fields.equals(this.fields);
+		public ObjType(HashMap<String, Identifier> identifiers) {
+			super("obj");
+			this.identifiers = identifiers;
 		}
 
 		// check fields and names in addition to raw type
+		// TODO implement
 		public boolean subtypeEquals(Object other) {
 			return false;
+		}
+
+		@Override
+		public String toString() {
+			// print fields in addition to obj
+			return "obj{}";
 		}
 	}
 
@@ -114,11 +115,12 @@ public abstract class Type {
 		}
 
 		if (text.startsWith("fn")) {
-			return new Type.FnType(text);
+			return new Type.FnType();
 		}
 
 		if (text.startsWith("obj")) {
-			return new Type.ObjType(text);
+			System.out.println("Creating new obj type from text: " + text);
+			return new Type.ObjType();
 		}
 
 		// TODO throw real error

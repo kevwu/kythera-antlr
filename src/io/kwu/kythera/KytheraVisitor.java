@@ -176,7 +176,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			System.out.println("ERROR: Assigning to variable that does not exist" + identifier);
 			return null;
 		} else {
-			// TODO type check before assignment
+			// TODO type check before assignment. Do shallow type check only
 			Value newValue = ctx.expression().accept(this);
 			this.currentScope.setVar(identifier, newValue);
 			// an assignment statement (as an expression) returns the new value that the variable has taken.
@@ -237,21 +237,36 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		List<KytheraParser.ObjLiteralEntryContext> objLiteralEntryContexts = ctx.objLiteralEntry();
 
+		HashMap<String, Identifier> identifiers = new HashMap<>();
+		HashMap<Identifier, Value> values = new HashMap<>();
+
 		for(KytheraParser.ObjLiteralEntryContext entry : objLiteralEntryContexts) {
+			assert(entry.identifier() != null);
+			String identifString = entry.identifier().getText();
+
+			Value val;
+
 			if(entry.ASSIGNMENT_OPERATOR() != null) {
+				assert(entry.expression() != null);
 				System.out.println("Entry added by assignment");
+
+				val = entry.expression().accept(this);
 			} else {
+				assert(entry.type() != null);
 				System.out.println("Entry added by signature");
+
+				val = Value.fromTypeText(entry.type().getText(), null);
 			}
+
+			System.out.println("Identifier: " + identifString);
+			System.out.println("Value: " + val.toString());
+
+			Identifier id = new Identifier(identifString, val.type);
+			identifiers.put(identifString, id);
+			values.put(id, val);
 		}
 
-		return null;
-	}
-
-	@Override
-	public Value visitObjType(KytheraParser.ObjTypeContext ctx) {
-		System.out.println("Object type (not yet implemented)");
-		return null;
+		return new Value.Obj(identifiers, values);
 	}
 
 	@Override
@@ -260,9 +275,17 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		return null;
 	}
 
-	@Override
-	public Value visitFnType(KytheraParser.FnTypeContext ctx) {
-		System.out.println("Object type: " + ctx.getText());
-		return visitChildren(ctx);
+	private static class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
+		@Override
+		public Type visitObjType(KytheraParser.ObjTypeContext ctx) {
+			System.out.println("Object type (not yet implemented)");
+			return null;
+		}
+
+		@Override
+		public Type visitFnType(KytheraParser.FnTypeContext ctx) {
+			System.out.println("Fn type: " + ctx.getText());
+			return null;
+		}
 	}
 }

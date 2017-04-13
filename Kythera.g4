@@ -45,7 +45,7 @@ FN: 'fn';
 OBJ: 'obj';
 ARR: 'arr';
 
-objType: OBJ '{' (type identifier)+ '}';
+objType: OBJ '{' (type identifier)*? '}';
 
 fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
 

@@ -1,4 +1,3 @@
-let a = {
-    int a
-    b = 2
-}
+// test identifier type system
+let a = 2
+a = "asdf" // should error

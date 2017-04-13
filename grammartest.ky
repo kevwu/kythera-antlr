@@ -24,6 +24,7 @@ let myStr = "hello"
 let myObj = {
     int a
     b = 2.0
+    myStr = "henlo"
 }
 
 a
