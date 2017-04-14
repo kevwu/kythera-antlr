@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -42,6 +42,12 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFnLiteral(KytheraParser.FnLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link KytheraParser#fnLiteralArg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFnLiteralArg(KytheraParser.FnLiteralArgContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link KytheraParser#literal}.
 	 * @param ctx the parse tree

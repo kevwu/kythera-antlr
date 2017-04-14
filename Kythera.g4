@@ -78,7 +78,11 @@ objLiteral: '{' (objLiteralEntry)+ '}';
 
 objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
-fnLiteral: '(' (type identifier)+ ')' '[' (type) (',' type)*? ']' '{' (statement)+ '}';
+// multiple returns are not yet supported.
+//fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' (type) (',' type)*? ']' '{' (expression)+ '}';
+fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' type ']' '{' (expression)+ '}';
+
+fnLiteralArg: type identifier;
 
 //arrLiteral: type '[' (literal)*? ']';
 

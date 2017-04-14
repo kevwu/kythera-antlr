@@ -4,6 +4,7 @@ import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class Type {
 	// string representing type as Kythera would see it
@@ -44,23 +45,47 @@ public abstract class Type {
 
 	public static Type nullType = new Type("null") {};
 
+	// base types are for shallow type comparison.
+	public static Type fnBaseType = new Type("fn") {};
+
+	public static Type objBaseType = new Type("obj") {};
+
 	public static class FnType extends Type {
-		private final ArrayList<KytheraParser.ExpressionContext> argList;
+		private final ArrayList<Type> argList;
 		private final Type returnType;
 
 		public FnType() {
+			// root type is always "fn"
 			super("fn");
 			this.argList = new ArrayList<>();
 			this.returnType = Type.nullType;
 		}
 
-		public FnType(ArrayList<KytheraParser.ExpressionContext> argList, Type returnType) {
+		public FnType(ArrayList argList, Type returnType) {
 			super("fn");
-			this.argList = argList;
+
+			// types don't matter if there are no arguments
+			if(argList.size() == 0) {
+				this.argList = new ArrayList<>();
+			} else if(argList.get(0) instanceof Type) {
+				this.argList = argList;
+			} else if(argList.get(0) instanceof Identifier) {
+				// build list of Types, we don't care about identifier names
+				ArrayList<Type> typeList = new ArrayList<>();
+				for(Object id : argList) {
+					typeList.add(((Identifier) id).type);
+				}
+				this.argList = typeList;
+			} else {
+				// TODO throw real error
+				System.out.println("Invalid type for argument list.");
+				this.argList = new ArrayList<>();
+			}
+
 			this.returnType = returnType;
 		}
 
-		// check parameters and return in addition to raw type
+		// check parameters and return type in addition to raw type
 		// TODO Implement
 		public boolean subtypeEquals(Object other) {
 			return false;
@@ -88,7 +113,7 @@ public abstract class Type {
 
 		@Override
 		public String toString() {
-			// print fields in addition to obj
+			// TODO print fields in addition to obj
 			return "obj{}";
 		}
 	}
@@ -115,6 +140,7 @@ public abstract class Type {
 		}
 
 		if (text.startsWith("fn")) {
+			System.out.println("Creating new fn type from text: " + text);
 			return new Type.FnType();
 		}
 

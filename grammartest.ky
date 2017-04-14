@@ -30,7 +30,7 @@ let myObj = {
 a
 
 // function literal
-let myFn = (int x) [str] {
+let myFn = fn(int x) [str] {
     let a = 0
 }
 // null
@@ -39,21 +39,26 @@ let n = null
 // declaration by new
 let n = new int
 
-// arrays
+// TODO arithmetic operations cause ambiguities, fix this
+// 2 + 2
+// a + b
+
+// arrays are temporarily removed from the language, will be added later
 // let myArr = new int[10]
-// TODO the line below silently fails:
 // let myArr = new int[]
 // a = myArr[10]
 // myArr[10] = 2
 
 // function call
-aFunction()
-aFunction(2)
-aFunction(2, "beep beep meme creep")
+// aFunction()
+// aFunction(2)
+// aFunction(2, "beep beep meme creep")
 
 // anonymous function call
-(int a) [int] {
-    return a + 2
+fn(int a) [int] {
+    let q = 2
+    let r = q
+    return q
 }(3)
 
 // boolean expression

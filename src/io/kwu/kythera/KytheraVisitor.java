@@ -4,6 +4,7 @@ import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	private KytheraParser parser;
-	private Scope rootScope;
-	private Scope currentScope;
-	private HashMap<ParserRuleContext, Scope> scopes;
+	protected Scope rootScope;
+	protected Scope currentScope;
+	protected HashMap<ParserRuleContext, Scope> scopes;
 
 
 	public KytheraVisitor(KytheraParser parser) {
@@ -160,6 +161,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if (ctx.fnCallExpression() != null) {
+			return ctx.fnCallExpression().accept(this);
+		}
+
 		System.out.println("Unhandled expression: " + ctx.getText());
 		return null;
 	}
@@ -181,7 +186,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			Value newValue = ctx.expression().accept(this);
 
-			if(!currentValue.type.equals(newValue.type)) {
+			if (!currentValue.type.equals(newValue.type)) {
 				System.out.println("ERROR: Assigning type " + newValue.type.toString() + " to variable of type " + currentValue.type.toString());
 				return null;
 			}
@@ -221,7 +226,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		// either "new [type]" or expression
 		if (declStatement.NEW() != null) {
 			// get the type
-			assert(declStatement.type() != null);
+			assert (declStatement.type() != null);
 			result = Value.fromTypeText(declStatement.type().getText(), null);
 		} else {
 			// initialize from expression
@@ -249,26 +254,19 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		HashMap<String, Identifier> identifiers = new HashMap<>();
 		HashMap<Identifier, Value> values = new HashMap<>();
 
-		for(KytheraParser.ObjLiteralEntryContext entry : objLiteralEntryContexts) {
-			assert(entry.identifier() != null);
+		for (KytheraParser.ObjLiteralEntryContext entry : objLiteralEntryContexts) {
+			assert (entry.identifier() != null);
 			String identifString = entry.identifier().getText();
 
 			Value val;
 
-			if(entry.ASSIGNMENT_OPERATOR() != null) {
-				assert(entry.expression() != null);
-				System.out.println("Entry added by assignment");
-
+			if (entry.ASSIGNMENT_OPERATOR() != null) {
+				assert (entry.expression() != null);
 				val = entry.expression().accept(this);
 			} else {
-				assert(entry.type() != null);
-				System.out.println("Entry added by signature");
-
+				assert (entry.type() != null);
 				val = Value.fromTypeText(entry.type().getText(), null);
 			}
-
-			System.out.println("Identifier: " + identifString);
-			System.out.println("Value: " + val.toString());
 
 			Identifier id = new Identifier(identifString, val.type);
 			identifiers.put(identifString, id);
@@ -280,8 +278,62 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitFnLiteral(KytheraParser.FnLiteralContext ctx) {
-		System.out.println("Function literal (not yet implemented)");
-		return null;
+		ArrayList<Identifier> arguments = new ArrayList<>();
+		if(ctx.fnLiteralArg() != null && ctx.fnLiteralArg().size() != 0) {
+			for(KytheraParser.FnLiteralArgContext fnArg : ctx.fnLiteralArg()) {
+				assert(fnArg.identifier() != null);
+				assert(fnArg.type() != null);
+				arguments.add(new Identifier(fnArg.identifier().getText(), Type.getTypeFromText(fnArg.type().getText())));
+			}
+		}
+
+		assert(ctx.expression() != null);
+		assert(ctx.expression().size() >=1);
+
+		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expression());
+
+		assert(ctx.type() != null);
+		Type returnType = Type.getTypeFromText(ctx.type().getText());
+
+		return new Value.Fn(arguments, expressions, returnType);
+	}
+
+	@Override
+	public Value visitFnCallExpression(KytheraParser.FnCallExpressionContext ctx) {
+		System.out.println("Function call expression.");
+
+		Value.Fn function = null;
+
+		if(ctx.identifier() != null) {
+			if(!this.currentScope.hasVar(ctx.identifier().getText())) {
+				// TODO throw exception
+				System.out.println("ERROR: Calling a function identifier that has not been defined.");
+				return null;
+			}
+			function = (Value.Fn) this.currentScope.getVar(ctx.identifier().getText());
+			if(function.type != Type.fnBaseType) {
+				System.out.println("ERROR: " + ctx.identifier().getText() + " is not a function");
+				return null;
+			}
+		} else if(ctx.fnLiteral() != null) {
+			function = (Value.Fn) ctx.fnLiteral().accept(this);
+		}
+
+		ArrayList<Value> argList = new ArrayList<>();
+
+		if(ctx.expression() != null && ctx.expression().size() != 0) {
+			for(KytheraParser.ExpressionContext expr : ctx.expression()) {
+				argList.add(expr.accept(this));
+			}
+		}
+
+		if(function != null) {
+			return function.call(argList, this);
+		} else {
+			System.out.println("Function was somehow not set...");
+			return null;
+		}
+
 	}
 
 	private static class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {

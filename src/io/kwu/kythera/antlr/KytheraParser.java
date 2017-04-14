@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -28,20 +28,21 @@ public class KytheraParser extends Parser {
 		StrLiteral=43, NULL=44, Identifier=45, WHITESPACE=46;
 	public static final int
 		RULE_objType = 0, RULE_fnType = 1, RULE_objLiteral = 2, RULE_objLiteralEntry = 3, 
-		RULE_fnLiteral = 4, RULE_literal = 5, RULE_type = 6, RULE_identifier = 7, 
-		RULE_expression = 8, RULE_fnCallExpression = 9, RULE_statement = 10, RULE_packageStatement = 11, 
-		RULE_importStatement = 12, RULE_includeStatement = 13, RULE_exportStatement = 14, 
-		RULE_variableStatement = 15, RULE_declarationStatement = 16, RULE_assignmentStatement = 17, 
-		RULE_nameStatement = 18, RULE_controlFlowStatement = 19, RULE_ifStatement = 20, 
-		RULE_forStatement = 21, RULE_whileStatement = 22, RULE_breakStatement = 23, 
-		RULE_continueStatement = 24, RULE_returnStatement = 25, RULE_program = 26;
+		RULE_fnLiteral = 4, RULE_fnLiteralArg = 5, RULE_literal = 6, RULE_type = 7, 
+		RULE_identifier = 8, RULE_expression = 9, RULE_fnCallExpression = 10, 
+		RULE_statement = 11, RULE_packageStatement = 12, RULE_importStatement = 13, 
+		RULE_includeStatement = 14, RULE_exportStatement = 15, RULE_variableStatement = 16, 
+		RULE_declarationStatement = 17, RULE_assignmentStatement = 18, RULE_nameStatement = 19, 
+		RULE_controlFlowStatement = 20, RULE_ifStatement = 21, RULE_forStatement = 22, 
+		RULE_whileStatement = 23, RULE_breakStatement = 24, RULE_continueStatement = 25, 
+		RULE_returnStatement = 26, RULE_program = 27;
 	public static final String[] ruleNames = {
-		"objType", "fnType", "objLiteral", "objLiteralEntry", "fnLiteral", "literal", 
-		"type", "identifier", "expression", "fnCallExpression", "statement", "packageStatement", 
-		"importStatement", "includeStatement", "exportStatement", "variableStatement", 
-		"declarationStatement", "assignmentStatement", "nameStatement", "controlFlowStatement", 
-		"ifStatement", "forStatement", "whileStatement", "breakStatement", "continueStatement", 
-		"returnStatement", "program"
+		"objType", "fnType", "objLiteral", "objLiteralEntry", "fnLiteral", "fnLiteralArg", 
+		"literal", "type", "identifier", "expression", "fnCallExpression", "statement", 
+		"packageStatement", "importStatement", "includeStatement", "exportStatement", 
+		"variableStatement", "declarationStatement", "assignmentStatement", "nameStatement", 
+		"controlFlowStatement", "ifStatement", "forStatement", "whileStatement", 
+		"breakStatement", "continueStatement", "returnStatement", "program"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -149,29 +150,29 @@ public class KytheraParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(54);
+			setState(56);
 			match(OBJ);
-			setState(55);
+			setState(57);
 			match(T__0);
-			setState(61);
+			setState(63);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1+1 ) {
 					{
 					{
-					setState(56);
+					setState(58);
 					type();
-					setState(57);
+					setState(59);
 					identifier();
 					}
 					} 
 				}
-				setState(63);
+				setState(65);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			}
-			setState(64);
+			setState(66);
 			match(T__1);
 			}
 		}
@@ -220,53 +221,53 @@ public class KytheraParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(68);
 			match(FN);
-			setState(67);
+			setState(69);
 			match(T__2);
-			setState(71);
+			setState(73);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1+1 ) {
 					{
 					{
-					setState(68);
+					setState(70);
 					type();
 					}
 					} 
 				}
-				setState(73);
+				setState(75);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			}
-			setState(74);
+			setState(76);
 			match(T__3);
-			setState(75);
+			setState(77);
 			match(T__4);
 			{
-			setState(76);
+			setState(78);
 			type();
 			}
-			setState(81);
+			setState(83);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1+1 ) {
 					{
 					{
-					setState(77);
+					setState(79);
 					match(T__5);
-					setState(78);
+					setState(80);
 					type();
 					}
 					} 
 				}
-				setState(83);
+				setState(85);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
-			setState(84);
+			setState(86);
 			match(T__6);
 			}
 		}
@@ -314,23 +315,23 @@ public class KytheraParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86);
+			setState(88);
 			match(T__0);
-			setState(88); 
+			setState(90); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(87);
+				setState(89);
 				objLiteralEntry();
 				}
 				}
-				setState(90); 
+				setState(92); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOL) | (1L << INT) | (1L << FLOAT) | (1L << STR) | (1L << FN) | (1L << OBJ) | (1L << Identifier))) != 0) );
-			setState(92);
+			setState(94);
 			match(T__1);
 			}
 		}
@@ -379,16 +380,16 @@ public class KytheraParser extends Parser {
 		ObjLiteralEntryContext _localctx = new ObjLiteralEntryContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_objLiteralEntry);
 		try {
-			setState(101);
+			setState(103);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				setState(94);
+				setState(96);
 				type();
-				setState(95);
+				setState(97);
 				identifier();
 				}
 				}
@@ -397,11 +398,11 @@ public class KytheraParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(97);
-				identifier();
-				setState(98);
-				match(ASSIGNMENT_OPERATOR);
 				setState(99);
+				identifier();
+				setState(100);
+				match(ASSIGNMENT_OPERATOR);
+				setState(101);
 				expression(0);
 				}
 				}
@@ -420,23 +421,21 @@ public class KytheraParser extends Parser {
 	}
 
 	public static class FnLiteralContext extends ParserRuleContext {
-		public List<TypeContext> type() {
-			return getRuleContexts(TypeContext.class);
+		public TerminalNode FN() { return getToken(KytheraParser.FN, 0); }
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
 		}
-		public TypeContext type(int i) {
-			return getRuleContext(TypeContext.class,i);
+		public List<FnLiteralArgContext> fnLiteralArg() {
+			return getRuleContexts(FnLiteralArgContext.class);
 		}
-		public List<IdentifierContext> identifier() {
-			return getRuleContexts(IdentifierContext.class);
+		public FnLiteralArgContext fnLiteralArg(int i) {
+			return getRuleContext(FnLiteralArgContext.class,i);
 		}
-		public IdentifierContext identifier(int i) {
-			return getRuleContext(IdentifierContext.class,i);
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
-		public List<StatementContext> statement() {
-			return getRuleContexts(StatementContext.class);
-		}
-		public StatementContext statement(int i) {
-			return getRuleContext(StatementContext.class,i);
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
 		public FnLiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -462,73 +461,101 @@ public class KytheraParser extends Parser {
 		enterRule(_localctx, 8, RULE_fnLiteral);
 		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(103);
+			setState(105);
+			match(FN);
+			setState(106);
 			match(T__2);
-			setState(107); 
+			setState(108); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(104);
-				type();
-				setState(105);
-				identifier();
+				setState(107);
+				fnLiteralArg();
 				}
 				}
-				setState(109); 
+				setState(110); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOL) | (1L << INT) | (1L << FLOAT) | (1L << STR) | (1L << FN) | (1L << OBJ) | (1L << Identifier))) != 0) );
-			setState(111);
-			match(T__3);
 			setState(112);
-			match(T__4);
-			{
+			match(T__3);
 			setState(113);
+			match(T__4);
+			setState(114);
 			type();
-			}
-			setState(118);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
-			while ( _alt!=1 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1+1 ) {
-					{
-					{
-					setState(114);
-					match(T__5);
-					setState(115);
-					type();
-					}
-					} 
-				}
-				setState(120);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
-			}
-			setState(121);
+			setState(115);
 			match(T__6);
-			setState(122);
+			setState(116);
 			match(T__0);
-			setState(124); 
+			setState(118); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(123);
-				statement();
+				setState(117);
+				expression(0);
 				}
 				}
-				setState(126); 
+				setState(120); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << Identifier))) != 0) );
-			setState(128);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+			setState(122);
 			match(T__1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FnLiteralArgContext extends ParserRuleContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public FnLiteralArgContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fnLiteralArg; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).enterFnLiteralArg(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof KytheraListener ) ((KytheraListener)listener).exitFnLiteralArg(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof KytheraVisitor ) return ((KytheraVisitor<? extends T>)visitor).visitFnLiteralArg(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FnLiteralArgContext fnLiteralArg() throws RecognitionException {
+		FnLiteralArgContext _localctx = new FnLiteralArgContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_fnLiteralArg);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(124);
+			type();
+			setState(125);
+			identifier();
 			}
 		}
 		catch (RecognitionException re) {
@@ -576,64 +603,64 @@ public class KytheraParser extends Parser {
 
 	public final LiteralContext literal() throws RecognitionException {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_literal);
+		enterRule(_localctx, 12, RULE_literal);
 		try {
-			setState(138);
+			setState(135);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IntLiteral:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(130);
+				setState(127);
 				match(IntLiteral);
 				}
 				break;
 			case FloatLiteral:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(131);
+				setState(128);
 				match(FloatLiteral);
 				}
 				break;
 			case StrLiteral:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(132);
+				setState(129);
 				match(StrLiteral);
 				}
 				break;
 			case NULL:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(133);
+				setState(130);
 				match(NULL);
 				}
 				break;
 			case TRUE:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(134);
+				setState(131);
 				match(TRUE);
 				}
 				break;
 			case FALSE:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(135);
+				setState(132);
 				match(FALSE);
 				}
 				break;
 			case T__0:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(136);
+				setState(133);
 				objLiteral();
 				}
 				break;
-			case T__2:
+			case FN:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(137);
+				setState(134);
 				fnLiteral();
 				}
 				break;
@@ -685,57 +712,57 @@ public class KytheraParser extends Parser {
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_type);
+		enterRule(_localctx, 14, RULE_type);
 		try {
-			setState(147);
+			setState(144);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case BOOL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(140);
+				setState(137);
 				match(BOOL);
 				}
 				break;
 			case INT:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(141);
+				setState(138);
 				match(INT);
 				}
 				break;
 			case FLOAT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(142);
+				setState(139);
 				match(FLOAT);
 				}
 				break;
 			case STR:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(143);
+				setState(140);
 				match(STR);
 				}
 				break;
 			case FN:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(144);
+				setState(141);
 				fnType();
 				}
 				break;
 			case OBJ:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(145);
+				setState(142);
 				objType();
 				}
 				break;
 			case Identifier:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(146);
+				setState(143);
 				match(Identifier);
 				}
 				break;
@@ -777,11 +804,11 @@ public class KytheraParser extends Parser {
 
 	public final IdentifierContext identifier() throws RecognitionException {
 		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_identifier);
+		enterRule(_localctx, 16, RULE_identifier);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149);
+			setState(146);
 			match(Identifier);
 			}
 		}
@@ -846,69 +873,69 @@ public class KytheraParser extends Parser {
 		int _parentState = getState();
 		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
 		ExpressionContext _prevctx = _localctx;
-		int _startState = 16;
-		enterRecursionRule(_localctx, 16, RULE_expression, _p);
+		int _startState = 18;
+		enterRecursionRule(_localctx, 18, RULE_expression, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(158);
+			setState(155);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(152);
+				setState(149);
 				statement();
 				}
 				break;
 			case 2:
 				{
-				setState(153);
+				setState(150);
 				identifier();
 				}
 				break;
 			case 3:
 				{
-				setState(154);
+				setState(151);
 				literal();
 				}
 				break;
 			case 4:
 				{
-				setState(155);
+				setState(152);
 				match(NOT_OPERATOR);
-				setState(156);
+				setState(153);
 				expression(2);
 				}
 				break;
 			case 5:
 				{
-				setState(157);
+				setState(154);
 				fnCallExpression();
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(168);
+			setState(165);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(166);
+					setState(163);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 					case 1:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(160);
+						setState(157);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(161);
+						setState(158);
 						match(BOOLEAN_OPERATOR);
-						setState(162);
+						setState(159);
 						expression(5);
 						}
 						break;
@@ -916,20 +943,20 @@ public class KytheraParser extends Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(163);
+						setState(160);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(164);
+						setState(161);
 						match(ARITH_OPERATOR);
-						setState(165);
+						setState(162);
 						expression(4);
 						}
 						break;
 					}
 					} 
 				}
-				setState(170);
+				setState(167);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			}
 			}
 		}
@@ -978,60 +1005,60 @@ public class KytheraParser extends Parser {
 
 	public final FnCallExpressionContext fnCallExpression() throws RecognitionException {
 		FnCallExpressionContext _localctx = new FnCallExpressionContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_fnCallExpression);
+		enterRule(_localctx, 20, RULE_fnCallExpression);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(173);
+			setState(170);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Identifier:
 				{
-				setState(171);
+				setState(168);
 				identifier();
 				}
 				break;
-			case T__2:
+			case FN:
 				{
-				setState(172);
+				setState(169);
 				fnLiteral();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(175);
+			setState(172);
 			match(T__2);
-			setState(184);
+			setState(181);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0)) {
 				{
 				{
-				setState(176);
+				setState(173);
 				expression(0);
 				}
-				setState(181);
+				setState(178);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__5) {
 					{
 					{
-					setState(177);
+					setState(174);
 					match(T__5);
-					setState(178);
+					setState(175);
 					expression(0);
 					}
 					}
-					setState(183);
+					setState(180);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				}
 			}
 
-			setState(186);
+			setState(183);
 			match(T__3);
 			}
 		}
@@ -1077,9 +1104,9 @@ public class KytheraParser extends Parser {
 
 	public final StatementContext statement() throws RecognitionException {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_statement);
+		enterRule(_localctx, 22, RULE_statement);
 		try {
-			setState(191);
+			setState(188);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LET:
@@ -1087,7 +1114,7 @@ public class KytheraParser extends Parser {
 			case Identifier:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(188);
+				setState(185);
 				variableStatement();
 				}
 				break;
@@ -1099,7 +1126,7 @@ public class KytheraParser extends Parser {
 			case CONTINUE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(189);
+				setState(186);
 				controlFlowStatement();
 				}
 				break;
@@ -1108,7 +1135,7 @@ public class KytheraParser extends Parser {
 			case T__9:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(190);
+				setState(187);
 				packageStatement();
 				}
 				break;
@@ -1158,29 +1185,29 @@ public class KytheraParser extends Parser {
 
 	public final PackageStatementContext packageStatement() throws RecognitionException {
 		PackageStatementContext _localctx = new PackageStatementContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_packageStatement);
+		enterRule(_localctx, 24, RULE_packageStatement);
 		try {
-			setState(196);
+			setState(193);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__7:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(193);
+				setState(190);
 				importStatement();
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(194);
+				setState(191);
 				includeStatement();
 				}
 				break;
 			case T__9:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(195);
+				setState(192);
 				exportStatement();
 				}
 				break;
@@ -1222,13 +1249,13 @@ public class KytheraParser extends Parser {
 
 	public final ImportStatementContext importStatement() throws RecognitionException {
 		ImportStatementContext _localctx = new ImportStatementContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_importStatement);
+		enterRule(_localctx, 26, RULE_importStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(198);
+			setState(195);
 			match(T__7);
-			setState(199);
+			setState(196);
 			match(StrLiteral);
 			}
 		}
@@ -1266,13 +1293,13 @@ public class KytheraParser extends Parser {
 
 	public final IncludeStatementContext includeStatement() throws RecognitionException {
 		IncludeStatementContext _localctx = new IncludeStatementContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_includeStatement);
+		enterRule(_localctx, 28, RULE_includeStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(201);
+			setState(198);
 			match(T__8);
-			setState(202);
+			setState(199);
 			match(StrLiteral);
 			}
 		}
@@ -1312,13 +1339,13 @@ public class KytheraParser extends Parser {
 
 	public final ExportStatementContext exportStatement() throws RecognitionException {
 		ExportStatementContext _localctx = new ExportStatementContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_exportStatement);
+		enterRule(_localctx, 30, RULE_exportStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(204);
+			setState(201);
 			match(T__9);
-			setState(205);
+			setState(202);
 			identifier();
 			}
 		}
@@ -1364,29 +1391,29 @@ public class KytheraParser extends Parser {
 
 	public final VariableStatementContext variableStatement() throws RecognitionException {
 		VariableStatementContext _localctx = new VariableStatementContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_variableStatement);
+		enterRule(_localctx, 32, RULE_variableStatement);
 		try {
-			setState(210);
+			setState(207);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LET:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(207);
+				setState(204);
 				declarationStatement();
 				}
 				break;
 			case Identifier:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(208);
+				setState(205);
 				assignmentStatement();
 				}
 				break;
 			case NAME:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(209);
+				setState(206);
 				nameStatement();
 				}
 				break;
@@ -1439,36 +1466,36 @@ public class KytheraParser extends Parser {
 
 	public final DeclarationStatementContext declarationStatement() throws RecognitionException {
 		DeclarationStatementContext _localctx = new DeclarationStatementContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_declarationStatement);
+		enterRule(_localctx, 34, RULE_declarationStatement);
 		try {
-			setState(223);
+			setState(220);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(212);
+				setState(209);
 				match(LET);
-				setState(213);
+				setState(210);
 				identifier();
-				setState(214);
+				setState(211);
 				match(ASSIGNMENT_OPERATOR);
-				setState(215);
+				setState(212);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(217);
+				setState(214);
 				match(LET);
-				setState(218);
+				setState(215);
 				identifier();
-				setState(219);
+				setState(216);
 				match(ASSIGNMENT_OPERATOR);
-				setState(220);
+				setState(217);
 				match(NEW);
-				setState(221);
+				setState(218);
 				type();
 				}
 				break;
@@ -1514,15 +1541,15 @@ public class KytheraParser extends Parser {
 
 	public final AssignmentStatementContext assignmentStatement() throws RecognitionException {
 		AssignmentStatementContext _localctx = new AssignmentStatementContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_assignmentStatement);
+		enterRule(_localctx, 36, RULE_assignmentStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(225);
+			setState(222);
 			identifier();
-			setState(226);
+			setState(223);
 			match(ASSIGNMENT_OPERATOR);
-			setState(227);
+			setState(224);
 			expression(0);
 			}
 		}
@@ -1575,108 +1602,108 @@ public class KytheraParser extends Parser {
 
 	public final NameStatementContext nameStatement() throws RecognitionException {
 		NameStatementContext _localctx = new NameStatementContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_nameStatement);
+		enterRule(_localctx, 38, RULE_nameStatement);
 		int _la;
 		try {
-			setState(267);
+			setState(264);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,21,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(229);
+				setState(226);
 				match(NAME);
-				setState(230);
+				setState(227);
 				identifier();
-				setState(231);
+				setState(228);
 				type();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(233);
+				setState(230);
 				match(NAME);
-				setState(234);
+				setState(231);
 				identifier();
-				setState(235);
+				setState(232);
 				match(IMPLEMENTS);
-				setState(237); 
+				setState(234); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(236);
+					setState(233);
 					identifier();
 					}
 					}
-					setState(239); 
+					setState(236); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==Identifier );
-				setState(241);
+				setState(238);
 				objType();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(243);
+				setState(240);
 				match(NAME);
-				setState(244);
+				setState(241);
 				identifier();
-				setState(245);
+				setState(242);
 				match(EXTENDS);
-				setState(246);
+				setState(243);
 				identifier();
-				setState(247);
+				setState(244);
 				objType();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(249);
+				setState(246);
 				match(NAME);
-				setState(250);
+				setState(247);
 				identifier();
-				setState(251);
+				setState(248);
 				match(EXTENDS);
-				setState(252);
+				setState(249);
 				identifier();
-				setState(253);
+				setState(250);
 				match(IMPLEMENTS);
-				setState(255); 
+				setState(252); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(254);
+					setState(251);
 					identifier();
 					}
 					}
-					setState(257); 
+					setState(254); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==Identifier );
-				setState(259);
+				setState(256);
 				objType();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(261);
+				setState(258);
 				match(NAME);
-				setState(262);
+				setState(259);
 				identifier();
-				setState(263);
+				setState(260);
 				match(INTERFACE);
-				setState(264);
+				setState(261);
 				identifier();
-				setState(265);
+				setState(262);
 				objType();
 				}
 				break;
@@ -1733,50 +1760,50 @@ public class KytheraParser extends Parser {
 
 	public final ControlFlowStatementContext controlFlowStatement() throws RecognitionException {
 		ControlFlowStatementContext _localctx = new ControlFlowStatementContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_controlFlowStatement);
+		enterRule(_localctx, 40, RULE_controlFlowStatement);
 		try {
-			setState(275);
+			setState(272);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IF:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(269);
+				setState(266);
 				ifStatement();
 				}
 				break;
 			case FOR:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(270);
+				setState(267);
 				forStatement();
 				}
 				break;
 			case WHILE:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(271);
+				setState(268);
 				whileStatement();
 				}
 				break;
 			case BREAK:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(272);
+				setState(269);
 				breakStatement();
 				}
 				break;
 			case CONTINUE:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(273);
+				setState(270);
 				continueStatement();
 				}
 				break;
 			case RETURN:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(274);
+				setState(271);
 				returnStatement();
 				}
 				break;
@@ -1831,96 +1858,96 @@ public class KytheraParser extends Parser {
 
 	public final IfStatementContext ifStatement() throws RecognitionException {
 		IfStatementContext _localctx = new IfStatementContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_ifStatement);
+		enterRule(_localctx, 42, RULE_ifStatement);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(277);
+			setState(274);
 			match(IF);
-			setState(278);
+			setState(275);
 			expression(0);
-			setState(279);
+			setState(276);
 			match(T__0);
-			setState(281); 
+			setState(278); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(280);
+				setState(277);
 				expression(0);
 				}
 				}
-				setState(283); 
+				setState(280); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
-			setState(285);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+			setState(282);
 			match(T__1);
-			setState(299);
+			setState(296);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,26,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,25,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(286);
+					setState(283);
 					match(ELSE);
-					setState(287);
+					setState(284);
 					match(IF);
-					setState(288);
+					setState(285);
 					expression(0);
-					setState(289);
+					setState(286);
 					match(T__0);
-					setState(291); 
+					setState(288); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					do {
 						{
 						{
-						setState(290);
+						setState(287);
 						expression(0);
 						}
 						}
-						setState(293); 
+						setState(290); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
-					setState(295);
+					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+					setState(292);
 					match(T__1);
 					}
 					} 
 				}
-				setState(301);
+				setState(298);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,26,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,25,_ctx);
 			}
-			setState(311);
+			setState(308);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,28,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,27,_ctx) ) {
 			case 1:
 				{
-				setState(302);
+				setState(299);
 				match(ELSE);
-				setState(303);
+				setState(300);
 				match(T__0);
-				setState(305); 
+				setState(302); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(304);
+					setState(301);
 					expression(0);
 					}
 					}
-					setState(307); 
+					setState(304); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
-				setState(309);
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+				setState(306);
 				match(T__1);
 				}
 				break;
@@ -1967,40 +1994,40 @@ public class KytheraParser extends Parser {
 
 	public final ForStatementContext forStatement() throws RecognitionException {
 		ForStatementContext _localctx = new ForStatementContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_forStatement);
+		enterRule(_localctx, 44, RULE_forStatement);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(313);
+			setState(310);
 			match(FOR);
+			setState(311);
+			expression(0);
+			setState(312);
+			match(T__10);
+			setState(313);
+			expression(0);
 			setState(314);
-			expression(0);
+			match(T__10);
 			setState(315);
-			match(T__10);
+			expression(0);
 			setState(316);
-			expression(0);
-			setState(317);
-			match(T__10);
-			setState(318);
-			expression(0);
-			setState(319);
 			match(T__0);
-			setState(321); 
+			setState(318); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(320);
+				setState(317);
 				expression(0);
 				}
 				}
-				setState(323); 
+				setState(320); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
-			setState(325);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+			setState(322);
 			match(T__1);
 			}
 		}
@@ -2044,32 +2071,32 @@ public class KytheraParser extends Parser {
 
 	public final WhileStatementContext whileStatement() throws RecognitionException {
 		WhileStatementContext _localctx = new WhileStatementContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_whileStatement);
+		enterRule(_localctx, 46, RULE_whileStatement);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(327);
+			setState(324);
 			match(WHILE);
-			setState(328);
+			setState(325);
 			expression(0);
-			setState(329);
+			setState(326);
 			match(T__0);
-			setState(331); 
+			setState(328); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(330);
+				setState(327);
 				expression(0);
 				}
 				}
-				setState(333); 
+				setState(330); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
-			setState(335);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+			setState(332);
 			match(T__1);
 			}
 		}
@@ -2107,11 +2134,11 @@ public class KytheraParser extends Parser {
 
 	public final BreakStatementContext breakStatement() throws RecognitionException {
 		BreakStatementContext _localctx = new BreakStatementContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_breakStatement);
+		enterRule(_localctx, 48, RULE_breakStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(337);
+			setState(334);
 			match(BREAK);
 			}
 		}
@@ -2149,11 +2176,11 @@ public class KytheraParser extends Parser {
 
 	public final ContinueStatementContext continueStatement() throws RecognitionException {
 		ContinueStatementContext _localctx = new ContinueStatementContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_continueStatement);
+		enterRule(_localctx, 50, RULE_continueStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(339);
+			setState(336);
 			match(CONTINUE);
 			}
 		}
@@ -2194,13 +2221,13 @@ public class KytheraParser extends Parser {
 
 	public final ReturnStatementContext returnStatement() throws RecognitionException {
 		ReturnStatementContext _localctx = new ReturnStatementContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_returnStatement);
+		enterRule(_localctx, 52, RULE_returnStatement);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(341);
+			setState(338);
 			match(RETURN);
-			setState(342);
+			setState(339);
 			expression(0);
 			}
 		}
@@ -2243,25 +2270,25 @@ public class KytheraParser extends Parser {
 
 	public final ProgramContext program() throws RecognitionException {
 		ProgramContext _localctx = new ProgramContext(_ctx, getState());
-		enterRule(_localctx, 52, RULE_program);
+		enterRule(_localctx, 54, RULE_program);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(345); 
+			setState(342); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(344);
+				setState(341);
 				expression(0);
 				}
 				}
-				setState(347); 
+				setState(344); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << LET) | (1L << NAME) | (1L << IF) | (1L << FOR) | (1L << WHILE) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << FN) | (1L << NOT_OPERATOR) | (1L << TRUE) | (1L << FALSE) | (1L << IntLiteral) | (1L << FloatLiteral) | (1L << StrLiteral) | (1L << NULL) | (1L << Identifier))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -2277,7 +2304,7 @@ public class KytheraParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 8:
+		case 9:
 			return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
 		return true;
@@ -2293,132 +2320,130 @@ public class KytheraParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\60\u0160\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\60\u015d\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\4\34\t\34\3\2\3\2\3\2\3\2\3\2\7\2>\n\2\f\2\16\2A"+
-		"\13\2\3\2\3\2\3\3\3\3\3\3\7\3H\n\3\f\3\16\3K\13\3\3\3\3\3\3\3\3\3\3\3"+
-		"\7\3R\n\3\f\3\16\3U\13\3\3\3\3\3\3\4\3\4\6\4[\n\4\r\4\16\4\\\3\4\3\4\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5h\n\5\3\6\3\6\3\6\3\6\6\6n\n\6\r\6\16\6"+
-		"o\3\6\3\6\3\6\3\6\3\6\7\6w\n\6\f\6\16\6z\13\6\3\6\3\6\3\6\6\6\177\n\6"+
-		"\r\6\16\6\u0080\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7\u008d\n\7"+
-		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u0096\n\b\3\t\3\t\3\n\3\n\3\n\3\n\3\n"+
-		"\3\n\3\n\5\n\u00a1\n\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00a9\n\n\f\n\16\n"+
-		"\u00ac\13\n\3\13\3\13\5\13\u00b0\n\13\3\13\3\13\3\13\3\13\7\13\u00b6\n"+
-		"\13\f\13\16\13\u00b9\13\13\5\13\u00bb\n\13\3\13\3\13\3\f\3\f\3\f\5\f\u00c2"+
-		"\n\f\3\r\3\r\3\r\5\r\u00c7\n\r\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20"+
-		"\3\20\3\21\3\21\3\21\5\21\u00d5\n\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22"+
-		"\3\22\3\22\3\22\3\22\5\22\u00e2\n\22\3\23\3\23\3\23\3\23\3\24\3\24\3\24"+
-		"\3\24\3\24\3\24\3\24\3\24\6\24\u00f0\n\24\r\24\16\24\u00f1\3\24\3\24\3"+
-		"\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\6\24\u0102"+
-		"\n\24\r\24\16\24\u0103\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\5\24\u010e"+
-		"\n\24\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u0116\n\25\3\26\3\26\3\26\3\26"+
-		"\6\26\u011c\n\26\r\26\16\26\u011d\3\26\3\26\3\26\3\26\3\26\3\26\6\26\u0126"+
-		"\n\26\r\26\16\26\u0127\3\26\3\26\7\26\u012c\n\26\f\26\16\26\u012f\13\26"+
-		"\3\26\3\26\3\26\6\26\u0134\n\26\r\26\16\26\u0135\3\26\3\26\5\26\u013a"+
-		"\n\26\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\6\27\u0144\n\27\r\27\16"+
-		"\27\u0145\3\27\3\27\3\30\3\30\3\30\3\30\6\30\u014e\n\30\r\30\16\30\u014f"+
-		"\3\30\3\30\3\31\3\31\3\32\3\32\3\33\3\33\3\33\3\34\6\34\u015c\n\34\r\34"+
-		"\16\34\u015d\3\34\6?ISx\3\22\35\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
-		" \"$&(*,.\60\62\64\66\2\2\2\u017c\28\3\2\2\2\4D\3\2\2\2\6X\3\2\2\2\bg"+
-		"\3\2\2\2\ni\3\2\2\2\f\u008c\3\2\2\2\16\u0095\3\2\2\2\20\u0097\3\2\2\2"+
-		"\22\u00a0\3\2\2\2\24\u00af\3\2\2\2\26\u00c1\3\2\2\2\30\u00c6\3\2\2\2\32"+
-		"\u00c8\3\2\2\2\34\u00cb\3\2\2\2\36\u00ce\3\2\2\2 \u00d4\3\2\2\2\"\u00e1"+
-		"\3\2\2\2$\u00e3\3\2\2\2&\u010d\3\2\2\2(\u0115\3\2\2\2*\u0117\3\2\2\2,"+
-		"\u013b\3\2\2\2.\u0149\3\2\2\2\60\u0153\3\2\2\2\62\u0155\3\2\2\2\64\u0157"+
-		"\3\2\2\2\66\u015b\3\2\2\289\7\36\2\29?\7\3\2\2:;\5\16\b\2;<\5\20\t\2<"+
-		">\3\2\2\2=:\3\2\2\2>A\3\2\2\2?@\3\2\2\2?=\3\2\2\2@B\3\2\2\2A?\3\2\2\2"+
-		"BC\7\4\2\2C\3\3\2\2\2DE\7\35\2\2EI\7\5\2\2FH\5\16\b\2GF\3\2\2\2HK\3\2"+
-		"\2\2IJ\3\2\2\2IG\3\2\2\2JL\3\2\2\2KI\3\2\2\2LM\7\6\2\2MN\7\7\2\2NS\5\16"+
-		"\b\2OP\7\b\2\2PR\5\16\b\2QO\3\2\2\2RU\3\2\2\2ST\3\2\2\2SQ\3\2\2\2TV\3"+
-		"\2\2\2US\3\2\2\2VW\7\t\2\2W\5\3\2\2\2XZ\7\3\2\2Y[\5\b\5\2ZY\3\2\2\2[\\"+
-		"\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]^\3\2\2\2^_\7\4\2\2_\7\3\2\2\2`a\5\16\b"+
-		"\2ab\5\20\t\2bh\3\2\2\2cd\5\20\t\2de\7 \2\2ef\5\22\n\2fh\3\2\2\2g`\3\2"+
-		"\2\2gc\3\2\2\2h\t\3\2\2\2im\7\5\2\2jk\5\16\b\2kl\5\20\t\2ln\3\2\2\2mj"+
-		"\3\2\2\2no\3\2\2\2om\3\2\2\2op\3\2\2\2pq\3\2\2\2qr\7\6\2\2rs\7\7\2\2s"+
-		"x\5\16\b\2tu\7\b\2\2uw\5\16\b\2vt\3\2\2\2wz\3\2\2\2xy\3\2\2\2xv\3\2\2"+
-		"\2y{\3\2\2\2zx\3\2\2\2{|\7\t\2\2|~\7\3\2\2}\177\5\26\f\2~}\3\2\2\2\177"+
-		"\u0080\3\2\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\u0082\3\2\2\2"+
-		"\u0082\u0083\7\4\2\2\u0083\13\3\2\2\2\u0084\u008d\7+\2\2\u0085\u008d\7"+
-		",\2\2\u0086\u008d\7-\2\2\u0087\u008d\7.\2\2\u0088\u008d\7)\2\2\u0089\u008d"+
-		"\7*\2\2\u008a\u008d\5\6\4\2\u008b\u008d\5\n\6\2\u008c\u0084\3\2\2\2\u008c"+
-		"\u0085\3\2\2\2\u008c\u0086\3\2\2\2\u008c\u0087\3\2\2\2\u008c\u0088\3\2"+
-		"\2\2\u008c\u0089\3\2\2\2\u008c\u008a\3\2\2\2\u008c\u008b\3\2\2\2\u008d"+
-		"\r\3\2\2\2\u008e\u0096\7\31\2\2\u008f\u0096\7\32\2\2\u0090\u0096\7\33"+
-		"\2\2\u0091\u0096\7\34\2\2\u0092\u0096\5\4\3\2\u0093\u0096\5\2\2\2\u0094"+
-		"\u0096\7/\2\2\u0095\u008e\3\2\2\2\u0095\u008f\3\2\2\2\u0095\u0090\3\2"+
-		"\2\2\u0095\u0091\3\2\2\2\u0095\u0092\3\2\2\2\u0095\u0093\3\2\2\2\u0095"+
-		"\u0094\3\2\2\2\u0096\17\3\2\2\2\u0097\u0098\7/\2\2\u0098\21\3\2\2\2\u0099"+
-		"\u009a\b\n\1\2\u009a\u00a1\5\26\f\2\u009b\u00a1\5\20\t\2\u009c\u00a1\5"+
-		"\f\7\2\u009d\u009e\7\"\2\2\u009e\u00a1\5\22\n\4\u009f\u00a1\5\24\13\2"+
-		"\u00a0\u0099\3\2\2\2\u00a0\u009b\3\2\2\2\u00a0\u009c\3\2\2\2\u00a0\u009d"+
-		"\3\2\2\2\u00a0\u009f\3\2\2\2\u00a1\u00aa\3\2\2\2\u00a2\u00a3\f\6\2\2\u00a3"+
-		"\u00a4\7!\2\2\u00a4\u00a9\5\22\n\7\u00a5\u00a6\f\5\2\2\u00a6\u00a7\7#"+
-		"\2\2\u00a7\u00a9\5\22\n\6\u00a8\u00a2\3\2\2\2\u00a8\u00a5\3\2\2\2\u00a9"+
-		"\u00ac\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\23\3\2\2"+
-		"\2\u00ac\u00aa\3\2\2\2\u00ad\u00b0\5\20\t\2\u00ae\u00b0\5\n\6\2\u00af"+
-		"\u00ad\3\2\2\2\u00af\u00ae\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00ba\7\5"+
-		"\2\2\u00b2\u00b7\5\22\n\2\u00b3\u00b4\7\b\2\2\u00b4\u00b6\5\22\n\2\u00b5"+
-		"\u00b3\3\2\2\2\u00b6\u00b9\3\2\2\2\u00b7\u00b5\3\2\2\2\u00b7\u00b8\3\2"+
-		"\2\2\u00b8\u00bb\3\2\2\2\u00b9\u00b7\3\2\2\2\u00ba\u00b2\3\2\2\2\u00ba"+
-		"\u00bb\3\2\2\2\u00bb\u00bc\3\2\2\2\u00bc\u00bd\7\6\2\2\u00bd\25\3\2\2"+
-		"\2\u00be\u00c2\5 \21\2\u00bf\u00c2\5(\25\2\u00c0\u00c2\5\30\r\2\u00c1"+
-		"\u00be\3\2\2\2\u00c1\u00bf\3\2\2\2\u00c1\u00c0\3\2\2\2\u00c2\27\3\2\2"+
-		"\2\u00c3\u00c7\5\32\16\2\u00c4\u00c7\5\34\17\2\u00c5\u00c7\5\36\20\2\u00c6"+
-		"\u00c3\3\2\2\2\u00c6\u00c4\3\2\2\2\u00c6\u00c5\3\2\2\2\u00c7\31\3\2\2"+
-		"\2\u00c8\u00c9\7\n\2\2\u00c9\u00ca\7-\2\2\u00ca\33\3\2\2\2\u00cb\u00cc"+
-		"\7\13\2\2\u00cc\u00cd\7-\2\2\u00cd\35\3\2\2\2\u00ce\u00cf\7\f\2\2\u00cf"+
-		"\u00d0\5\20\t\2\u00d0\37\3\2\2\2\u00d1\u00d5\5\"\22\2\u00d2\u00d5\5$\23"+
-		"\2\u00d3\u00d5\5&\24\2\u00d4\u00d1\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d4\u00d3"+
-		"\3\2\2\2\u00d5!\3\2\2\2\u00d6\u00d7\7\17\2\2\u00d7\u00d8\5\20\t\2\u00d8"+
-		"\u00d9\7 \2\2\u00d9\u00da\5\22\n\2\u00da\u00e2\3\2\2\2\u00db\u00dc\7\17"+
-		"\2\2\u00dc\u00dd\5\20\t\2\u00dd\u00de\7 \2\2\u00de\u00df\7\30\2\2\u00df"+
-		"\u00e0\5\16\b\2\u00e0\u00e2\3\2\2\2\u00e1\u00d6\3\2\2\2\u00e1\u00db\3"+
-		"\2\2\2\u00e2#\3\2\2\2\u00e3\u00e4\5\20\t\2\u00e4\u00e5\7 \2\2\u00e5\u00e6"+
-		"\5\22\n\2\u00e6%\3\2\2\2\u00e7\u00e8\7\20\2\2\u00e8\u00e9\5\20\t\2\u00e9"+
-		"\u00ea\5\16\b\2\u00ea\u010e\3\2\2\2\u00eb\u00ec\7\20\2\2\u00ec\u00ed\5"+
-		"\20\t\2\u00ed\u00ef\7%\2\2\u00ee\u00f0\5\20\t\2\u00ef\u00ee\3\2\2\2\u00f0"+
-		"\u00f1\3\2\2\2\u00f1\u00ef\3\2\2\2\u00f1\u00f2\3\2\2\2\u00f2\u00f3\3\2"+
-		"\2\2\u00f3\u00f4\5\2\2\2\u00f4\u010e\3\2\2\2\u00f5\u00f6\7\20\2\2\u00f6"+
-		"\u00f7\5\20\t\2\u00f7\u00f8\7$\2\2\u00f8\u00f9\5\20\t\2\u00f9\u00fa\5"+
-		"\2\2\2\u00fa\u010e\3\2\2\2\u00fb\u00fc\7\20\2\2\u00fc\u00fd\5\20\t\2\u00fd"+
-		"\u00fe\7$\2\2\u00fe\u00ff\5\20\t\2\u00ff\u0101\7%\2\2\u0100\u0102\5\20"+
-		"\t\2\u0101\u0100\3\2\2\2\u0102\u0103\3\2\2\2\u0103\u0101\3\2\2\2\u0103"+
-		"\u0104\3\2\2\2\u0104\u0105\3\2\2\2\u0105\u0106\5\2\2\2\u0106\u010e\3\2"+
-		"\2\2\u0107\u0108\7\20\2\2\u0108\u0109\5\20\t\2\u0109\u010a\7&\2\2\u010a"+
-		"\u010b\5\20\t\2\u010b\u010c\5\2\2\2\u010c\u010e\3\2\2\2\u010d\u00e7\3"+
-		"\2\2\2\u010d\u00eb\3\2\2\2\u010d\u00f5\3\2\2\2\u010d\u00fb\3\2\2\2\u010d"+
-		"\u0107\3\2\2\2\u010e\'\3\2\2\2\u010f\u0116\5*\26\2\u0110\u0116\5,\27\2"+
-		"\u0111\u0116\5.\30\2\u0112\u0116\5\60\31\2\u0113\u0116\5\62\32\2\u0114"+
-		"\u0116\5\64\33\2\u0115\u010f\3\2\2\2\u0115\u0110\3\2\2\2\u0115\u0111\3"+
-		"\2\2\2\u0115\u0112\3\2\2\2\u0115\u0113\3\2\2\2\u0115\u0114\3\2\2\2\u0116"+
-		")\3\2\2\2\u0117\u0118\7\21\2\2\u0118\u0119\5\22\n\2\u0119\u011b\7\3\2"+
-		"\2\u011a\u011c\5\22\n\2\u011b\u011a\3\2\2\2\u011c\u011d\3\2\2\2\u011d"+
-		"\u011b\3\2\2\2\u011d\u011e\3\2\2\2\u011e\u011f\3\2\2\2\u011f\u012d\7\4"+
-		"\2\2\u0120\u0121\7\22\2\2\u0121\u0122\7\21\2\2\u0122\u0123\5\22\n\2\u0123"+
-		"\u0125\7\3\2\2\u0124\u0126\5\22\n\2\u0125\u0124\3\2\2\2\u0126\u0127\3"+
-		"\2\2\2\u0127\u0125\3\2\2\2\u0127\u0128\3\2\2\2\u0128\u0129\3\2\2\2\u0129"+
-		"\u012a\7\4\2\2\u012a\u012c\3\2\2\2\u012b\u0120\3\2\2\2\u012c\u012f\3\2"+
-		"\2\2\u012d\u012b\3\2\2\2\u012d\u012e\3\2\2\2\u012e\u0139\3\2\2\2\u012f"+
-		"\u012d\3\2\2\2\u0130\u0131\7\22\2\2\u0131\u0133\7\3\2\2\u0132\u0134\5"+
-		"\22\n\2\u0133\u0132\3\2\2\2\u0134\u0135\3\2\2\2\u0135\u0133\3\2\2\2\u0135"+
-		"\u0136\3\2\2\2\u0136\u0137\3\2\2\2\u0137\u0138\7\4\2\2\u0138\u013a\3\2"+
-		"\2\2\u0139\u0130\3\2\2\2\u0139\u013a\3\2\2\2\u013a+\3\2\2\2\u013b\u013c"+
-		"\7\23\2\2\u013c\u013d\5\22\n\2\u013d\u013e\7\r\2\2\u013e\u013f\5\22\n"+
-		"\2\u013f\u0140\7\r\2\2\u0140\u0141\5\22\n\2\u0141\u0143\7\3\2\2\u0142"+
-		"\u0144\5\22\n\2\u0143\u0142\3\2\2\2\u0144\u0145\3\2\2\2\u0145\u0143\3"+
-		"\2\2\2\u0145\u0146\3\2\2\2\u0146\u0147\3\2\2\2\u0147\u0148\7\4\2\2\u0148"+
-		"-\3\2\2\2\u0149\u014a\7\24\2\2\u014a\u014b\5\22\n\2\u014b\u014d\7\3\2"+
-		"\2\u014c\u014e\5\22\n\2\u014d\u014c\3\2\2\2\u014e\u014f\3\2\2\2\u014f"+
-		"\u014d\3\2\2\2\u014f\u0150\3\2\2\2\u0150\u0151\3\2\2\2\u0151\u0152\7\4"+
-		"\2\2\u0152/\3\2\2\2\u0153\u0154\7\26\2\2\u0154\61\3\2\2\2\u0155\u0156"+
-		"\7\27\2\2\u0156\63\3\2\2\2\u0157\u0158\7\25\2\2\u0158\u0159\5\22\n\2\u0159"+
-		"\65\3\2\2\2\u015a\u015c\5\22\n\2\u015b\u015a\3\2\2\2\u015c\u015d\3\2\2"+
-		"\2\u015d\u015b\3\2\2\2\u015d\u015e\3\2\2\2\u015e\67\3\2\2\2\"?IS\\gox"+
-		"\u0080\u008c\u0095\u00a0\u00a8\u00aa\u00af\u00b7\u00ba\u00c1\u00c6\u00d4"+
-		"\u00e1\u00f1\u0103\u010d\u0115\u011d\u0127\u012d\u0135\u0139\u0145\u014f"+
-		"\u015d";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\3\2\3\2\3\2\3\2\3\2\7\2@\n\2"+
+		"\f\2\16\2C\13\2\3\2\3\2\3\3\3\3\3\3\7\3J\n\3\f\3\16\3M\13\3\3\3\3\3\3"+
+		"\3\3\3\3\3\7\3T\n\3\f\3\16\3W\13\3\3\3\3\3\3\4\3\4\6\4]\n\4\r\4\16\4^"+
+		"\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5j\n\5\3\6\3\6\3\6\6\6o\n\6\r\6"+
+		"\16\6p\3\6\3\6\3\6\3\6\3\6\3\6\6\6y\n\6\r\6\16\6z\3\6\3\6\3\7\3\7\3\7"+
+		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u008a\n\b\3\t\3\t\3\t\3\t\3\t\3\t"+
+		"\3\t\5\t\u0093\n\t\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u009e"+
+		"\n\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u00a6\n\13\f\13\16\13\u00a9\13"+
+		"\13\3\f\3\f\5\f\u00ad\n\f\3\f\3\f\3\f\3\f\7\f\u00b3\n\f\f\f\16\f\u00b6"+
+		"\13\f\5\f\u00b8\n\f\3\f\3\f\3\r\3\r\3\r\5\r\u00bf\n\r\3\16\3\16\3\16\5"+
+		"\16\u00c4\n\16\3\17\3\17\3\17\3\20\3\20\3\20\3\21\3\21\3\21\3\22\3\22"+
+		"\3\22\5\22\u00d2\n\22\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23\3\23"+
+		"\3\23\5\23\u00df\n\23\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25\3\25"+
+		"\3\25\3\25\6\25\u00ed\n\25\r\25\16\25\u00ee\3\25\3\25\3\25\3\25\3\25\3"+
+		"\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\6\25\u00ff\n\25\r\25\16\25"+
+		"\u0100\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u010b\n\25\3\26\3"+
+		"\26\3\26\3\26\3\26\3\26\5\26\u0113\n\26\3\27\3\27\3\27\3\27\6\27\u0119"+
+		"\n\27\r\27\16\27\u011a\3\27\3\27\3\27\3\27\3\27\3\27\6\27\u0123\n\27\r"+
+		"\27\16\27\u0124\3\27\3\27\7\27\u0129\n\27\f\27\16\27\u012c\13\27\3\27"+
+		"\3\27\3\27\6\27\u0131\n\27\r\27\16\27\u0132\3\27\3\27\5\27\u0137\n\27"+
+		"\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\6\30\u0141\n\30\r\30\16\30\u0142"+
+		"\3\30\3\30\3\31\3\31\3\31\3\31\6\31\u014b\n\31\r\31\16\31\u014c\3\31\3"+
+		"\31\3\32\3\32\3\33\3\33\3\34\3\34\3\34\3\35\6\35\u0159\n\35\r\35\16\35"+
+		"\u015a\3\35\5AKU\3\24\36\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&("+
+		"*,.\60\62\64\668\2\2\2\u0177\2:\3\2\2\2\4F\3\2\2\2\6Z\3\2\2\2\bi\3\2\2"+
+		"\2\nk\3\2\2\2\f~\3\2\2\2\16\u0089\3\2\2\2\20\u0092\3\2\2\2\22\u0094\3"+
+		"\2\2\2\24\u009d\3\2\2\2\26\u00ac\3\2\2\2\30\u00be\3\2\2\2\32\u00c3\3\2"+
+		"\2\2\34\u00c5\3\2\2\2\36\u00c8\3\2\2\2 \u00cb\3\2\2\2\"\u00d1\3\2\2\2"+
+		"$\u00de\3\2\2\2&\u00e0\3\2\2\2(\u010a\3\2\2\2*\u0112\3\2\2\2,\u0114\3"+
+		"\2\2\2.\u0138\3\2\2\2\60\u0146\3\2\2\2\62\u0150\3\2\2\2\64\u0152\3\2\2"+
+		"\2\66\u0154\3\2\2\28\u0158\3\2\2\2:;\7\36\2\2;A\7\3\2\2<=\5\20\t\2=>\5"+
+		"\22\n\2>@\3\2\2\2?<\3\2\2\2@C\3\2\2\2AB\3\2\2\2A?\3\2\2\2BD\3\2\2\2CA"+
+		"\3\2\2\2DE\7\4\2\2E\3\3\2\2\2FG\7\35\2\2GK\7\5\2\2HJ\5\20\t\2IH\3\2\2"+
+		"\2JM\3\2\2\2KL\3\2\2\2KI\3\2\2\2LN\3\2\2\2MK\3\2\2\2NO\7\6\2\2OP\7\7\2"+
+		"\2PU\5\20\t\2QR\7\b\2\2RT\5\20\t\2SQ\3\2\2\2TW\3\2\2\2UV\3\2\2\2US\3\2"+
+		"\2\2VX\3\2\2\2WU\3\2\2\2XY\7\t\2\2Y\5\3\2\2\2Z\\\7\3\2\2[]\5\b\5\2\\["+
+		"\3\2\2\2]^\3\2\2\2^\\\3\2\2\2^_\3\2\2\2_`\3\2\2\2`a\7\4\2\2a\7\3\2\2\2"+
+		"bc\5\20\t\2cd\5\22\n\2dj\3\2\2\2ef\5\22\n\2fg\7 \2\2gh\5\24\13\2hj\3\2"+
+		"\2\2ib\3\2\2\2ie\3\2\2\2j\t\3\2\2\2kl\7\35\2\2ln\7\5\2\2mo\5\f\7\2nm\3"+
+		"\2\2\2op\3\2\2\2pn\3\2\2\2pq\3\2\2\2qr\3\2\2\2rs\7\6\2\2st\7\7\2\2tu\5"+
+		"\20\t\2uv\7\t\2\2vx\7\3\2\2wy\5\24\13\2xw\3\2\2\2yz\3\2\2\2zx\3\2\2\2"+
+		"z{\3\2\2\2{|\3\2\2\2|}\7\4\2\2}\13\3\2\2\2~\177\5\20\t\2\177\u0080\5\22"+
+		"\n\2\u0080\r\3\2\2\2\u0081\u008a\7+\2\2\u0082\u008a\7,\2\2\u0083\u008a"+
+		"\7-\2\2\u0084\u008a\7.\2\2\u0085\u008a\7)\2\2\u0086\u008a\7*\2\2\u0087"+
+		"\u008a\5\6\4\2\u0088\u008a\5\n\6\2\u0089\u0081\3\2\2\2\u0089\u0082\3\2"+
+		"\2\2\u0089\u0083\3\2\2\2\u0089\u0084\3\2\2\2\u0089\u0085\3\2\2\2\u0089"+
+		"\u0086\3\2\2\2\u0089\u0087\3\2\2\2\u0089\u0088\3\2\2\2\u008a\17\3\2\2"+
+		"\2\u008b\u0093\7\31\2\2\u008c\u0093\7\32\2\2\u008d\u0093\7\33\2\2\u008e"+
+		"\u0093\7\34\2\2\u008f\u0093\5\4\3\2\u0090\u0093\5\2\2\2\u0091\u0093\7"+
+		"/\2\2\u0092\u008b\3\2\2\2\u0092\u008c\3\2\2\2\u0092\u008d\3\2\2\2\u0092"+
+		"\u008e\3\2\2\2\u0092\u008f\3\2\2\2\u0092\u0090\3\2\2\2\u0092\u0091\3\2"+
+		"\2\2\u0093\21\3\2\2\2\u0094\u0095\7/\2\2\u0095\23\3\2\2\2\u0096\u0097"+
+		"\b\13\1\2\u0097\u009e\5\30\r\2\u0098\u009e\5\22\n\2\u0099\u009e\5\16\b"+
+		"\2\u009a\u009b\7\"\2\2\u009b\u009e\5\24\13\4\u009c\u009e\5\26\f\2\u009d"+
+		"\u0096\3\2\2\2\u009d\u0098\3\2\2\2\u009d\u0099\3\2\2\2\u009d\u009a\3\2"+
+		"\2\2\u009d\u009c\3\2\2\2\u009e\u00a7\3\2\2\2\u009f\u00a0\f\6\2\2\u00a0"+
+		"\u00a1\7!\2\2\u00a1\u00a6\5\24\13\7\u00a2\u00a3\f\5\2\2\u00a3\u00a4\7"+
+		"#\2\2\u00a4\u00a6\5\24\13\6\u00a5\u009f\3\2\2\2\u00a5\u00a2\3\2\2\2\u00a6"+
+		"\u00a9\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8\25\3\2\2"+
+		"\2\u00a9\u00a7\3\2\2\2\u00aa\u00ad\5\22\n\2\u00ab\u00ad\5\n\6\2\u00ac"+
+		"\u00aa\3\2\2\2\u00ac\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b7\7\5"+
+		"\2\2\u00af\u00b4\5\24\13\2\u00b0\u00b1\7\b\2\2\u00b1\u00b3\5\24\13\2\u00b2"+
+		"\u00b0\3\2\2\2\u00b3\u00b6\3\2\2\2\u00b4\u00b2\3\2\2\2\u00b4\u00b5\3\2"+
+		"\2\2\u00b5\u00b8\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b7\u00af\3\2\2\2\u00b7"+
+		"\u00b8\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00ba\7\6\2\2\u00ba\27\3\2\2"+
+		"\2\u00bb\u00bf\5\"\22\2\u00bc\u00bf\5*\26\2\u00bd\u00bf\5\32\16\2\u00be"+
+		"\u00bb\3\2\2\2\u00be\u00bc\3\2\2\2\u00be\u00bd\3\2\2\2\u00bf\31\3\2\2"+
+		"\2\u00c0\u00c4\5\34\17\2\u00c1\u00c4\5\36\20\2\u00c2\u00c4\5 \21\2\u00c3"+
+		"\u00c0\3\2\2\2\u00c3\u00c1\3\2\2\2\u00c3\u00c2\3\2\2\2\u00c4\33\3\2\2"+
+		"\2\u00c5\u00c6\7\n\2\2\u00c6\u00c7\7-\2\2\u00c7\35\3\2\2\2\u00c8\u00c9"+
+		"\7\13\2\2\u00c9\u00ca\7-\2\2\u00ca\37\3\2\2\2\u00cb\u00cc\7\f\2\2\u00cc"+
+		"\u00cd\5\22\n\2\u00cd!\3\2\2\2\u00ce\u00d2\5$\23\2\u00cf\u00d2\5&\24\2"+
+		"\u00d0\u00d2\5(\25\2\u00d1\u00ce\3\2\2\2\u00d1\u00cf\3\2\2\2\u00d1\u00d0"+
+		"\3\2\2\2\u00d2#\3\2\2\2\u00d3\u00d4\7\17\2\2\u00d4\u00d5\5\22\n\2\u00d5"+
+		"\u00d6\7 \2\2\u00d6\u00d7\5\24\13\2\u00d7\u00df\3\2\2\2\u00d8\u00d9\7"+
+		"\17\2\2\u00d9\u00da\5\22\n\2\u00da\u00db\7 \2\2\u00db\u00dc\7\30\2\2\u00dc"+
+		"\u00dd\5\20\t\2\u00dd\u00df\3\2\2\2\u00de\u00d3\3\2\2\2\u00de\u00d8\3"+
+		"\2\2\2\u00df%\3\2\2\2\u00e0\u00e1\5\22\n\2\u00e1\u00e2\7 \2\2\u00e2\u00e3"+
+		"\5\24\13\2\u00e3\'\3\2\2\2\u00e4\u00e5\7\20\2\2\u00e5\u00e6\5\22\n\2\u00e6"+
+		"\u00e7\5\20\t\2\u00e7\u010b\3\2\2\2\u00e8\u00e9\7\20\2\2\u00e9\u00ea\5"+
+		"\22\n\2\u00ea\u00ec\7%\2\2\u00eb\u00ed\5\22\n\2\u00ec\u00eb\3\2\2\2\u00ed"+
+		"\u00ee\3\2\2\2\u00ee\u00ec\3\2\2\2\u00ee\u00ef\3\2\2\2\u00ef\u00f0\3\2"+
+		"\2\2\u00f0\u00f1\5\2\2\2\u00f1\u010b\3\2\2\2\u00f2\u00f3\7\20\2\2\u00f3"+
+		"\u00f4\5\22\n\2\u00f4\u00f5\7$\2\2\u00f5\u00f6\5\22\n\2\u00f6\u00f7\5"+
+		"\2\2\2\u00f7\u010b\3\2\2\2\u00f8\u00f9\7\20\2\2\u00f9\u00fa\5\22\n\2\u00fa"+
+		"\u00fb\7$\2\2\u00fb\u00fc\5\22\n\2\u00fc\u00fe\7%\2\2\u00fd\u00ff\5\22"+
+		"\n\2\u00fe\u00fd\3\2\2\2\u00ff\u0100\3\2\2\2\u0100\u00fe\3\2\2\2\u0100"+
+		"\u0101\3\2\2\2\u0101\u0102\3\2\2\2\u0102\u0103\5\2\2\2\u0103\u010b\3\2"+
+		"\2\2\u0104\u0105\7\20\2\2\u0105\u0106\5\22\n\2\u0106\u0107\7&\2\2\u0107"+
+		"\u0108\5\22\n\2\u0108\u0109\5\2\2\2\u0109\u010b\3\2\2\2\u010a\u00e4\3"+
+		"\2\2\2\u010a\u00e8\3\2\2\2\u010a\u00f2\3\2\2\2\u010a\u00f8\3\2\2\2\u010a"+
+		"\u0104\3\2\2\2\u010b)\3\2\2\2\u010c\u0113\5,\27\2\u010d\u0113\5.\30\2"+
+		"\u010e\u0113\5\60\31\2\u010f\u0113\5\62\32\2\u0110\u0113\5\64\33\2\u0111"+
+		"\u0113\5\66\34\2\u0112\u010c\3\2\2\2\u0112\u010d\3\2\2\2\u0112\u010e\3"+
+		"\2\2\2\u0112\u010f\3\2\2\2\u0112\u0110\3\2\2\2\u0112\u0111\3\2\2\2\u0113"+
+		"+\3\2\2\2\u0114\u0115\7\21\2\2\u0115\u0116\5\24\13\2\u0116\u0118\7\3\2"+
+		"\2\u0117\u0119\5\24\13\2\u0118\u0117\3\2\2\2\u0119\u011a\3\2\2\2\u011a"+
+		"\u0118\3\2\2\2\u011a\u011b\3\2\2\2\u011b\u011c\3\2\2\2\u011c\u012a\7\4"+
+		"\2\2\u011d\u011e\7\22\2\2\u011e\u011f\7\21\2\2\u011f\u0120\5\24\13\2\u0120"+
+		"\u0122\7\3\2\2\u0121\u0123\5\24\13\2\u0122\u0121\3\2\2\2\u0123\u0124\3"+
+		"\2\2\2\u0124\u0122\3\2\2\2\u0124\u0125\3\2\2\2\u0125\u0126\3\2\2\2\u0126"+
+		"\u0127\7\4\2\2\u0127\u0129\3\2\2\2\u0128\u011d\3\2\2\2\u0129\u012c\3\2"+
+		"\2\2\u012a\u0128\3\2\2\2\u012a\u012b\3\2\2\2\u012b\u0136\3\2\2\2\u012c"+
+		"\u012a\3\2\2\2\u012d\u012e\7\22\2\2\u012e\u0130\7\3\2\2\u012f\u0131\5"+
+		"\24\13\2\u0130\u012f\3\2\2\2\u0131\u0132\3\2\2\2\u0132\u0130\3\2\2\2\u0132"+
+		"\u0133\3\2\2\2\u0133\u0134\3\2\2\2\u0134\u0135\7\4\2\2\u0135\u0137\3\2"+
+		"\2\2\u0136\u012d\3\2\2\2\u0136\u0137\3\2\2\2\u0137-\3\2\2\2\u0138\u0139"+
+		"\7\23\2\2\u0139\u013a\5\24\13\2\u013a\u013b\7\r\2\2\u013b\u013c\5\24\13"+
+		"\2\u013c\u013d\7\r\2\2\u013d\u013e\5\24\13\2\u013e\u0140\7\3\2\2\u013f"+
+		"\u0141\5\24\13\2\u0140\u013f\3\2\2\2\u0141\u0142\3\2\2\2\u0142\u0140\3"+
+		"\2\2\2\u0142\u0143\3\2\2\2\u0143\u0144\3\2\2\2\u0144\u0145\7\4\2\2\u0145"+
+		"/\3\2\2\2\u0146\u0147\7\24\2\2\u0147\u0148\5\24\13\2\u0148\u014a\7\3\2"+
+		"\2\u0149\u014b\5\24\13\2\u014a\u0149\3\2\2\2\u014b\u014c\3\2\2\2\u014c"+
+		"\u014a\3\2\2\2\u014c\u014d\3\2\2\2\u014d\u014e\3\2\2\2\u014e\u014f\7\4"+
+		"\2\2\u014f\61\3\2\2\2\u0150\u0151\7\26\2\2\u0151\63\3\2\2\2\u0152\u0153"+
+		"\7\27\2\2\u0153\65\3\2\2\2\u0154\u0155\7\25\2\2\u0155\u0156\5\24\13\2"+
+		"\u0156\67\3\2\2\2\u0157\u0159\5\24\13\2\u0158\u0157\3\2\2\2\u0159\u015a"+
+		"\3\2\2\2\u015a\u0158\3\2\2\2\u015a\u015b\3\2\2\2\u015b9\3\2\2\2!AKU^i"+
+		"pz\u0089\u0092\u009d\u00a5\u00a7\u00ac\u00b4\u00b7\u00be\u00c3\u00d1\u00de"+
+		"\u00ee\u0100\u010a\u0112\u011a\u0124\u012a\u0132\u0136\u0142\u014c\u015a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

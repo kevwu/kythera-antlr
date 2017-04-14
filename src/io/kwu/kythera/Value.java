@@ -1,11 +1,9 @@
 package io.kwu.kythera;
 
+import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Value<V> implements Comparable<Value> {
 	protected final V value;
@@ -142,14 +140,27 @@ public abstract class Value<V> implements Comparable<Value> {
 
 	// functions handle equality differently
 	public static class Fn extends Value {
-		public Fn(List<KytheraParser.ExpressionContext> expressions) {
-//			super(new Type.FnType(expressions))
-			super(null, null); // placeholder
+		private ArrayList<Identifier> args;
+		private ArrayList<KytheraParser.ExpressionContext> expressions;
+		private Type returnType;
+
+		public Fn(ArrayList<Identifier> args, ArrayList<KytheraParser.ExpressionContext> expressions, Type returnType) {
+			super(new Type.FnType(args, returnType), expressions);
+			this.args = args;
+			this.expressions = expressions;
+			this.returnType = returnType;
 		}
 
 		@Override
 		public String toString() {
-			return type.toString() + ": " + (value != null ? value.toString() : "null");
+			StringBuilder out = new StringBuilder("fn: (");
+			for(Identifier arg : this.args) {
+				// TODO get those commas right
+				out.append(arg.type.toString()).append(" ").append(arg.name).append(", ");
+			}
+			out.append(") [").append(returnType.toString()).append("]");
+
+			return out.toString();
 		}
 
 		public Type getType() {
@@ -170,6 +181,22 @@ public abstract class Value<V> implements Comparable<Value> {
 		public int compareTo(Value o) {
 			// functions can't be numerically compared.
 			throw new ClassCastException();
+		}
+
+		// run the function
+		public Value call(ArrayList<Value> arguments, KytheraVisitor visitor) {
+			System.out.println("Called function!");
+			for (KytheraParser.ExpressionContext exp : this.expressions) {
+				Value result = exp.accept(visitor);
+				if(result != null) {
+					System.out.println("fn: [[[ " + result.toString() + " ]]]");
+				} else {
+					System.out.println("fn: Expression resulted in null");
+				}
+			}
+
+			System.out.println("End fn");
+			return null;
 		}
 	}
 
