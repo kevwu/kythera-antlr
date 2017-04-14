@@ -6,6 +6,9 @@ public class Scope extends HashMap<String, Value> {
 	final private Scope parent;
 	final private int level;
 
+	protected boolean returnFlag;
+	protected Value returnVal;
+
 	public Scope(final Scope parent) {
 		this.parent = parent;
 
@@ -15,6 +18,7 @@ public class Scope extends HashMap<String, Value> {
 			level = 0;
 		}
 
+		this.returnFlag = false;
 	}
 
 	public boolean inScope(String var) {

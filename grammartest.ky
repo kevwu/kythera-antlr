@@ -56,7 +56,7 @@ let n = new int
 
 // anonymous function call
 fn(int a) [int] {
-    let q = 2
+    let q = 99
     let r = q
     return q
 }(3)

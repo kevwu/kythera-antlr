@@ -186,17 +186,39 @@ public abstract class Value<V> implements Comparable<Value> {
 		// run the function
 		public Value call(ArrayList<Value> arguments, KytheraVisitor visitor) {
 			System.out.println("Called function!");
+			System.out.println("Originally at " + visitor.currentScope);
+
+			Scope fnScope = new Scope(visitor.currentScope);
+			Value returnVal = Values.NULL;
+
+			visitor.currentScope = fnScope;
+
+			System.out.println("New scope created: " + fnScope);
+			System.out.println("With parent scope: " + fnScope.parent());
+
 			for (KytheraParser.ExpressionContext exp : this.expressions) {
-				Value result = exp.accept(visitor);
-				if(result != null) {
-					System.out.println("fn: [[[ " + result.toString() + " ]]]");
+				if(!fnScope.returnFlag) {
+					Value result = exp.accept(visitor);
+					if(result != null) {
+						System.out.println("fn: [[[ " + result.toString() + " ]]]");
+					} else {
+						System.out.println("fn: Expression resulted in null");
+					}
 				} else {
-					System.out.println("fn: Expression resulted in null");
+					System.out.println("Returned early!");
+					System.out.println(visitor.currentScope.returnVal.toString());
+					break;
 				}
 			}
 
-			System.out.println("End fn");
-			return null;
+			if(fnScope.returnFlag) {
+				System.out.println("Got return val.");
+				returnVal = visitor.currentScope.returnVal;
+			}
+
+			// return scope to before
+			visitor.currentScope = fnScope.parent();
+			return returnVal;
 		}
 	}
 

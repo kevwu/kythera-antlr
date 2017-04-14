@@ -242,6 +242,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	@Override
 	public Value visitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx) {
 		System.out.println("Control flow statement");
+
+		if(ctx.returnStatement() != null) {
+			return ctx.returnStatement().accept(this);
+		}
 		return null;
 	}
 
@@ -334,6 +338,20 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
+	}
+
+	@Override public Value visitReturnStatement(KytheraParser.ReturnStatementContext ctx) {
+		System.out.println("Return statement");
+		assert(ctx.expression() != null);
+
+		System.out.println("Returning in scope " + this.currentScope);
+		System.out.println("With parent scope: " + this.currentScope.parent());
+
+		this.currentScope.returnFlag = true;
+		this.currentScope.returnVal = ctx.expression().accept(this);
+
+		// it doesn't really matter what a return statement evaluates to since its value is never used
+		return this.currentScope.returnVal;
 	}
 
 	private static class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
