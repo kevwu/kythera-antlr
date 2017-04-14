@@ -341,11 +341,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	}
 
 	@Override public Value visitReturnStatement(KytheraParser.ReturnStatementContext ctx) {
-		System.out.println("Return statement");
 		assert(ctx.expression() != null);
-
-		System.out.println("Returning in scope " + this.currentScope);
-		System.out.println("With parent scope: " + this.currentScope.parent());
 
 		this.currentScope.returnFlag = true;
 		this.currentScope.returnVal = ctx.expression().accept(this);

@@ -39,7 +39,7 @@ let n = null
 // declaration by new
 let n = new int
 
-// TODO arithmetic operations cause ambiguities, fix this
+// TODO arithmetic operations cause parser ambiguities, fix this
 // 2 + 2
 // a + b
 
@@ -58,7 +58,7 @@ let n = new int
 fn(int a) [int] {
     let q = 99
     let r = q
-    return q
+    return a
 }(3)
 
 // boolean expression

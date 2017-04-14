@@ -185,16 +185,30 @@ public abstract class Value<V> implements Comparable<Value> {
 
 		// run the function
 		public Value call(ArrayList<Value> arguments, KytheraVisitor visitor) {
-			System.out.println("Called function!");
-			System.out.println("Originally at " + visitor.currentScope);
+			if(arguments.size() != this.args.size()) {
+				// TODO throw error
+				System.out.println("ERROR: Incorrect number of arguments: got " + arguments.size() + ", expected " + this.args.size());
+				return null;
+			}
 
 			Scope fnScope = new Scope(visitor.currentScope);
 			Value returnVal = Values.NULL;
 
 			visitor.currentScope = fnScope;
 
-			System.out.println("New scope created: " + fnScope);
-			System.out.println("With parent scope: " + fnScope.parent());
+			// bring arguments into scope
+			if(this.args.size() >= 1) {
+				for(int i = 0; i < arguments.size(); i += 1) {
+					// type check
+					if(!arguments.get(i).type.equals(this.args.get(i).type)) {
+						// TODO throw error
+						System.out.println("ERROR: Invalid type for parameter " + i +": Got " + arguments.get(i).type.toString() + ", expected " + this.args.get(i).type.toString());
+						return null;
+					}
+
+					fnScope.setVar(this.args.get(i).name, arguments.get(i));
+				}
+			}
 
 			for (KytheraParser.ExpressionContext exp : this.expressions) {
 				if(!fnScope.returnFlag) {
@@ -205,14 +219,12 @@ public abstract class Value<V> implements Comparable<Value> {
 						System.out.println("fn: Expression resulted in null");
 					}
 				} else {
-					System.out.println("Returned early!");
 					System.out.println(visitor.currentScope.returnVal.toString());
 					break;
 				}
 			}
 
 			if(fnScope.returnFlag) {
-				System.out.println("Got return val.");
 				returnVal = visitor.currentScope.returnVal;
 			}
 
