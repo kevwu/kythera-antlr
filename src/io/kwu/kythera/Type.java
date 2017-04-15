@@ -1,10 +1,7 @@
 package io.kwu.kythera;
 
-import io.kwu.kythera.antlr.KytheraParser;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public abstract class Type {
 	// string representing type as Kythera would see it

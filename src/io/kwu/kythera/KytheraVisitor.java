@@ -51,58 +51,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
-		if (ctx.identifier() != null) {
-			if (this.currentScope.hasVar(ctx.identifier().getText())) {
-				return this.currentScope.getVar(ctx.identifier().getText());
-			} else {
-				// TODO throw a proper exception
-				System.out.println("ERROR: Accessing a variable that is not set: " + ctx.identifier().getText());
-				return null;
-			}
-		}
-
-		if (ctx.literal() != null) {
-			if (ctx.literal().IntLiteral() != null) {
-				return new Value.Int(
-					Integer.parseInt(ctx.literal().IntLiteral().getText())
-				);
-			}
-
-			if (ctx.literal().FloatLiteral() != null) {
-				return new Value.Float(
-					Double.parseDouble(ctx.literal().FloatLiteral().getText())
-				);
-			}
-
-			if (ctx.literal().StrLiteral() != null) {
-				return new Value.Str(
-					ctx.literal().StrLiteral().getText().replaceAll("\"", "")
-				);
-			}
-
-			if (ctx.literal().NULL() != null) {
-				return Values.NULL;
-			}
-
-			if (ctx.literal().TRUE() != null) {
-				return Values.TRUE;
-			}
-
-			if (ctx.literal().FALSE() != null) {
-				return Values.FALSE;
-			}
-
-			if (ctx.literal().objLiteral() != null) {
-				return ctx.literal().objLiteral().accept(this);
-			}
-
-			if (ctx.literal().fnLiteral() != null) {
-				return ctx.literal().fnLiteral().accept(this);
-			}
-
-			return null;
-		}
-
 		if (ctx.BOOLEAN_OPERATOR() != null) {
 			// there is no sub-rule for a boolean op, handle it here
 			System.out.println("Boolean expression: " + ctx.expression(0).getText() + ctx.BOOLEAN_OPERATOR().getText() + ctx.expression(1).getText());
@@ -156,14 +104,56 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			if(!lhs.type.equals(rhs.type)) {
 				// TODO throw exception
-				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on variables of different type.");
+				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on variables of different type: " + lhs.type.toString() + " vs " + rhs.type.toString());
 				return null;
 			}
 
-			if(!lhs.type.equals(Type.intType) || !lhs.type.equals(Type.floatType)) {
+			if(!lhs.type.equals(Type.intType) && !lhs.type.equals(Type.floatType)) {
 				System.out.println("Operator overloading is not yet implemented.");
 				// TODO throw exception
 				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on type " + lhs.type.toString());
+				return null;
+			}
+
+			/*
+			This is a stopgap implementation. It is very messy and unpleasant.
+			It will (hopefully) change when operator overloading is implemented.
+			*/
+
+			Type resultType = lhs.type;
+			double lhsVal = (Double) ((Number) lhs.getVal()).doubleValue();
+			double rhsVal = (Double) ((Number) rhs.getVal()).doubleValue();
+
+			double resultVal;
+
+			String op = ctx.ARITH_OPERATOR().getText();
+			// cheating here by casting doubles back to ints. very bad. will be removed.
+			switch(op) {
+				case "+":
+					resultVal = lhsVal + rhsVal;
+					break;
+				case "-":
+					resultVal = lhsVal - rhsVal;
+					break;
+				case "*":
+					resultVal = lhsVal - rhsVal;
+					break;
+				case "/":
+					// integer division SHOULD be preserved when converting back
+					resultVal = lhsVal / rhsVal;
+					break;
+				case "%":
+					resultVal = lhsVal % rhsVal;
+					break;
+				default:
+					return null;
+			}
+
+			if(resultType.equals(Type.intType)) {
+				return new Value.Int(Integer.valueOf((int) resultVal));
+			} else if(resultType.equals(Type.floatType)){
+				return new Value.Float(Double.valueOf(resultVal));
+			} else {
 				return null;
 			}
 		}
@@ -184,6 +174,59 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		if (ctx.fnCallExpression() != null) {
 			return ctx.fnCallExpression().accept(this);
+		}
+
+		// check for literals/raw expression last
+		if (ctx.literal() != null) {
+			if (ctx.literal().IntLiteral() != null) {
+				return new Value.Int(
+					Integer.parseInt(ctx.literal().IntLiteral().getText())
+				);
+			}
+
+			if (ctx.literal().FloatLiteral() != null) {
+				return new Value.Float(
+					Double.parseDouble(ctx.literal().FloatLiteral().getText())
+				);
+			}
+
+			if (ctx.literal().StrLiteral() != null) {
+				return new Value.Str(
+					ctx.literal().StrLiteral().getText().replaceAll("\"", "")
+				);
+			}
+
+			if (ctx.literal().NULL() != null) {
+				return Values.NULL;
+			}
+
+			if (ctx.literal().TRUE() != null) {
+				return Values.TRUE;
+			}
+
+			if (ctx.literal().FALSE() != null) {
+				return Values.FALSE;
+			}
+
+			if (ctx.literal().objLiteral() != null) {
+				return ctx.literal().objLiteral().accept(this);
+			}
+
+			if (ctx.literal().fnLiteral() != null) {
+				return ctx.literal().fnLiteral().accept(this);
+			}
+
+			return null;
+		}
+
+		if (ctx.identifier() != null) {
+			if (this.currentScope.hasVar(ctx.identifier().getText())) {
+				return this.currentScope.getVar(ctx.identifier().getText());
+			} else {
+				// TODO throw a proper exception
+				System.out.println("ERROR: Accessing a variable that is not set: " + ctx.identifier().getText());
+				return null;
+			}
 		}
 
 		System.out.println("Unhandled expression: " + ctx.getText());

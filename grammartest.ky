@@ -62,15 +62,23 @@ fn(int a) [int] {
 }(3)
 
 // boolean expression
+a = 3
 a == b
+a == a
+a == 3
 // arithmetic expression
+// demonstrates strict typing
 a + b
+
+a
+a % 2
+
 // boolean negation
 !myBool
 
 // if statement
 if a == b {
-    2 + 2
+    a
 }
 
 // if-if-else
@@ -84,20 +92,19 @@ if a == b {
 
 // if-else
 if a == b {
-    3 + 3
+    a
 } else {
-    3 + 4
+    b
 }
 
 // for
 for let i = 0; i < 10; i + 1 {
-    1+1
+    i
 }
 
 // while
 while a == b {
-    1+1
-    c = d
+    a
 }
 
 // name statements
