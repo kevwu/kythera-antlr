@@ -147,6 +147,27 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if(ctx.ARITH_OPERATOR() != null) {
+			// no sub-rule for arithmetic, evaluate it here
+			assert(ctx.expression().size() == 2);
+
+			Value lhs = ctx.expression(0).accept(this);
+			Value rhs = ctx.expression(1).accept(this);
+
+			if(!lhs.type.equals(rhs.type)) {
+				// TODO throw exception
+				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on variables of different type.");
+				return null;
+			}
+
+			if(!lhs.type.equals(Type.intType) || !lhs.type.equals(Type.floatType)) {
+				System.out.println("Operator overloading is not yet implemented.");
+				// TODO throw exception
+				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on type " + lhs.type.toString());
+				return null;
+			}
+		}
+
 		if (ctx.statement() != null) {
 			KytheraParser.StatementContext statement = ctx.statement();
 			if (statement.variableStatement() != null) {
@@ -315,7 +336,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 			function = (Value.Fn) this.currentScope.getVar(ctx.identifier().getText());
-			if(function.type != Type.fnBaseType) {
+			if(!function.type.equals(Type.fnBaseType)) {
 				System.out.println("ERROR: " + ctx.identifier().getText() + " is not a function");
 				return null;
 			}
