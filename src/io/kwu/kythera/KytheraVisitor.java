@@ -158,6 +158,25 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if(ctx.NOT_OPERATOR() != null) {
+			System.out.println("Boolean operator");
+			assert(ctx.expression().size() == 1);
+
+			Value val = ctx.expression(0).accept(this);
+			if(!val.type.equals(Type.boolType)) {
+				// TODO throw error
+				System.out.println("Cannot boolean negate a non-boolean type: " + val.type.toString());
+				return null;
+			}
+
+			Value.Bool boolVal = (Value.Bool) val;
+			if(boolVal.value) {
+				return Values.FALSE;
+			} else {
+				return Values.TRUE;
+			}
+		}
+
 		if (ctx.statement() != null) {
 			KytheraParser.StatementContext statement = ctx.statement();
 			if (statement.variableStatement() != null) {

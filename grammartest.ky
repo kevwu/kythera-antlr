@@ -74,7 +74,10 @@ a
 a % 2
 
 // boolean negation
+myBool
 !myBool
+
+!false
 
 // if statement
 if a == b {
