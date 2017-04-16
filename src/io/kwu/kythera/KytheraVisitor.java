@@ -57,6 +57,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
 
+			if(lhs == null || rhs == null) {
+				System.out.println("One or more variables were null (probably due to an error.)");
+				return null;
+			}
+
 			switch (ctx.BOOLEAN_OPERATOR().getText()) {
 				case "==":
 					return new Value.Bool(lhs.equals(rhs));
@@ -101,6 +106,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			Value lhs = ctx.expression(0).accept(this);
 			Value rhs = ctx.expression(1).accept(this);
+
+			if(lhs == null || rhs == null) {
+				System.out.println("One or more variables were null (probably due to an error.)");
+				return null;
+			}
 
 			if(!lhs.type.equals(rhs.type)) {
 				// TODO throw exception
@@ -304,6 +314,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
 		assert (declStatement.LET() != null);
 		String identifier = declStatement.identifier().getText();
+
+		if(this.currentScope.hasVar(identifier)) {
+			System.out.println("ERROR: Identifier " + identifier + " has already been declared.");
+			return null;
+		}
+
 		Value result;
 
 		// either "new [type]" or expression
@@ -329,6 +345,28 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		if(ctx.returnStatement() != null) {
 			return ctx.returnStatement().accept(this);
 		}
+
+		if(ctx.ifStatement() != null) {
+			return ctx.ifStatement().accept(this);
+		}
+
+		if(ctx.whileStatement() != null) {
+			return ctx.whileStatement().accept(this);
+		}
+
+		if(ctx.forStatement() != null) {
+			return ctx.forStatement().accept(this);
+		}
+
+		return null;
+	}
+
+	@Override public Value visitIfStatement(KytheraParser.IfStatementContext ctx) {
+		// must be at least two statements - the if-expression, and at least one statement inside the braces.
+
+		assert(ctx.expression().size() >= 2);
+
+//		Value conditional =
 		return null;
 	}
 
