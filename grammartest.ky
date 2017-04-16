@@ -62,7 +62,7 @@ fn(int a) [int] {
     let q = 99
     let r = q
     return a
-}(3)
+}(10)
 
 // boolean expression
 let a = 0
@@ -111,14 +111,14 @@ if a == b {
     b
 }
 
-// for
-for let i = 0; i < 10; i + 1 {
-    i
-}
-
 // while
 while a == b {
-    a
+    a = a + 2
+}
+
+let x = 0
+while x < 10 {
+    x = x + 1
 }
 
 // name statements

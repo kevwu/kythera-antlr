@@ -28,8 +28,8 @@ NAME: 'name'; // typedef
 // control flow
 IF: 'if';
 ELSE: 'else';
-FOR: 'for';
 WHILE: 'while';
+EACH: 'each';
 RETURN: 'return';
 BREAK: 'break';
 CONTINUE: 'continue';
@@ -148,7 +148,7 @@ nameStatement // like "typedef" in C/C++
     ;
 
 // control flow statements
-controlFlowStatement: ifStatement | forStatement | whileStatement | breakStatement | continueStatement | returnStatement;
+controlFlowStatement: ifStatement | whileStatement | breakStatement | continueStatement | returnStatement;
 ifStatement:
     IF expression
     expBlock
@@ -156,8 +156,9 @@ ifStatement:
         ELSE (ifStatement | expBlock)
     )?
     ;
-forStatement: FOR expression ';' expression ';' expression expBlock;
-whileStatement: WHILE expression expBlock;
+whileStatement:
+    WHILE expression
+    expBlock;
 breakStatement: BREAK;
 continueStatement: CONTINUE;
 returnStatement: RETURN expression;

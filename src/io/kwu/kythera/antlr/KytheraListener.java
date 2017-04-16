@@ -240,16 +240,6 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(KytheraParser.IfStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#forStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForStatement(KytheraParser.ForStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#forStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForStatement(KytheraParser.ForStatementContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link KytheraParser#whileStatement}.
 	 * @param ctx the parse tree
 	 */

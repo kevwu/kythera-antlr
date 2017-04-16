@@ -151,12 +151,6 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfStatement(KytheraParser.IfStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#forStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitForStatement(KytheraParser.ForStatementContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link KytheraParser#whileStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

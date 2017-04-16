@@ -340,8 +340,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx) {
-		System.out.println("Control flow statement");
-
 		if(ctx.returnStatement() != null) {
 			return ctx.returnStatement().accept(this);
 		}
@@ -354,16 +352,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return ctx.whileStatement().accept(this);
 		}
 
-		if(ctx.forStatement() != null) {
-			return ctx.forStatement().accept(this);
-		}
-
 		return null;
 	}
 
 	@Override public Value visitIfStatement(KytheraParser.IfStatementContext ctx) {
-		// must be at least two statements - the if-expression, and at least one statement inside the braces.
-
 		Value condRaw = ctx.expression().accept(this);
 
 		if(!condRaw.type.equals(Type.boolType)) {
@@ -374,10 +366,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		Value.Bool conditional = (Value.Bool) condRaw;
 
 		if(conditional.equals(Values.TRUE)) {
-			System.out.println("if: TRUE");
 			ctx.expBlock(0).accept(this);
 		} else if(conditional.equals(Values.FALSE)) {
-			System.out.println("if: FALSE");
 			if(ctx.ELSE() != null) {
 				// else-if
 				if(ctx.ifStatement() != null) {
@@ -398,6 +388,24 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		// if statements evaluate to the value of their conditional
 		return conditional;
+	}
+
+	@Override
+	public Value visitWhileStatement(KytheraParser.WhileStatementContext ctx) {
+		System.out.println("while statement");
+
+		while(ctx.expression().accept(this).type.equals(Type.boolType) && ctx.expression().accept(this).equals(Values.TRUE)) {
+			System.out.println("Running loop");
+			ctx.expBlock().accept(this);
+		}
+
+		if(!ctx.expression().accept(this).type.equals(Type.boolType)) {
+			System.out.println("ERROR: Boolean expression expected for conditional, got " + ctx.expression().accept(this).type.toString());
+			return null;
+		}
+
+		// while statements don't return anything yet (until ExpBlock evaluations are implemented)
+		return null;
 	}
 
 	@Override
@@ -442,14 +450,9 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-
-		// TODO store the entire ExpBlockContext instead of individual ExpressionContexts
 		assert(ctx.expBlock() != null);
-		assert(ctx.expBlock().expression().size() >=1);
-
-//		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expBlock().expression());
-
 		assert(ctx.type() != null);
+
 		Type returnType = Type.getTypeFromText(ctx.type().getText());
 
 		return new Value.Fn(arguments, ctx.expBlock(), returnType);
@@ -510,7 +513,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-		// exp blocks don't return anything
+		/*
+		TODO allow ExpBlocks to return and evaluate to values
+		If/For/While loops can evaluate to the return values of their ExpBlocks
+		 */
 		return null;
 	}
 
