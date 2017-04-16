@@ -1,6 +1,5 @@
 package io.kwu.kythera;
 
-import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.*;
@@ -141,13 +140,13 @@ public abstract class Value<V> implements Comparable<Value> {
 	// functions handle equality differently
 	public static class Fn extends Value {
 		private ArrayList<Identifier> args;
-		private ArrayList<KytheraParser.ExpressionContext> expressions;
+		private KytheraParser.ExpBlockContext expBlock;
 		private Type returnType;
 
-		public Fn(ArrayList<Identifier> args, ArrayList<KytheraParser.ExpressionContext> expressions, Type returnType) {
-			super(new Type.FnType(args, returnType), expressions);
+		public Fn(ArrayList<Identifier> args, KytheraParser.ExpBlockContext expBlock, Type returnType) {
+			super(new Type.FnType(args, returnType), expBlock);
 			this.args = args;
-			this.expressions = expressions;
+			this.expBlock = expBlock;
 			this.returnType = returnType;
 		}
 
@@ -210,19 +209,7 @@ public abstract class Value<V> implements Comparable<Value> {
 				}
 			}
 
-			for (KytheraParser.ExpressionContext exp : this.expressions) {
-				if(!fnScope.returnFlag) {
-					Value result = exp.accept(visitor);
-					if(result != null) {
-						System.out.println("fn: [[[ " + result.toString() + " ]]]");
-					} else {
-						System.out.println("fn: Expression resulted in null");
-					}
-				} else {
-					System.out.println(visitor.currentScope.returnVal.toString());
-					break;
-				}
-			}
+			this.expBlock.accept(visitor);
 
 			if(fnScope.returnFlag) {
 				returnVal = visitor.currentScope.returnVal;

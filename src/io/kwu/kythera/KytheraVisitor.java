@@ -447,12 +447,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		assert(ctx.expBlock() != null);
 		assert(ctx.expBlock().expression().size() >=1);
 
-		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expBlock().expression());
+//		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expBlock().expression());
 
 		assert(ctx.type() != null);
 		Type returnType = Type.getTypeFromText(ctx.type().getText());
 
-		return new Value.Fn(arguments, expressions, returnType);
+		return new Value.Fn(arguments, ctx.expBlock(), returnType);
 	}
 
 	@Override
