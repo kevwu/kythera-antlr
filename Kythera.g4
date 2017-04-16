@@ -79,8 +79,7 @@ objLiteral: '{' (objLiteralEntry)+ '}';
 objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
 // multiple returns are not yet supported.
-//fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' (type) (',' type)*? ']' '{' (expression)+ '}';
-fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' type ']' '{' (expression)+ '}';
+fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' type ']' expBlock;
 
 fnLiteralArg: type identifier;
 
@@ -113,7 +112,10 @@ expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnCallExpression
+//    |   expBlock
     ;
+
+expBlock: '{' (expression)+ '}';
 
 fnCallExpression: (identifier | fnLiteral) '(' ((expression) (',' expression)*)? ')';
 
@@ -149,15 +151,13 @@ nameStatement // like "typedef" in C/C++
 controlFlowStatement: ifStatement | forStatement | whileStatement | breakStatement | continueStatement | returnStatement;
 ifStatement:
     IF expression
-    '{' (expression)+ '}'
+    expBlock
     (
-        ELSE IF expression
-        '{' (expression)+ '}'
-    )*
-    ( ELSE '{' (expression)+ '}')?
+        ELSE (ifStatement | expBlock)
+    )?
     ;
-forStatement: FOR expression ';' expression ';' expression '{' (expression)+ '}';
-whileStatement: WHILE expression '{' (expression)+ '}';
+forStatement: FOR expression ';' expression ';' expression expBlock;
+whileStatement: WHILE expression expBlock;
 breakStatement: BREAK;
 continueStatement: CONTINUE;
 returnStatement: RETURN expression;
