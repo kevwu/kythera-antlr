@@ -230,6 +230,12 @@ public abstract class Value<V> implements Comparable<Value> {
 
 			// return scope to before
 			visitor.currentScope = fnScope.parent();
+
+			if(!fnScope.returnFlag) {
+				System.out.println("ERROR: Function never returned!");
+				return null;
+			}
+
 			return returnVal;
 		}
 	}

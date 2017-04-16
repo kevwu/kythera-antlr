@@ -364,10 +364,40 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	@Override public Value visitIfStatement(KytheraParser.IfStatementContext ctx) {
 		// must be at least two statements - the if-expression, and at least one statement inside the braces.
 
-		assert(ctx.expression().size() >= 2);
+		Value condRaw = ctx.expression().accept(this);
 
-//		Value conditional =
-		return null;
+		if(!condRaw.type.equals(Type.boolType)) {
+			System.out.println("ERROR: Boolean expression expected, got " + condRaw.type.toString());
+			return null;
+		}
+
+		Value.Bool conditional = (Value.Bool) condRaw;
+
+		if(conditional.equals(Values.TRUE)) {
+			System.out.println("if: TRUE");
+			ctx.expBlock(0).accept(this);
+		} else if(conditional.equals(Values.FALSE)) {
+			System.out.println("if: FALSE");
+			if(ctx.ELSE() != null) {
+				// else-if
+				if(ctx.ifStatement() != null) {
+					ctx.ifStatement().accept(this);
+				} else if(ctx.expBlock().size() == 2) {
+					assert(ctx.expBlock(1) != null);
+					ctx.expBlock(1).accept(this);
+				} else {
+					System.out.println("ELSE was given, but no if statement or exp block...");
+					return null;
+				}
+			} else {
+				System.out.println("No ELSE statement, done.");
+			}
+		} else {
+			assert(false);
+		}
+
+		// if statements evaluate to the value of their conditional
+		return conditional;
 	}
 
 	@Override
@@ -412,10 +442,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-		assert(ctx.expression() != null);
-		assert(ctx.expression().size() >=1);
 
-		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expression());
+		// TODO store the entire ExpBlockContext instead of individual ExpressionContexts
+		assert(ctx.expBlock() != null);
+		assert(ctx.expBlock().expression().size() >=1);
+
+		ArrayList<KytheraParser.ExpressionContext> expressions = new ArrayList<>(ctx.expBlock().expression());
 
 		assert(ctx.type() != null);
 		Type returnType = Type.getTypeFromText(ctx.type().getText());
@@ -458,10 +490,32 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			System.out.println("Function was somehow not set...");
 			return null;
 		}
-
 	}
 
-	@Override public Value visitReturnStatement(KytheraParser.ReturnStatementContext ctx) {
+	@Override
+	public Value visitExpBlock(KytheraParser.ExpBlockContext ctx) {
+		System.out.println("Inside Expr Block: "+ ctx.getText());
+
+		for (KytheraParser.ExpressionContext exp : ctx.expression()) {
+			if(!this.currentScope.returnFlag) {
+				Value result = exp.accept(this);
+				if(result != null) {
+					System.out.println("exp: [[[ " + result.toString() + " ]]]");
+				} else {
+					System.out.println("exp: Expression resulted in null");
+				}
+			} else {
+				System.out.println(this.currentScope.returnVal.toString());
+				break;
+			}
+		}
+
+		// exp blocks don't return anything
+		return null;
+	}
+
+	@Override
+	public Value visitReturnStatement(KytheraParser.ReturnStatementContext ctx) {
 		assert(ctx.expression() != null);
 
 		this.currentScope.returnFlag = true;

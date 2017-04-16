@@ -61,7 +61,7 @@ m
 fn(int a) [int] {
     let q = 99
     let r = q
-    return r
+    return a
 }(3)
 
 // boolean expression
@@ -85,17 +85,23 @@ myBool
 !false
 
 // if statement
-if a == b {
+if false {
+    a a a a a a
+}
+
+if false {
     a
+} else {
+    b
 }
 
 // if-if-else
-if a == b {
-    1 + 2
-} else if a == c {
-    2 + 3
+if false {
+    a
+} else if false {
+    23
 } else {
-    3 + 4
+    "yay"
 }
 
 // if-else

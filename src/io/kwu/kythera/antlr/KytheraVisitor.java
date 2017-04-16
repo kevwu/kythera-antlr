@@ -73,6 +73,12 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpression(KytheraParser.ExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link KytheraParser#expBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpBlock(KytheraParser.ExpBlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link KytheraParser#fnCallExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

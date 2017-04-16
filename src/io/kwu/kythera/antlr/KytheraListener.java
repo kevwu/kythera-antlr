@@ -110,6 +110,16 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitExpression(KytheraParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KytheraParser#expBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpBlock(KytheraParser.ExpBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#expBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpBlock(KytheraParser.ExpBlockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KytheraParser#fnCallExpression}.
 	 * @param ctx the parse tree
 	 */

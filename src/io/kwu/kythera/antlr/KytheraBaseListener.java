@@ -138,6 +138,18 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpBlock(KytheraParser.ExpBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpBlock(KytheraParser.ExpBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFnCallExpression(KytheraParser.FnCallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
