@@ -6,38 +6,41 @@ comment */
 
 // boolean literal
 let myBool = false
-
 myBool
 
 // integer literal
-let a = 0
+let myInt = 99
+myInt
 
-a
 // float literal
-let b = 2.0
+let myFloat = 3.14159
+myFloat
 
-b
 // string literal
 let myStr = "hello"
-// object literal
+myStr
 
+// object literal
 let myObj = {
     int a
     b = 2.0
-    myStr = "henlo"
+    c = "asdf"
 }
-
-a
+myObj
 
 // function literal
 let myFn = fn(int x) [str] {
     let a = 0
 }
+myFn
+
 // null
 let n = null
+n
 
 // declaration by new
-let n = new int
+let m = new int
+m
 
 // TODO arithmetic operations cause parser ambiguities, fix this
 // 2 + 2
@@ -58,10 +61,12 @@ let n = new int
 fn(int a) [int] {
     let q = 99
     let r = q
-    return a
+    return r
 }(3)
 
 // boolean expression
+let a = 0
+let b = 1
 a = 3
 a == b
 a == a
