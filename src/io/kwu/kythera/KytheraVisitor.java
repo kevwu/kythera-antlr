@@ -53,7 +53,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
 		if (ctx.BOOLEAN_OPERATOR() != null) {
 			// there is no sub-rule for a boolean op, handle it here
-			System.out.println("Boolean expression: " + ctx.expression(0).getText() + ctx.BOOLEAN_OPERATOR().getText() + ctx.expression(1).getText());
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
 
@@ -187,6 +186,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if(ctx.parenExp() != null) {
+			return ctx.parenExp().accept(this);
+		}
+
 		if (ctx.statement() != null) {
 			KytheraParser.StatementContext statement = ctx.statement();
 			if (statement.variableStatement() != null) {
@@ -260,6 +263,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		System.out.println("Unhandled expression: " + ctx.getText());
 		return null;
+	}
+
+	@Override
+	public Value visitParenExp(KytheraParser.ParenExpContext ctx) {
+		return ctx.expression().accept(this);
 	}
 
 	@Override
@@ -380,7 +388,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 					return null;
 				}
 			} else {
-				System.out.println("No ELSE statement, done.");
 			}
 		} else {
 			assert(false);
@@ -392,10 +399,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitWhileStatement(KytheraParser.WhileStatementContext ctx) {
-		System.out.println("while statement");
-
 		while(ctx.expression().accept(this).type.equals(Type.boolType) && ctx.expression().accept(this).equals(Values.TRUE)) {
-			System.out.println("Running loop");
 			ctx.expBlock().accept(this);
 		}
 
@@ -497,8 +501,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpBlock(KytheraParser.ExpBlockContext ctx) {
-		System.out.println("Inside Expr Block: "+ ctx.getText());
-
 		for (KytheraParser.ExpressionContext exp : ctx.expression()) {
 			if(!this.currentScope.returnFlag) {
 				Value result = exp.accept(this);

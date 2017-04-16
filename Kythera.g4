@@ -112,8 +112,11 @@ expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnCallExpression
+    |   parenExp
 //    |   expBlock
     ;
+
+parenExp: '(' expression ')';
 
 expBlock: '{' (expression)+ '}';
 
