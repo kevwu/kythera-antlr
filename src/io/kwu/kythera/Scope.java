@@ -34,6 +34,11 @@ public class Scope extends HashMap<String, Value> {
 	}
 
 	public void setVar(String identifier, Value value) {
+		if(this.hasVar(identifier) && !this.getVar(identifier).type.equals(value.type)) {
+			System.out.println("ERROR: Cannot assign type " + value.type.toString() + " to " + identifier + ", which is of type " + this.getVar(identifier).type.toString());
+			return;
+		}
+
 		this.put(identifier, value);
 	}
 

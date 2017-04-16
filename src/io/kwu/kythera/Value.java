@@ -22,10 +22,6 @@ public abstract class Value<V> implements Comparable<Value> {
 		return this.value;
 	}
 
-	public Type getType() {
-		return this.type;
-	}
-
 	@Override
 	public boolean equals(Object other) {
 		if(!(other instanceof Value)) {
@@ -162,10 +158,6 @@ public abstract class Value<V> implements Comparable<Value> {
 			return out.toString();
 		}
 
-		public Type getType() {
-			return this.type;
-		}
-
 		@Override
 		public boolean equals(Object other) {
 			if(!(other instanceof Value)) {
@@ -248,10 +240,6 @@ public abstract class Value<V> implements Comparable<Value> {
 			out += "}";
 
 			return out;
-		}
-
-		public Type getType() {
-			return this.type;
 		}
 
 		@Override
