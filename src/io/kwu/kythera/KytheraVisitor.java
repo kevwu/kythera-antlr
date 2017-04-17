@@ -51,7 +51,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
-		if (ctx.BOOLEAN_OPERATOR() != null) {
+		if (ctx.BOOLEAN_COMPARISON() != null) {
 			// there is no sub-rule for a boolean op, handle it here
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
@@ -61,42 +61,78 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 
-			switch (ctx.BOOLEAN_OPERATOR().getText()) {
-				case "==":
-					return new Value.Bool(lhs.equals(rhs));
-				case "!=":
-					return new Value.Bool(!(lhs.equals(rhs)));
-				case "<":
-					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
-					} else {
-						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
-						return null;
-					}
-				case ">":
-					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
-					} else {
-						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
-						return null;
-					}
-				case "<=":
-					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
-					} else {
-						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
-						return null;
-					}
-				case ">=":
-					if (lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
-						return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
-					} else {
-						System.out.println("ERROR: Boolean operator overloading is not yet supported.");
-						return null;
-					}
-				default:
-					System.out.println("Unimplemented boolean statement.");
+			String op = ctx.BOOLEAN_COMPARISON().getText();
+
+			if(op.equals("==")) {
+				return new Value.Bool(lhs.equals(rhs));
 			}
+
+			if(op.equals("!=")) {
+				return new Value.Bool(!(lhs.equals(rhs)));
+			}
+
+			// all other comparisons require Comparable
+			if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
+				if(op.equals("<")) {
+					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
+				}
+
+				if(op.equals(">")) {
+					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
+				}
+
+				if(op.equals("<=")) {
+					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
+				}
+
+				if(op.equals(">=")) {
+					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
+				}
+			} else {
+				System.out.println("ERROR: Boolean operator overloading is not yet supported.");
+				return null;
+			}
+
+			System.out.println("Unimplemented boolean operator.");
+			assert(false);
+			return null;
+		}
+
+		if(ctx.BOOLEAN_OPERATOR() != null) {
+			System.out.println("Boolean operation");
+
+			assert(ctx.expression().size() == 2);
+
+			Value lhs = ctx.expression(0).accept(this);
+			Value rhs = ctx.expression(1).accept(this);
+
+
+			if(lhs == null || rhs == null) {
+				System.out.println("One or more variables were null (probably due to an error.)");
+				return null;
+			}
+
+			if(!lhs.type.equals(Type.boolType) && !rhs.type.equals(Type.boolType)){
+				System.out.println("ERROR: Boolean expected, got " + lhs.type.toString() + ", " + rhs.type.toString());
+				return null;
+			}
+
+			String op = ctx.BOOLEAN_OPERATOR().getText();
+
+			if(op.equals("&&")) {
+				return new Value.Bool(
+					(((Boolean) lhs.value) && ((Boolean) rhs.value))
+				);
+			}
+
+			if(op.equals("||")) {
+				return new Value.Bool(
+					(((Boolean) lhs.value) || ((Boolean) rhs.value))
+				);
+			}
+
+			System.out.println("Unimplemented boolean operation.");
+			return null;
 		}
 
 		if(ctx.ARITH_OPERATOR() != null) {

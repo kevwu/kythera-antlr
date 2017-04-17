@@ -51,7 +51,8 @@ fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
 
 // operators
 ASSIGNMENT_OPERATOR: '=';
-BOOLEAN_OPERATOR: '==' | '!=' | '<' | '>' | '<=' | '>=';
+BOOLEAN_COMPARISON: '==' | '!=' | '<' | '>' | '<=' | '>=';
+BOOLEAN_OPERATOR: '&&' | '||';
 NOT_OPERATOR: '!';
 ARITH_OPERATOR: '+' | '-' | '*' | '/' | '%';
 
@@ -108,7 +109,8 @@ expression
     :   statement // statements evaluate as expressions
     |   identifier
     |   literal
-    |   expression BOOLEAN_OPERATOR expression // boolean expression
+    |   expression BOOLEAN_COMPARISON expression // boolean expression
+    |   expression BOOLEAN_OPERATOR expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
     |   fnCallExpression
