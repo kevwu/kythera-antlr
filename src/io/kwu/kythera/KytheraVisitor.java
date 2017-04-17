@@ -99,8 +99,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if(ctx.BOOLEAN_OPERATOR() != null) {
-			System.out.println("Boolean operation");
-
 			assert(ctx.expression().size() == 2);
 
 			Value lhs = ctx.expression(0).accept(this);

@@ -1,11 +1,16 @@
-let x = 0
-while x < 100 {
-    if (x % 3) == 0 {
-        "fizz"
-    }
-    if (x % 5) == 0 {
-        "buzz"
-    }
+fn(int count) [null] {
+    let x = 0
+    while x < count {
+        if (x % 3) == 0 && (x % 5) == 0 {
+            "fizzbuzz"
+        } else if (x % 5) == 0 {
+            "buzz"
+        } else if (x % 3) == 0 {
+            "fizz"
+        } else {
+            x
+        }
 
-    x = (x + 1)
-}
+        x = (x + 1)
+    }
+}(100)

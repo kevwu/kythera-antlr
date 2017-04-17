@@ -91,7 +91,7 @@ NULL: 'null';
 literal: IntLiteral | FloatLiteral | StrLiteral | NULL | TRUE | FALSE | objLiteral | fnLiteral;
 
 /* Type */
-type: BOOL | INT | FLOAT | STR | fnType | objType | Identifier ;
+type: BOOL | INT | FLOAT | STR | NULL | fnType | objType | Identifier ;
 
 identifier: Identifier;
 //identifier: Identifier | Identifier '[' IntLiteral ']' | Identifier '.' Identifier
