@@ -3,6 +3,7 @@ package io.kwu.kythera;
 import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraLexer;
 import io.kwu.kythera.antlr.KytheraParser;
+import org.antlr.runtime.tree.DOTTreeGenerator;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -45,7 +46,7 @@ public class Main {
 
 					@Override
 					public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
-						System.out.println("Parse ambiguity: " + dfa.toLexerString());
+						System.out.println("Parse ambiguity: " + dfa.toString(parser.getVocabulary()));
 						Token decisionStart = parser.getInputStream().get(i);
 						Token ambiguityStart = parser.getInputStream().get(i1);
 

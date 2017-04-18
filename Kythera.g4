@@ -47,7 +47,7 @@ ARR: 'arr';
 
 objType: OBJ '{' (type identifier)*? '}';
 
-fnType: FN '(' (type)*? ')' '[' (type) (',' type)*? ']';
+fnType: FN '(' (type (',' type)*? )? ')' '[' (type) (',' type)*? ']';
 
 // operators
 ASSIGNMENT_OPERATOR: '=';
@@ -80,7 +80,7 @@ objLiteral: '{' (objLiteralEntry)+ '}';
 objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
 // multiple returns are not yet supported.
-fnLiteral: FN '(' (fnLiteralArg)+ ')' '[' type ']' expBlock;
+fnLiteral: FN '(' fnLiteralArg (',' fnLiteralArg)* ')' '[' type ']' expBlock;
 
 fnLiteralArg: type identifier;
 
@@ -106,23 +106,25 @@ Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*
 
 // some of these are inline by necessity (otherwise we get left recursion problems)
 expression
-    :   statement // statements evaluate as expressions
-    |   identifier
-    |   literal
+    :   fnCallExpression
     |   expression BOOLEAN_COMPARISON expression // boolean expression
     |   expression BOOLEAN_OPERATOR expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
-    |   fnCallExpression
-    |   parenExp
+    |   statement // statements evaluate as expressions
+    |   identifier
+    |   literal
+    |   '(' expression ')'
 //    |   expBlock
     ;
 
-parenExp: '(' expression ')';
+fnCallExpression: (identifier | fnLiteral) '(' fnCallParamList ')';
+
+fnCallParamList: ((expression) (',' expression)*?)?;
 
 expBlock: '{' (expression)+ '}';
 
-fnCallExpression: (identifier | fnLiteral) '(' ((expression) (',' expression)*)? ')';
+//parenExp: '(' expression ')';
 
 // statements
 statement

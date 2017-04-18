@@ -1,4 +1,4 @@
-// Generated from /home/dejawu/Documents/kythera/Kythera.g4 by ANTLR 4.7
+// Generated from /home/dejawu/kythera/Kythera.g4 by ANTLR 4.7
 
     package io.kwu.kythera.antlr;
 
@@ -45,7 +45,7 @@ public class KytheraLexer extends Lexer {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'{'", "'}'", "'('", "')'", "'['", "','", "']'", "'import'", "'include'", 
+		null, "'{'", "'}'", "'('", "','", "')'", "'['", "']'", "'import'", "'include'", 
 		"'export'", null, "'let'", "'name'", "'if'", "'else'", "'while'", "'each'", 
 		"'return'", "'break'", "'continue'", "'new'", "'bool'", "'int'", "'float'", 
 		"'str'", "'fn'", "'obj'", "'arr'", "'='", null, null, "'!'", null, "'extends'", 
@@ -164,7 +164,7 @@ public class KytheraLexer extends Lexer {
 		"\u0127\3\2\2\2M\u012c\3\2\2\2O\u012e\3\2\2\2Q\u0133\3\2\2\2S\u013a\3\2"+
 		"\2\2U\u013f\3\2\2\2W\u014b\3\2\2\2Y\u0153\3\2\2\2[\u0158\3\2\2\2]\u015f"+
 		"\3\2\2\2_`\7}\2\2`\4\3\2\2\2ab\7\177\2\2b\6\3\2\2\2cd\7*\2\2d\b\3\2\2"+
-		"\2ef\7+\2\2f\n\3\2\2\2gh\7]\2\2h\f\3\2\2\2ij\7.\2\2j\16\3\2\2\2kl\7_\2"+
+		"\2ef\7.\2\2f\n\3\2\2\2gh\7+\2\2h\f\3\2\2\2ij\7]\2\2j\16\3\2\2\2kl\7_\2"+
 		"\2l\20\3\2\2\2mn\7k\2\2no\7o\2\2op\7r\2\2pq\7q\2\2qr\7t\2\2rs\7v\2\2s"+
 		"\22\3\2\2\2tu\7k\2\2uv\7p\2\2vw\7e\2\2wx\7n\2\2xy\7w\2\2yz\7f\2\2z{\7"+
 		"g\2\2{\24\3\2\2\2|}\7g\2\2}~\7z\2\2~\177\7r\2\2\177\u0080\7q\2\2\u0080"+

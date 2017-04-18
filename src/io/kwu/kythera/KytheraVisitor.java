@@ -219,10 +219,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return Values.TRUE;
 			}
 		}
-
-		if(ctx.parenExp() != null) {
-			return ctx.parenExp().accept(this);
-		}
+//
+//		if(ctx.parenExp() != null) {
+//			return ctx.parenExp().accept(this);
+//		}
 
 		if (ctx.statement() != null) {
 			KytheraParser.StatementContext statement = ctx.statement();
@@ -295,14 +295,19 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if(ctx.expression().size() == 1) {
+			System.out.println("Unwrapping paren expression.");
+			return ctx.expression(0).accept(this);
+		}
+
 		System.out.println("Unhandled expression: " + ctx.getText());
 		return null;
 	}
-
-	@Override
-	public Value visitParenExp(KytheraParser.ParenExpContext ctx) {
-		return ctx.expression().accept(this);
-	}
+//
+//	@Override
+//	public Value visitParenExp(KytheraParser.ParenExpContext ctx) {
+//		return ctx.expression().accept(this);
+//	}
 
 	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
@@ -519,8 +524,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		ArrayList<Value> argList = new ArrayList<>();
 
-		if(ctx.expression() != null && ctx.expression().size() != 0) {
-			for(KytheraParser.ExpressionContext expr : ctx.expression()) {
+		if(ctx.fnCallParamList() != null && ctx.fnCallParamList().expression().size() != 0) {
+			for(KytheraParser.ExpressionContext expr : ctx.fnCallParamList().expression()) {
 				argList.add(expr.accept(this));
 			}
 		}

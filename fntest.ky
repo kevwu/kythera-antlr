@@ -1,0 +1,5 @@
+let mySum = fn(int a, int b) [null]{
+    return a + b
+}
+
+mySum(10, 20)
