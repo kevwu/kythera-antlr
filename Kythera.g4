@@ -97,7 +97,7 @@ identifier: Identifier;
 //identifier: Identifier | Identifier '[' IntLiteral ']' | Identifier '.' Identifier
 
 // lexically, identifiers are the same as types
-Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '-'  | '_')*;
+Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
 
 /* Statements and Expressions */
 
@@ -115,7 +115,6 @@ expression
     |   identifier
     |   literal
     |   '(' expression ')'
-//    |   expBlock
     ;
 
 fnCallExpression: (identifier | fnLiteral) '(' fnCallParamList ')';
@@ -123,8 +122,6 @@ fnCallExpression: (identifier | fnLiteral) '(' fnCallParamList ')';
 fnCallParamList: ((expression) (',' expression)*?)?;
 
 expBlock: '{' (expression)+ '}';
-
-//parenExp: '(' expression ')';
 
 // statements
 statement

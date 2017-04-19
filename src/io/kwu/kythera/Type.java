@@ -14,7 +14,7 @@ public abstract class Type {
 	/*
 	In compound types (fn and obj), equals only checks that the root types are the same.
 	This allows fn and obj variables to take on fns and objs with different signatures.
-	For deep checking of signatures use subtypeEquals.
+	For deep checking of signatures, use subtypeEquals.
 	 */
 	@Override
 	public boolean equals(Object other) {
@@ -83,9 +83,14 @@ public abstract class Type {
 		}
 
 		// check parameters and return type in addition to raw type
-		// TODO Implement
 		public boolean subtypeEquals(Object other) {
-			return false;
+			if(!this.equals(other)) {
+				return false;
+			}
+
+			FnType otherFnType = (FnType) other;
+
+			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.argList);
 		}
 	}
 

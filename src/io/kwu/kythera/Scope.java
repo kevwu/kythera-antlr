@@ -6,8 +6,10 @@ public class Scope extends HashMap<String, Value> {
 	final private Scope parent;
 	final private int level;
 
-	protected boolean returnFlag;
-	protected Value returnVal;
+	boolean returnFlag;
+	Value returnVal;
+
+	HashMap<String, Type> names;
 
 	public Scope(final Scope parent) {
 		this.parent = parent;
@@ -19,6 +21,8 @@ public class Scope extends HashMap<String, Value> {
 		}
 
 		this.returnFlag = false;
+
+		this.names = new HashMap<>();
 	}
 
 	public boolean inScope(String var) {
@@ -48,6 +52,7 @@ public class Scope extends HashMap<String, Value> {
 		} else if(this.parent != null) {
 			return this.parent.getVar(identifier);
 		} else {
+			System.out.println("Internal warning: getVar on unset variable.");
 			return null;
 		}
 	}
@@ -60,6 +65,23 @@ public class Scope extends HashMap<String, Value> {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean hasName(String name) {
+		return this.names.containsKey(name);
+	}
+
+	public Type getName(String name) {
+		return this.names.get(name);
+	}
+
+	public void setName(String name, Type type) {
+		if(this.names.containsKey(name)) {
+			System.out.println("Internal warning: attempted to set a name that was already set");
+			return;
+		}
+
+		this.names.put(name, type);
 	}
 
 	public Scope parent() {

@@ -51,6 +51,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
+		if (ctx.fnCallExpression() != null) {
+			return ctx.fnCallExpression().accept(this);
+		}
+
 		if (ctx.BOOLEAN_COMPARISON() != null) {
 			// there is no sub-rule for a boolean op, handle it here
 			Value lhs = visit(ctx.expression(0));
@@ -238,10 +242,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-		if (ctx.fnCallExpression() != null) {
-			return ctx.fnCallExpression().accept(this);
-		}
-
 		// check for literals/raw expression last
 		if (ctx.literal() != null) {
 			if (ctx.literal().IntLiteral() != null) {
@@ -296,7 +296,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if(ctx.expression().size() == 1) {
-			System.out.println("Unwrapping paren expression.");
 			return ctx.expression(0).accept(this);
 		}
 
@@ -349,8 +348,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if (ctx.nameStatement() != null) {
-			System.out.println("name statement");
-			return null;
+			return ctx.nameStatement().accept(this);
 		}
 
 		System.out.println("Unhandled variable statement: " + ctx.getText());
@@ -399,6 +397,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return ctx.whileStatement().accept(this);
 		}
 
+		return null;
+	}
+
+	@Override
+	public Value visitNameStatement(KytheraParser.NameStatementContext ctx) {
+		System.out.println("Name Statement");
 		return null;
 	}
 
