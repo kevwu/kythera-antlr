@@ -45,9 +45,15 @@ FN: 'fn';
 OBJ: 'obj';
 ARR: 'arr';
 
-objType: OBJ '{' (type identifier)*? '}';
+objType: OBJ '{' (objTypeEntry)*? '}';
+objTypeEntry: type identifier;
 
-fnType: FN '(' (type (',' type)*? )? ')' '[' (type) (',' type)*? ']';
+// only one return value allowed right now
+//fnType: FN '(' (type (',' type)*? )? ')' '[' (type) (',' type)*? ']';
+fnType: FN '(' (fnTypeArg (',' fnTypeArg)*? )? ')' '[' fnTypeReturn ']';
+fnTypeArg: type;
+fnTypeReturn: type;
+
 
 // operators
 ASSIGNMENT_OPERATOR: '=';

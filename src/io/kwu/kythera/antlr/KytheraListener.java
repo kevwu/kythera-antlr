@@ -20,6 +20,16 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitObjType(KytheraParser.ObjTypeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KytheraParser#objTypeEntry}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjTypeEntry(KytheraParser.ObjTypeEntryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#objTypeEntry}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjTypeEntry(KytheraParser.ObjTypeEntryContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KytheraParser#fnType}.
 	 * @param ctx the parse tree
 	 */
@@ -29,6 +39,26 @@ public interface KytheraListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFnType(KytheraParser.FnTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#fnTypeArg}.
+	 * @param ctx the parse tree
+	 */
+	void enterFnTypeArg(KytheraParser.FnTypeArgContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#fnTypeArg}.
+	 * @param ctx the parse tree
+	 */
+	void exitFnTypeArg(KytheraParser.FnTypeArgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#fnTypeReturn}.
+	 * @param ctx the parse tree
+	 */
+	void enterFnTypeReturn(KytheraParser.FnTypeReturnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#fnTypeReturn}.
+	 * @param ctx the parse tree
+	 */
+	void exitFnTypeReturn(KytheraParser.FnTypeReturnContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#objLiteral}.
 	 * @param ctx the parse tree

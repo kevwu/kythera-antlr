@@ -2,6 +2,8 @@ package io.kwu.kythera;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Type {
 	// string representing type as Kythera would see it
@@ -95,31 +97,54 @@ public abstract class Type {
 
 			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.argList);
 		}
+
+		@Override
+		public String toString() {
+			StringBuilder out = new StringBuilder("fn: (");
+			for(Type arg : this.argList) {
+				// TODO get those commas right
+				out.append(arg.type).append(", ");
+			}
+			out.append(") [").append(returnType.toString()).append("]");
+
+			return out.toString();
+		}
 	}
 
 	public static class ObjType extends Type {
-		private HashMap<String, Identifier> identifiers;
+		private HashSet<Identifier> identifiers;
 
 		public ObjType() {
 			super("obj");
-			this.identifiers = new HashMap<>();
+			this.identifiers = new HashSet<>();
 		}
 
-		public ObjType(HashMap<String, Identifier> identifiers) {
+		public ObjType(Set<Identifier> identifiers) {
 			super("obj");
-			this.identifiers = identifiers;
+			this.identifiers = new HashSet<>(identifiers);
 		}
 
 		// check fields and names in addition to raw type
-		// TODO implement
 		public boolean subtypeEquals(Object other) {
-			return false;
+			if(!this.equals(other)) {
+				return false;
+			}
+
+			return this.identifiers.equals(((ObjType) other).identifiers);
 		}
 
 		@Override
 		public String toString() {
 			// TODO print fields in addition to obj
-			return "obj{}";
+			StringBuilder out = new StringBuilder("obj: {\n");
+
+			for(Identifier arg : this.identifiers) {
+				out.append(arg.type).append(" ").append(arg.name).append("\n");
+			}
+
+			out.append("}");
+
+			return out.toString();
 		}
 	}
 }

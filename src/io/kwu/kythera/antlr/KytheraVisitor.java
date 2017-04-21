@@ -19,11 +19,29 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObjType(KytheraParser.ObjTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link KytheraParser#objTypeEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjTypeEntry(KytheraParser.ObjTypeEntryContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link KytheraParser#fnType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFnType(KytheraParser.FnTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link KytheraParser#fnTypeArg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFnTypeArg(KytheraParser.FnTypeArgContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link KytheraParser#fnTypeReturn}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFnTypeReturn(KytheraParser.FnTypeReturnContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link KytheraParser#objLiteral}.
 	 * @param ctx the parse tree

@@ -137,6 +137,8 @@ while x < 10 {
     x = x + 1
 }
 
+x
+
 // name statements
 name myType int
 name myFnType fn(int) [str]
@@ -144,6 +146,13 @@ name myObjType obj{
     int ab
     str b
 }
+
+let myCustomFnInstance = new myFnType
+
+myCustomFnInstance
+
+let myCustomObjInstance = new myObjType
+
 
 // package statements
 // import "myThing"

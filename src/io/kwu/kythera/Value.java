@@ -5,7 +5,7 @@ import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.*;
 
-public abstract class Value<V> implements Comparable<Value> {
+public class Value<V> implements Comparable<Value> {
 	protected final V value;
 	protected final Type type;
 
@@ -25,6 +25,7 @@ public abstract class Value<V> implements Comparable<Value> {
 
 	@Override
 	public boolean equals(Object other) {
+		// all subtypes of Value, such as IntVal, are also instanceof Value.
 		if(!(other instanceof Value)) {
 			return false;
 		}
@@ -183,8 +184,8 @@ public abstract class Value<V> implements Comparable<Value> {
 
 	// objects handle equality differently
 	public static class ObjVal extends Value<HashMap<Identifier, Value>> {
-		public ObjVal(HashMap<String, Identifier> identifiers, HashMap<Identifier, Value> values) {
-			super(new Type.ObjType(identifiers), values);
+		public ObjVal(HashMap<Identifier, Value> value) {
+			super(new Type.ObjType(value.keySet()), value);
 		}
 
 		@Override

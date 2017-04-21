@@ -30,6 +30,18 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterObjTypeEntry(KytheraParser.ObjTypeEntryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjTypeEntry(KytheraParser.ObjTypeEntryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFnType(KytheraParser.FnTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -37,6 +49,30 @@ public class KytheraBaseListener implements KytheraListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFnType(KytheraParser.FnTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFnTypeArg(KytheraParser.FnTypeArgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFnTypeArg(KytheraParser.FnTypeArgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFnTypeReturn(KytheraParser.FnTypeReturnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFnTypeReturn(KytheraParser.FnTypeReturnContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

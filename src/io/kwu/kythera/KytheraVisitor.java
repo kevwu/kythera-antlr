@@ -312,10 +312,16 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	// to get a Type from a type, use KytheraTypeVisitor.
 	@Override
 	public Value visitType(KytheraParser.TypeContext ctx) {
-		System.out.println("visittype");
 		Type type = ctx.accept(this.typeVisitor);
 
-		// TODO find a proper default value to set for uninitialized variables
+		if(type == null) {
+			System.out.println("Couldn't find type.");
+			return null;
+		}
+
+		return new Value(type, null);
+
+/*		// TODO find a proper default value to set for uninitialized variables
 		if(type.equals(Type.intType)) {
 			return new Value.IntVal(null);
 		}
@@ -343,11 +349,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		if (ctx.objType() != null) {
 			System.out.println("Object type is not supported here.");
-			return null;
+			return new Value.ObjVal(null);
 		}
 
 		System.out.println("ERROR: Invalid type");
-		return null;
+		return null;*/
 	}
 
 //
@@ -546,7 +552,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			values.put(id, val);
 		}
 
-		return new Value.ObjVal(identifiers, values);
+		return new Value.ObjVal(values);
 	}
 
 	@Override

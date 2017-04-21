@@ -68,11 +68,24 @@ public class Scope extends HashMap<String, Value> {
 	}
 
 	public boolean hasName(String name) {
-		return this.names.containsKey(name);
+		if(this.names.containsKey(name)) {
+			return true;
+		} else if(this.parent != null) {
+			return this.parent.hasName(name);
+		} else {
+			return false;
+		}
 	}
 
 	public Type getName(String name) {
-		return this.names.get(name);
+		if(this.names.containsKey(name)) {
+			return this.names.get(name);
+		} else if(this.parent != null) {
+			return this.parent.getName(name);
+		} else {
+			System.out.println("Internal warning: getName on unset name.");
+			return null;
+		}
 	}
 
 	public void setName(String name, Type type) {

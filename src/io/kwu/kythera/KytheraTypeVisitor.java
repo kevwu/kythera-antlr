@@ -3,6 +3,11 @@ package io.kwu.kythera;
 import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 	private KytheraVisitor visitor;
 
@@ -13,6 +18,7 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 
 	@Override
 	public Type visitType(KytheraParser.TypeContext ctx) {
+		System.out.println("Finding type.");
 		String typeString = ctx.getText();
 
 		if (typeString.equals("int")) {
@@ -43,19 +49,46 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 			return ctx.objType().accept(this);
 		}
 
+		if (this.visitor.currentScope.hasName(typeString)) {
+			return this.visitor.currentScope.getName(typeString);
+		}
+
 		System.out.println("Internal error: Unhandled type");
 		return null;
 	}
 
 	@Override
 	public Type visitObjType(KytheraParser.ObjTypeContext ctx) {
-		System.out.println("Object type (not yet implemented)");
-		return null;
+		List<KytheraParser.ObjTypeEntryContext> entryContexts = ctx.objTypeEntry();
+
+		HashSet<Identifier> identifiers = new HashSet<>();
+
+		for (KytheraParser.ObjTypeEntryContext entry : entryContexts) {
+			assert (entry.identifier() != null);
+			String identifString = entry.identifier().getText();
+
+			assert (entry.type() != null);
+			Type type = entry.type().accept(this);
+
+			Identifier id = new Identifier(identifString, type);
+			identifiers.add(id);
+		}
+
+		return new Type.ObjType(identifiers);
 	}
 
 	@Override
 	public Type visitFnType(KytheraParser.FnTypeContext ctx) {
-		System.out.println("FnVal type: " + ctx.getText());
-		return null;
+		ArrayList<Type> argTypes = new ArrayList<>();
+		if(ctx.fnTypeArg() != null && ctx.fnTypeArg().size() != 0) {
+			for(KytheraParser.FnTypeArgContext fnArg : ctx.fnTypeArg()) {
+				assert(fnArg.type() != null);
+				argTypes.add(fnArg.type().accept(this));
+			}
+		}
+
+		Type returnType = ctx.fnTypeReturn().accept(this);
+
+		return new Type.FnType(argTypes, returnType);
 	}
 }
