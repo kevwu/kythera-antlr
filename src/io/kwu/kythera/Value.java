@@ -49,15 +49,15 @@ public abstract class Value<V> implements Comparable<Value> {
 		Type type = Type.getTypeFromText(typeString);
 
 		if(type.equals(Type.intType)) {
-			return new Int((Integer) value);
+			return new IntVal((Integer) value);
 		}
 
 		if(type.equals(Type.floatType)) {
-			return new Float((Double) value);
+			return new FloatVal((Double) value);
 		}
 
 		if(type.equals(Type.boolType)) {
-			return new Bool((Boolean) value);
+			return new BoolVal((Boolean) value);
 		}
 
 		if (type.equals(Type.nullType)) {
@@ -65,7 +65,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 
 		if (type.equals(Type.strType)) {
-			return new Str((String) value);
+			return new StrVal((String) value);
 		}
 
 		if (typeString.startsWith("fn")) {
@@ -84,28 +84,28 @@ public abstract class Value<V> implements Comparable<Value> {
 		return null;
 	}
 
-	public static class Int extends Value<Integer> {
-		public Int(Integer val) {
+	public static class IntVal extends Value<Integer> {
+		public IntVal(Integer val) {
 			super(Type.intType, val);
 		}
 
-		public Int(int val) {
+		public IntVal(int val) {
 			super(Type.intType, val);
 		}
 	}
 
-	public static class Float extends Value<Double> {
-		public Float(Double val) {
+	public static class FloatVal extends Value<Double> {
+		public FloatVal(Double val) {
 			super(Type.floatType, val);
 		}
 
-		public Float(double val) {
+		public FloatVal(double val) {
 			super(Type.floatType, val);
 		}
 	}
 
-	public static class Str extends Value<String> {
-		public Str(String val) {
+	public static class StrVal extends Value<String> {
+		public StrVal(String val) {
 			super(Type.strType, val);
 		}
 
@@ -116,13 +116,13 @@ public abstract class Value<V> implements Comparable<Value> {
 	}
 
 	// type implementations
-	public static class Bool extends Value<Boolean> {
-		public Bool(Boolean val) {
+	public static class BoolVal extends Value<Boolean> {
+		public BoolVal(Boolean val) {
 			super(Type.boolType, val);
 		}
 
 		// ez creation from Java boolean primitive
-		public Bool(boolean val) {
+		public BoolVal(boolean val) {
 			super(Type.boolType, val);
 		}
 	}
@@ -134,12 +134,12 @@ public abstract class Value<V> implements Comparable<Value> {
 	}
 
 	// functions handle equality differently
-	public static class Fn extends Value {
+	public static class FnVal extends Value {
 		private ArrayList<Identifier> args;
 		private KytheraParser.ExpBlockContext expBlock;
 		private Type returnType;
 
-		public Fn(ArrayList<Identifier> args, KytheraParser.ExpBlockContext expBlock, Type returnType) {
+		public FnVal(ArrayList<Identifier> args, KytheraParser.ExpBlockContext expBlock, Type returnType) {
 			super(new Type.FnType(args, returnType), expBlock);
 			this.args = args;
 			this.expBlock = expBlock;
@@ -220,8 +220,8 @@ public abstract class Value<V> implements Comparable<Value> {
 	}
 
 	// objects handle equality differently
-	public static class Obj extends Value<HashMap<Identifier, Value>> {
-		public Obj(HashMap<String, Identifier> identifiers, HashMap<Identifier, Value> values) {
+	public static class ObjVal extends Value<HashMap<Identifier, Value>> {
+		public ObjVal(HashMap<String, Identifier> identifiers, HashMap<Identifier, Value> values) {
 			super(new Type.ObjType(identifiers), values);
 		}
 
@@ -256,6 +256,13 @@ public abstract class Value<V> implements Comparable<Value> {
 		public int compareTo(Value o) {
 			// objects can't be numerically compared
 			throw new ClassCastException();
+		}
+	}
+
+	public static class TypeVal extends Value<Type> {
+
+		public TypeVal(Type type) {
+			super(Type.typeType, type);
 		}
 	}
 }

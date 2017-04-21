@@ -5,6 +5,6 @@ public class Values {
 	public static Value.Null NULL = new Value.Null();
 
 	// boolean true/false
-	public static Value.Bool TRUE = new Value.Bool(Boolean.TRUE);
-	public static Value.Bool FALSE = new Value.Bool(Boolean.FALSE);
+	public static Value.BoolVal TRUE = new Value.BoolVal(Boolean.TRUE);
+	public static Value.BoolVal FALSE = new Value.BoolVal(Boolean.FALSE);
 }

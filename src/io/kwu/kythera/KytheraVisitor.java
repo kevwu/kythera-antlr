@@ -68,29 +68,29 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			String op = ctx.BOOLEAN_COMPARISON().getText();
 
 			if(op.equals("==")) {
-				return new Value.Bool(lhs.equals(rhs));
+				return new Value.BoolVal(lhs.equals(rhs));
 			}
 
 			if(op.equals("!=")) {
-				return new Value.Bool(!(lhs.equals(rhs)));
+				return new Value.BoolVal(!(lhs.equals(rhs)));
 			}
 
 			// all other comparisons require Comparable
 			if(lhs.getVal() instanceof Comparable && rhs.getVal() instanceof Comparable) {
 				if(op.equals("<")) {
-					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
+					return new Value.BoolVal(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) < 0);
 				}
 
 				if(op.equals(">")) {
-					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
+					return new Value.BoolVal(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) > 0);
 				}
 
 				if(op.equals("<=")) {
-					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
+					return new Value.BoolVal(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) <= 0);
 				}
 
 				if(op.equals(">=")) {
-					return new Value.Bool(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
+					return new Value.BoolVal(((Comparable) lhs.getVal()).compareTo(rhs.getVal()) >= 0);
 				}
 			} else {
 				System.out.println("ERROR: Boolean operator overloading is not yet supported.");
@@ -122,13 +122,13 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			String op = ctx.BOOLEAN_OPERATOR().getText();
 
 			if(op.equals("&&")) {
-				return new Value.Bool(
+				return new Value.BoolVal(
 					(((Boolean) lhs.value) && ((Boolean) rhs.value))
 				);
 			}
 
 			if(op.equals("||")) {
-				return new Value.Bool(
+				return new Value.BoolVal(
 					(((Boolean) lhs.value) || ((Boolean) rhs.value))
 				);
 			}
@@ -197,9 +197,9 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 
 			if(resultType.equals(Type.intType)) {
-				return new Value.Int(Integer.valueOf((int) resultVal));
+				return new Value.IntVal(Integer.valueOf((int) resultVal));
 			} else if(resultType.equals(Type.floatType)){
-				return new Value.Float(Double.valueOf(resultVal));
+				return new Value.FloatVal(Double.valueOf(resultVal));
 			} else {
 				return null;
 			}
@@ -216,7 +216,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 
-			Value.Bool boolVal = (Value.Bool) val;
+			Value.BoolVal boolVal = (Value.BoolVal) val;
 			if(boolVal.value) {
 				return Values.FALSE;
 			} else {
@@ -245,19 +245,19 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		// check for literals/raw expression last
 		if (ctx.literal() != null) {
 			if (ctx.literal().IntLiteral() != null) {
-				return new Value.Int(
+				return new Value.IntVal(
 					Integer.parseInt(ctx.literal().IntLiteral().getText())
 				);
 			}
 
 			if (ctx.literal().FloatLiteral() != null) {
-				return new Value.Float(
+				return new Value.FloatVal(
 					Double.parseDouble(ctx.literal().FloatLiteral().getText())
 				);
 			}
 
 			if (ctx.literal().StrLiteral() != null) {
-				return new Value.Str(
+				return new Value.StrVal(
 					ctx.literal().StrLiteral().getText().replaceAll("\"", "")
 				);
 			}
@@ -414,7 +414,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
-		Value.Bool conditional = (Value.Bool) condRaw;
+		Value.BoolVal conditional = (Value.BoolVal) condRaw;
 
 		if(conditional.equals(Values.TRUE)) {
 			ctx.expBlock(0).accept(this);
@@ -452,7 +452,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		// while statements don't return anything yet (until ExpBlock evaluations are implemented)
-		return null;
+		System.out.println("(While statement returning null)");
+		return Values.NULL;
 	}
 
 	@Override
@@ -483,7 +484,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			values.put(id, val);
 		}
 
-		return new Value.Obj(identifiers, values);
+		return new Value.ObjVal(identifiers, values);
 	}
 
 	@Override
@@ -502,14 +503,14 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		Type returnType = Type.getTypeFromText(ctx.type().getText());
 
-		return new Value.Fn(arguments, ctx.expBlock(), returnType);
+		return new Value.FnVal(arguments, ctx.expBlock(), returnType);
 	}
 
 	@Override
 	public Value visitFnCallExpression(KytheraParser.FnCallExpressionContext ctx) {
 		System.out.println("Function call expression.");
 
-		Value.Fn function = null;
+		Value.FnVal function = null;
 
 		if(ctx.identifier() != null) {
 			if(!this.currentScope.hasVar(ctx.identifier().getText())) {
@@ -517,13 +518,13 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				System.out.println("ERROR: Calling a function identifier that has not been defined.");
 				return null;
 			}
-			function = (Value.Fn) this.currentScope.getVar(ctx.identifier().getText());
+			function = (Value.FnVal) this.currentScope.getVar(ctx.identifier().getText());
 			if(!function.type.equals(Type.fnBaseType)) {
 				System.out.println("ERROR: " + ctx.identifier().getText() + " is not a function");
 				return null;
 			}
 		} else if(ctx.fnLiteral() != null) {
-			function = (Value.Fn) ctx.fnLiteral().accept(this);
+			function = (Value.FnVal) ctx.fnLiteral().accept(this);
 		}
 
 		ArrayList<Value> argList = new ArrayList<>();
@@ -585,7 +586,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		@Override
 		public Type visitFnType(KytheraParser.FnTypeContext ctx) {
-			System.out.println("Fn type: " + ctx.getText());
+			System.out.println("FnVal type: " + ctx.getText());
 			return null;
 		}
 	}

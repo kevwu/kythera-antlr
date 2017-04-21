@@ -42,6 +42,9 @@ public abstract class Type {
 
 	public static Type nullType = new Type("null") {};
 
+	// allow the returning of data types
+	public static Type typeType = new Type("type") {};
+
 	// base types are for shallow type comparison.
 	public static Type fnBaseType = new Type("fn") {};
 
