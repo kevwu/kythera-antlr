@@ -14,4 +14,4 @@ fn(int count) [null] {
         x = (x + 1)
     }
     return null
-}(1000)
+}(20)

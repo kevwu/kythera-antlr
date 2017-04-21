@@ -1,5 +1,6 @@
 package io.kwu.kythera;
 
+import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.*;
@@ -43,45 +44,6 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 
 		return ((Comparable) this.value).compareTo(o.value);
-	}
-
-	public static Value fromTypeText(String typeString, Object value) {
-		Type type = Type.getTypeFromText(typeString);
-
-		if(type.equals(Type.intType)) {
-			return new IntVal((Integer) value);
-		}
-
-		if(type.equals(Type.floatType)) {
-			return new FloatVal((Double) value);
-		}
-
-		if(type.equals(Type.boolType)) {
-			return new BoolVal((Boolean) value);
-		}
-
-		if (type.equals(Type.nullType)) {
-			return new Null();
-		}
-
-		if (type.equals(Type.strType)) {
-			return new StrVal((String) value);
-		}
-
-		if (typeString.startsWith("fn")) {
-			// check function equality
-			System.out.println("Function type not yet implemented.");
-			return null;
-		}
-
-		if (typeString.startsWith("obj")) {
-			// check object equality
-			System.out.println("Object type not yet implemented.");
-			return null;
-		}
-
-		System.out.println("ERROR: Invalid type");
-		return null;
 	}
 
 	public static class IntVal extends Value<Integer> {

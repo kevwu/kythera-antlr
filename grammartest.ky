@@ -41,6 +41,8 @@ n
 // declaration by new
 let m = new int
 m
+m = 2
+m + 2
 
 // TODO arithmetic operations cause parser ambiguities, fix this
 // 2 + 2
@@ -142,16 +144,9 @@ name myObjType obj{
     int ab
     str b
 }
-name mySubObj extends myObjType obj{
-    myFnType asdf
-}
-
-name myObjType implements myInterface obj{
-    int a
-}
 
 // package statements
-import "myThing"
-include "./myFile"
+// import "myThing"
+// include "./myFile"
 
-export a
+// export a

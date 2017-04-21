@@ -122,40 +122,4 @@ public abstract class Type {
 			return "obj{}";
 		}
 	}
-
-	public static Type getTypeFromText(String text) {
-		if (text.equals("int")) {
-			return Type.intType;
-		}
-
-		if (text.equals("float")) {
-			return Type.floatType;
-		}
-
-		if (text.equals("str")) {
-			return Type.strType;
-		}
-
-		if (text.equals("bool")) {
-			return Type.strType;
-		}
-
-		if (text.equals("null")) {
-			return Type.nullType;
-		}
-
-		if (text.startsWith("fn")) {
-			System.out.println("Creating new fn type from text: " + text);
-			return new Type.FnType();
-		}
-
-		if (text.startsWith("obj")) {
-			System.out.println("Creating new obj type from text: " + text);
-			return new Type.ObjType();
-		}
-
-		// TODO throw real error
-		System.out.println("Parser somehow received invalid type.");
-		return null;
-	}
 }

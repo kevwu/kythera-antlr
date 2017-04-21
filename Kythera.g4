@@ -145,10 +145,11 @@ declarationStatement
 assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
 nameStatement // like "typedef" in C/C++
     : NAME identifier type
-    | NAME identifier IMPLEMENTS (identifier)+ objType
-    | NAME identifier EXTENDS identifier objType
-    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ objType
-    | NAME identifier INTERFACE identifier objType
+    // OOP not supported yet
+//    | NAME identifier IMPLEMENTS (identifier)+ type
+//    | NAME identifier EXTENDS identifier type
+//    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ type
+//    | NAME identifier INTERFACE identifier objType
     ;
 
 // control flow statements

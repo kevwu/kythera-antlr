@@ -17,6 +17,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	protected Scope currentScope;
 	protected HashMap<ParserRuleContext, Scope> scopes;
 
+	private KytheraTypeVisitor typeVisitor;
+
 
 	public KytheraVisitor(KytheraParser parser) {
 		this.parser = parser;
@@ -32,6 +34,9 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		scopes = new HashMap<>();
 		// the root scope is not connected to any context
 		scopes.put(null, rootScope);
+
+
+		this.typeVisitor = new KytheraTypeVisitor(this);
 	}
 
 	@Override
@@ -302,6 +307,49 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		System.out.println("Unhandled expression: " + ctx.getText());
 		return null;
 	}
+
+	// gets a Value from a type.
+	// to get a Type from a type, use KytheraTypeVisitor.
+	@Override
+	public Value visitType(KytheraParser.TypeContext ctx) {
+		System.out.println("visittype");
+		Type type = ctx.accept(this.typeVisitor);
+
+		// TODO find a proper default value to set for uninitialized variables
+		if(type.equals(Type.intType)) {
+			return new Value.IntVal(null);
+		}
+
+		if(type.equals(Type.floatType)) {
+			return new Value.FloatVal(null);
+		}
+
+		if(type.equals(Type.boolType)) {
+			return new Value.BoolVal(null);
+		}
+
+		if (type.equals(Type.nullType)) {
+			return new Value.Null();
+		}
+
+		if (type.equals(Type.strType)) {
+			return new Value.StrVal(null);
+		}
+
+		if (ctx.fnType() != null) {
+			System.out.println("Function type is not supported here.");
+			return null;
+		}
+
+		if (ctx.objType() != null) {
+			System.out.println("Object type is not supported here.");
+			return null;
+		}
+
+		System.out.println("ERROR: Invalid type");
+		return null;
+	}
+
 //
 //	@Override
 //	public Value visitParenExp(KytheraParser.ParenExpContext ctx) {
@@ -371,7 +419,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		if (declStatement.NEW() != null) {
 			// get the type
 			assert (declStatement.type() != null);
-			result = Value.fromTypeText(declStatement.type().getText(), null);
+//			result = Value.fromTypeContext(declStatement.type(), null, this.typeVisitor);
+			result = declStatement.type().accept(this);
 		} else {
 			// initialize from expression
 			result = declStatement.expression().accept(this);
@@ -403,7 +452,19 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	@Override
 	public Value visitNameStatement(KytheraParser.NameStatementContext ctx) {
 		System.out.println("Name Statement");
-		return null;
+
+		String name = ctx.identifier().getText();
+
+		if(this.currentScope.hasName(name)) {
+			System.out.println("ERROR: Name " + name + " is already set.");
+			return null;
+		}
+
+		Type type = ctx.type().accept(this.typeVisitor);
+
+		this.currentScope.setName(name, type);
+
+		return new Value.TypeVal(type);
 	}
 
 	@Override public Value visitIfStatement(KytheraParser.IfStatementContext ctx) {
@@ -476,7 +537,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				val = entry.expression().accept(this);
 			} else {
 				assert (entry.type() != null);
-				val = Value.fromTypeText(entry.type().getText(), null);
+//				val = Value.fromTypeContext(entry.type(), null, this.typeVisitor);
+				val = entry.type().accept(this);
 			}
 
 			Identifier id = new Identifier(identifString, val.type);
@@ -494,14 +556,14 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			for(KytheraParser.FnLiteralArgContext fnArg : ctx.fnLiteralArg()) {
 				assert(fnArg.identifier() != null);
 				assert(fnArg.type() != null);
-				arguments.add(new Identifier(fnArg.identifier().getText(), Type.getTypeFromText(fnArg.type().getText())));
+				arguments.add(new Identifier(fnArg.identifier().getText(), fnArg.type().accept(this.typeVisitor)));
 			}
 		}
 
 		assert(ctx.expBlock() != null);
 		assert(ctx.type() != null);
 
-		Type returnType = Type.getTypeFromText(ctx.type().getText());
+		Type returnType = ctx.type().accept(this.typeVisitor);
 
 		return new Value.FnVal(arguments, ctx.expBlock(), returnType);
 	}
@@ -575,19 +637,5 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		// it doesn't really matter what a return statement evaluates to since its value is never used
 		return this.currentScope.returnVal;
-	}
-
-	private static class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
-		@Override
-		public Type visitObjType(KytheraParser.ObjTypeContext ctx) {
-			System.out.println("Object type (not yet implemented)");
-			return null;
-		}
-
-		@Override
-		public Type visitFnType(KytheraParser.FnTypeContext ctx) {
-			System.out.println("FnVal type: " + ctx.getText());
-			return null;
-		}
 	}
 }
