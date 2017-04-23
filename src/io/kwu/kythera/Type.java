@@ -99,6 +99,21 @@ public abstract class Type {
 		}
 
 		@Override
+		public boolean equals(Object other) {
+			if(!super.equals(other)) {
+				return false;
+			}
+
+			if(!(other instanceof FnType)) {
+				return false;
+			}
+
+			FnType otherFnType = (FnType) other;
+
+			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.returnType);
+		}
+
+		@Override
 		public String toString() {
 			StringBuilder out = new StringBuilder("fn: (");
 			for(Type arg : this.argList) {
