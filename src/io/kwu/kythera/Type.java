@@ -87,17 +87,6 @@ public abstract class Type {
 			this.returnType = returnType;
 		}
 
-		// check parameters and return type in addition to raw type
-		public boolean subtypeEquals(Object other) {
-			if(!this.equals(other)) {
-				return false;
-			}
-
-			FnType otherFnType = (FnType) other;
-
-			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.argList);
-		}
-
 		@Override
 		public boolean equals(Object other) {
 			if(!super.equals(other)) {
@@ -111,6 +100,10 @@ public abstract class Type {
 			FnType otherFnType = (FnType) other;
 
 			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.returnType);
+		}
+
+		public boolean baseTypeEquals(Object other) {
+			return super.equals(other);
 		}
 
 		@Override

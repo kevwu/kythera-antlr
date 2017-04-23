@@ -49,11 +49,9 @@ objType: OBJ '{' (objTypeEntry)*? '}';
 objTypeEntry: type identifier;
 
 // only one return value allowed right now
-//fnType: FN '(' (type (',' type)*? )? ')' '[' (type) (',' type)*? ']';
-fnType: FN '(' (fnTypeArg (',' fnTypeArg)*? )? ')' '[' fnTypeReturn ']';
+fnType: FN '(' (fnTypeArg (',' fnTypeArg)*? )? ')' ':' fnTypeReturn ;
 fnTypeArg: type;
 fnTypeReturn: type;
-
 
 // operators
 ASSIGNMENT_OPERATOR: '=';
@@ -86,7 +84,7 @@ objLiteral: '{' (objLiteralEntry)+ '}';
 objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
 // multiple returns are not yet supported.
-fnLiteral: FN '(' fnLiteralArg (',' fnLiteralArg)* ')' '[' type ']' expBlock;
+fnLiteral: FN '(' fnLiteralArg (',' fnLiteralArg)* ')' ':' type expBlock;
 
 fnLiteralArg: type identifier;
 

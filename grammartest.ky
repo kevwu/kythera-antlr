@@ -29,7 +29,7 @@ let myObj = {
 myObj
 
 // function literal
-let myFn = fn(int x) [str] {
+let myFn = fn(int x): str {
     let a = 0
 }
 myFn
@@ -60,7 +60,7 @@ m + 2
 // aFunction(2, "beep beep meme creep")
 
 // anonymous function call
-fn(int a) [int] {
+fn(int a): int {
     let q = 99
     let r = q
     return q
@@ -86,7 +86,7 @@ myBool
 
 !false
 
-let fibo = fn(int x) [int] {
+let fibo = fn(int x): int {
     if x == 1 {
         return 1
     }
@@ -141,7 +141,7 @@ x
 
 // name statements
 name myType int
-name myFnType fn(int) [str]
+name myFnType fn(int) : str
 name myObjType obj{
     int ab
     str b
@@ -149,7 +149,7 @@ name myObjType obj{
 
 let myCustomFnInstance = new myFnType
 
-myCustomFnInstance = fn(float a) [str] {
+myCustomFnInstance = fn(float a): str {
     return "helo"
 }
 
@@ -157,7 +157,7 @@ myCustomFnInstance("asdf")
 
 let myCustomObjInstance = new myObjType
 
-myCustomObjInstance = obj {
+myCustomObjInstance = {
     b = "asdf"
     ab = 2
     c = "zzz"

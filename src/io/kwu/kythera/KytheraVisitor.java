@@ -587,7 +587,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 			function = (Value.FnVal) this.currentScope.getVar(ctx.identifier().getText());
-			if(!function.type.equals(Type.fnBaseType)) {
+			if(!((Type.FnType) function.type).baseTypeEquals(Type.fnBaseType)) {
 				System.out.println("ERROR: " + ctx.identifier().getText() + " is not a function");
 				return null;
 			}
