@@ -304,6 +304,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if (ctx.TYPEOF() != null) {
+			Value val = ctx.expression(0).accept(this);
+			return new Value.TypeVal(val.type);
+		}
+
 		if(ctx.expression().size() == 1) {
 			return ctx.expression(0).accept(this);
 		}

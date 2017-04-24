@@ -165,6 +165,8 @@ myCustomObjInstance = {
 
 myCustomObjInstance.b
 
+typeof a
+
 // package statements
 // import "myThing"
 // include "./myFile"

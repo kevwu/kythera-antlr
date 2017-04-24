@@ -45,6 +45,8 @@ FN: 'fn';
 OBJ: 'obj';
 ARR: 'arr';
 
+TYPEOF: 'typeof';
+
 objType: OBJ '{' (objTypeEntry)*? '}';
 objTypeEntry: type identifier;
 
@@ -121,6 +123,7 @@ expression
     |   identifier
     |   objAccess
     |   literal
+    |   TYPEOF expression
     |   '(' expression ')'
     ;
 
