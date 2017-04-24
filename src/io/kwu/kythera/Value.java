@@ -182,10 +182,20 @@ public class Value<V> implements Comparable<Value> {
 		}
 	}
 
-	// objects handle equality differently
 	public static class ObjVal extends Value<HashMap<Identifier, Value>> {
-		public ObjVal(HashMap<Identifier, Value> value) {
-			super(new Type.ObjType(value.keySet()), value);
+		private final HashMap<String, Identifier> identifiers;
+
+		public ObjVal(HashMap<Identifier, Value> values) {
+			super(new Type.ObjType(values.keySet()), values);
+			// create mapping from identifier names to Identifiers (easier when retrieving)
+			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
+
+			this.identifiers = new HashMap<>();
+
+			// brandon wang is weeping at the missed opportunity to use a mapreduce here
+			for(Identifier id : identifiers) {
+				this.identifiers.put(id.name, id);
+			}
 		}
 
 		@Override
@@ -219,6 +229,19 @@ public class Value<V> implements Comparable<Value> {
 		public int compareTo(Value o) {
 			// objects can't be numerically compared
 			throw new ClassCastException();
+		}
+
+		public boolean hasVal(String member) {
+			return this.identifiers.containsKey(member);
+		}
+
+		public Value getVal(String member) {
+			if(!this.identifiers.containsKey(member)) {
+				return null;
+			}
+
+			Identifier id = this.identifiers.get(member);
+			return this.value.get(id);
 		}
 	}
 

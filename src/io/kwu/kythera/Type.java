@@ -102,6 +102,9 @@ public abstract class Type {
 			return this.argList.equals(otherFnType.argList) && this.returnType.equals(otherFnType.returnType);
 		}
 
+		/*
+		Does shallow type comparison. By default, fn types are compared with strict comparison (implemented in equals())
+		 */
 		public boolean baseTypeEquals(Object other) {
 			return super.equals(other);
 		}
@@ -143,7 +146,6 @@ public abstract class Type {
 
 		@Override
 		public String toString() {
-			// TODO print fields in addition to obj
 			StringBuilder out = new StringBuilder("obj: {\n");
 
 			for(Identifier arg : this.identifiers) {

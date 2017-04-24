@@ -80,6 +80,16 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link KytheraParser#objAccess}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjAccess(KytheraParser.ObjAccessContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#objAccess}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjAccess(KytheraParser.ObjAccessContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link KytheraParser#fnLiteral}.
 	 * @param ctx the parse tree
 	 */

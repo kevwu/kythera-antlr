@@ -83,6 +83,8 @@ objLiteral: '{' (objLiteralEntry)+ '}';
 
 objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
 
+objAccess: identifier '.' identifier;
+
 // multiple returns are not yet supported.
 fnLiteral: FN '(' fnLiteralArg (',' fnLiteralArg)* ')' ':' type expBlock;
 
@@ -117,6 +119,7 @@ expression
     |   NOT_OPERATOR expression // !
     |   statement // statements evaluate as expressions
     |   identifier
+    |   objAccess
     |   literal
     |   '(' expression ')'
     ;

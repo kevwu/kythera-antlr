@@ -149,7 +149,7 @@ name myObjType obj{
 
 let myCustomFnInstance = new myFnType
 
-myCustomFnInstance = fn(float a): str {
+myCustomFnInstance = fn(int a): str {
     return "helo"
 }
 
@@ -162,6 +162,8 @@ myCustomObjInstance = {
     ab = 2
     c = "zzz"
 }
+
+myCustomObjInstance.b
 
 // package statements
 // import "myThing"

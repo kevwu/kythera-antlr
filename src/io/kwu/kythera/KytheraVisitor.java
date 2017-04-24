@@ -247,6 +247,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if(ctx.objAccess() != null) {
+			return ctx.objAccess().accept(this);
+		}
+
 		// check for literals/raw expression last
 		if (ctx.literal() != null) {
 			if (ctx.literal().IntLiteral() != null) {
@@ -319,48 +323,35 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
+		// TODO find a proper default value to set for uninitialized variables
 		return new Value(type, null);
+	}
 
-/*		// TODO find a proper default value to set for uninitialized variables
-		if(type.equals(Type.intType)) {
-			return new Value.IntVal(null);
-		}
+	@Override
+	public Value visitObjAccess(KytheraParser.ObjAccessContext ctx) {
+		System.out.println("Accessing object member.");
 
-		if(type.equals(Type.floatType)) {
-			return new Value.FloatVal(null);
-		}
+		assert(ctx.identifier().size() == 2);
 
-		if(type.equals(Type.boolType)) {
-			return new Value.BoolVal(null);
-		}
+		// first identifier is the object
+		Value objRaw = this.currentScope.getVar(ctx.identifier(0).getText());
 
-		if (type.equals(Type.nullType)) {
-			return new Value.Null();
-		}
-
-		if (type.equals(Type.strType)) {
-			return new Value.StrVal(null);
-		}
-
-		if (ctx.fnType() != null) {
-			System.out.println("Function type is not supported here.");
+		if(!(objRaw instanceof  Value.ObjVal)) {
+			System.out.println("ERROR: " + ctx.identifier(0).getText() + " is not an object!");
 			return null;
 		}
 
-		if (ctx.objType() != null) {
-			System.out.println("Object type is not supported here.");
-			return new Value.ObjVal(null);
+		Value.ObjVal obj = (Value.ObjVal) objRaw;
+
+		String member = ctx.identifier(1).getText();
+
+		if(!obj.hasVal(member)) {
+			System.out.println("ERROR: " + ctx.identifier(0).getText() + " does not contain member " + member);
+			return null;
 		}
 
-		System.out.println("ERROR: Invalid type");
-		return null;*/
+		return obj.getVal(member);
 	}
-
-//
-//	@Override
-//	public Value visitParenExp(KytheraParser.ParenExpContext ctx) {
-//		return ctx.expression().accept(this);
-//	}
 
 	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {

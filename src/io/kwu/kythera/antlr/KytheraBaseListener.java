@@ -102,6 +102,18 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterObjAccess(KytheraParser.ObjAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjAccess(KytheraParser.ObjAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFnLiteral(KytheraParser.FnLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
