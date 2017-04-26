@@ -228,10 +228,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return Values.TRUE;
 			}
 		}
-//
-//		if(ctx.parenExp() != null) {
-//			return ctx.parenExp().accept(this);
-//		}
+
+		if(ctx.NEW() != null) {
+			assert (ctx.type() != null);
+			Value result = ctx.type().accept(this);
+			return result;
+		}
 
 		if (ctx.statement() != null) {
 			KytheraParser.StatementContext statement = ctx.statement();
@@ -415,18 +417,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
-		Value result;
-
-		// either "new [type]" or expression
-		if (declStatement.NEW() != null) {
-			// get the type
-			assert (declStatement.type() != null);
-//			result = Value.fromTypeContext(declStatement.type(), null, this.typeVisitor);
-			result = declStatement.type().accept(this);
-		} else {
-			// initialize from expression
-			result = declStatement.expression().accept(this);
-		}
+		Value result = declStatement.expression().accept(this);
 
 		this.currentScope.setVar(identifier, result);
 

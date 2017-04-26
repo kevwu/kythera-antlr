@@ -119,6 +119,7 @@ expression
     |   expression BOOLEAN_OPERATOR expression
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
+    |   NEW type
     |   statement // statements evaluate as expressions
     |   identifier
     |   objAccess
@@ -148,11 +149,9 @@ exportStatement: 'export' identifier;
 
 // statements involving variables
 variableStatement: declarationStatement | assignmentStatement | nameStatement;
-declarationStatement
-    :   LET identifier ASSIGNMENT_OPERATOR expression
-    |   LET identifier ASSIGNMENT_OPERATOR NEW type
-    ;
+declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
 assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
+
 nameStatement // like "typedef" in C/C++
     : NAME identifier type
     // OOP not supported yet
