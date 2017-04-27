@@ -46,7 +46,8 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 		}
 
 		if (ctx.objType() != null) {
-			return ctx.objType().accept(this);
+//			return ctx.objType().accept(this);
+			return Type.objBaseType;
 		}
 
 		if (this.visitor.currentScope.hasName(typeString)) {

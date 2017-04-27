@@ -83,7 +83,7 @@ StrLiteral:	'"' (.)+? '"';
 
 objLiteral: '{' (objLiteralEntry)+ '}';
 
-objLiteralEntry: (type identifier) | (identifier ASSIGNMENT_OPERATOR expression);
+objLiteralEntry: identifier ASSIGNMENT_OPERATOR expression;
 
 objAccess: identifier '.' identifier;
 
@@ -115,6 +115,7 @@ Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
 // some of these are inline by necessity (otherwise we get left recursion problems)
 expression
     :   fnCallExpression
+    |   TYPEOF expression
     |   expression BOOLEAN_COMPARISON expression // boolean expression
     |   expression BOOLEAN_OPERATOR expression
     |   expression ARITH_OPERATOR expression // arithmetic
@@ -124,7 +125,6 @@ expression
     |   identifier
     |   objAccess
     |   literal
-    |   TYPEOF expression
     |   '(' expression ')'
     ;
 

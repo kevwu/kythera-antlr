@@ -5,7 +5,7 @@ import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.*;
 
-public class Value<V> implements Comparable<Value> {
+public abstract class Value<V> implements Comparable<Value> {
 	protected final V value;
 	protected final Type type;
 
@@ -183,10 +183,13 @@ public class Value<V> implements Comparable<Value> {
 	}
 
 	public static class ObjVal extends Value<HashMap<Identifier, Value>> {
-		private final HashMap<String, Identifier> identifiers;
+		// the actual values are stored in this.value.
+		// identifiers is a convenience string-map to make retrieval easier.
+		private HashMap<String, Identifier> identifiers;
 
 		public ObjVal(HashMap<Identifier, Value> values) {
-			super(new Type.ObjType(values.keySet()), values);
+//			super(new Type.ObjType(values.keySet()), values);
+			super(Type.objBaseType, values);
 			// create mapping from identifier names to Identifiers (easier when retrieving)
 			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
 
@@ -243,6 +246,10 @@ public class Value<V> implements Comparable<Value> {
 			Identifier id = this.identifiers.get(member);
 			return this.value.get(id);
 		}
+
+		public void putVal(String identifier, Value value) {
+
+		}
 	}
 
 	public static class TypeVal extends Value<Type> {
@@ -250,5 +257,9 @@ public class Value<V> implements Comparable<Value> {
 		public TypeVal(Type type) {
 			super(Type.typeType, type);
 		}
+	}
+
+	public static void ValFromType(Type valType) {
+
 	}
 }

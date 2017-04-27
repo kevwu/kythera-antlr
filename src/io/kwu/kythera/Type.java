@@ -44,7 +44,7 @@ public abstract class Type {
 
 	public static Type nullType = new Type("null") {};
 
-	// allow the returning of data types
+	// used when treating a type as a value.
 	public static Type typeType = new Type("type") {};
 
 	// base types are for shallow type comparison.
@@ -53,15 +53,8 @@ public abstract class Type {
 	public static Type objBaseType = new Type("obj") {};
 
 	public static class FnType extends Type {
-		private final ArrayList<Type> argList;
-		private final Type returnType;
-
-		public FnType() {
-			// root type is always "fn"
-			super("fn");
-			this.argList = new ArrayList<>();
-			this.returnType = Type.nullType;
-		}
+		final ArrayList<Type> argList;
+		final Type returnType;
 
 		public FnType(ArrayList argList, Type returnType) {
 			super("fn");
@@ -123,7 +116,7 @@ public abstract class Type {
 	}
 
 	public static class ObjType extends Type {
-		private HashSet<Identifier> identifiers;
+		final HashSet<Identifier> identifiers;
 
 		public ObjType() {
 			super("obj");

@@ -1,0 +1,22 @@
+let x = {
+    int a
+    str b
+}
+
+typeof x
+
+name myObjType obj{
+    int a
+    str b
+}
+
+let y = new myObjType
+typeof y
+
+let z = new obj{int a str b float c fn(null):null q}
+typeof z
+z.q
+typeof z == typeof x
+
+let myInt = new int
+typeof myInt

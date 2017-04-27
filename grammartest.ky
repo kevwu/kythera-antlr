@@ -7,10 +7,13 @@ comment */
 // boolean literal
 let myBool = false
 myBool
+myBool = true
+myBool
 
 // integer literal
 let myInt = 99
 myInt
+myInt + 10
 
 // float literal
 let myFloat = 3.14159
@@ -22,11 +25,12 @@ myStr
 
 // object literal
 let myObj = {
-    int a
+    a = new int
     b = 2.0
     c = "asdf"
 }
 myObj
+typeof myObj
 
 // function literal
 let myFn = fn(int x): str {
@@ -98,7 +102,7 @@ let fibo = fn(int x): int {
     return fibo(x-1) + fibo(x-2)
 }
 
-fibo(10)
+// fibo(10)
 
 // if statement
 if false {

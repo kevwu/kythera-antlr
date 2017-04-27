@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /* TODO consider separating each visitor into its own class
@@ -231,8 +232,40 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		if(ctx.NEW() != null) {
 			assert (ctx.type() != null);
-			Value result = ctx.type().accept(this);
-			return result;
+//			Value result = ctx.type().accept(this);
+			Type valType = ctx.type().accept(this.typeVisitor);
+
+			if(valType.equals(Type.intType)) {
+				return new Value.IntVal(0);
+			}
+
+			if(valType.equals(Type.floatType)) {
+				return new Value.FloatVal(0);
+			}
+
+			if(valType.equals(Type.boolType)) {
+				return new Value.BoolVal(false);
+			}
+
+			// you can't declare new nulls
+			if(valType.equals(Type.nullType)) {
+				System.out.println("Instances of null cannot be created.");
+				return null;
+			}
+
+			if(valType instanceof Type.FnType) {
+				System.out.println("new cannot be used on a function type (yet)");
+				return null;
+			}
+
+			if(valType instanceof Type.ObjType) {
+				// TODO figure this out
+				System.out.println("idk yet");
+				return null;
+			}
+
+			System.out.println("Internal error: Unimplemented type: " + valType.toString());
+			return null;
 		}
 
 		if (ctx.statement() != null) {
@@ -331,7 +364,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		// TODO find a proper default value to set for uninitialized variables
-		return new Value(type, null);
+		return new Value.TypeVal(type);
 	}
 
 	@Override
@@ -343,7 +376,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		// first identifier is the object
 		Value objRaw = this.currentScope.getVar(ctx.identifier(0).getText());
 
-		if(!(objRaw instanceof  Value.ObjVal)) {
+		if(!(objRaw.type.type.equals("obj"))) {
 			System.out.println("ERROR: " + ctx.identifier(0).getText() + " is not an object!");
 			return null;
 		}
@@ -525,14 +558,8 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			Value val;
 
-			if (entry.ASSIGNMENT_OPERATOR() != null) {
-				assert (entry.expression() != null);
-				val = entry.expression().accept(this);
-			} else {
-				assert (entry.type() != null);
-//				val = Value.fromTypeContext(entry.type(), null, this.typeVisitor);
-				val = entry.type().accept(this);
-			}
+			assert (entry.expression() != null);
+			val = entry.expression().accept(this);
 
 			Identifier id = new Identifier(identifString, val.type);
 			identifiers.put(identifString, id);
