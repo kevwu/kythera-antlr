@@ -18,7 +18,6 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 
 	@Override
 	public Type visitType(KytheraParser.TypeContext ctx) {
-		System.out.println("Finding type.");
 		String typeString = ctx.getText();
 
 		if (typeString.equals("int")) {
@@ -46,8 +45,7 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 		}
 
 		if (ctx.objType() != null) {
-//			return ctx.objType().accept(this);
-			return Type.objBaseType;
+			return ctx.objType().accept(this);
 		}
 
 		if (this.visitor.currentScope.hasName(typeString)) {

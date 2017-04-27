@@ -1,4 +1,4 @@
-fn(int count) [null] {
+fn(int count): null {
     let x = 0
     while x < count {
         if ((x % 3) == 0 && (x % 5) == 0) {

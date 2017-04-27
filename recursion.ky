@@ -1,4 +1,4 @@
-let fibo = fn(int n) [int] {
+let fibo = fn(int n): int {
     if n == 1 {
         return 1
     }

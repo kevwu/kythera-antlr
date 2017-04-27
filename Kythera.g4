@@ -81,7 +81,7 @@ FloatLiteral: ('0'..'9')+ ('.' ('0'..'9')+)?;
 
 StrLiteral:	'"' (.)+? '"';
 
-objLiteral: '{' (objLiteralEntry)+ '}';
+objLiteral: '{' (objLiteralEntry)*? '}';
 
 objLiteralEntry: identifier ASSIGNMENT_OPERATOR expression;
 

@@ -6,7 +6,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /* TODO consider separating each visitor into its own class
@@ -234,38 +233,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			assert (ctx.type() != null);
 //			Value result = ctx.type().accept(this);
 			Type valType = ctx.type().accept(this.typeVisitor);
-
-			if(valType.equals(Type.intType)) {
-				return new Value.IntVal(0);
-			}
-
-			if(valType.equals(Type.floatType)) {
-				return new Value.FloatVal(0);
-			}
-
-			if(valType.equals(Type.boolType)) {
-				return new Value.BoolVal(false);
-			}
-
-			// you can't declare new nulls
-			if(valType.equals(Type.nullType)) {
-				System.out.println("Instances of null cannot be created.");
-				return null;
-			}
-
-			if(valType instanceof Type.FnType) {
-				System.out.println("new cannot be used on a function type (yet)");
-				return null;
-			}
-
-			if(valType instanceof Type.ObjType) {
-				// TODO figure this out
-				System.out.println("idk yet");
-				return null;
-			}
-
-			System.out.println("Internal error: Unimplemented type: " + valType.toString());
-			return null;
+			return Value.newValFromType(valType);
 		}
 
 		if (ctx.statement() != null) {

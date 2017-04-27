@@ -96,16 +96,22 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 	}
 
+	public static class TypeVal extends Value<Type> {
+
+		public TypeVal(Type type) {
+			super(Type.typeType, type);
+		}
+	}
+
 	// functions handle equality differently
 	public static class FnVal extends Value {
 		private ArrayList<Identifier> args;
-		private KytheraParser.ExpBlockContext expBlock;
+//		private KytheraParser.ExpBlockContext expBlock;
 		private Type returnType;
 
 		public FnVal(ArrayList<Identifier> args, KytheraParser.ExpBlockContext expBlock, Type returnType) {
 			super(new Type.FnType(args, returnType), expBlock);
 			this.args = args;
-			this.expBlock = expBlock;
 			this.returnType = returnType;
 		}
 
@@ -164,7 +170,7 @@ public abstract class Value<V> implements Comparable<Value> {
 				}
 			}
 
-			this.expBlock.accept(visitor);
+			((KytheraParser.ExpBlockContext) this.value).accept(visitor);
 
 			if(fnScope.returnFlag) {
 				returnVal = visitor.currentScope.returnVal;
@@ -190,6 +196,19 @@ public abstract class Value<V> implements Comparable<Value> {
 		public ObjVal(HashMap<Identifier, Value> values) {
 //			super(new Type.ObjType(values.keySet()), values);
 			super(Type.objBaseType, values);
+			// create mapping from identifier names to Identifiers (easier when retrieving)
+			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
+
+			this.identifiers = new HashMap<>();
+
+			// brandon wang is weeping at the missed opportunity to use a mapreduce here
+			for(Identifier id : identifiers) {
+				this.identifiers.put(id.name, id);
+			}
+		}
+
+		public ObjVal(HashMap<Identifier, Value> values, Type.ObjType rigidType) {
+			super(rigidType, values);
 			// create mapping from identifier names to Identifiers (easier when retrieving)
 			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
 
@@ -252,14 +271,54 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 	}
 
-	public static class TypeVal extends Value<Type> {
-
-		public TypeVal(Type type) {
-			super(Type.typeType, type);
+	public static Value newValFromType(Type valType) {
+		if(valType.equals(Type.intType)) {
+			return new Value.IntVal(0);
 		}
-	}
 
-	public static void ValFromType(Type valType) {
+		if(valType.equals(Type.floatType)) {
+			return new Value.FloatVal(0);
+		}
 
+		if(valType.equals(Type.boolType)) {
+			return new Value.BoolVal(false);
+		}
+
+		if(valType.equals(Type.strType)) {
+			return new Value.StrVal("");
+		}
+
+		// you can't declare new nulls
+		if(valType.equals(Type.nullType)) {
+			System.out.println("Instances of null cannot be created.");
+			return null;
+		}
+
+		if(valType.equals(Type.typeType)) {
+			System.out.println("Instances of type values cannot be created (yet)");
+			return null;
+		}
+
+		if(valType instanceof Type.FnType) {
+			System.out.println("new cannot be used on an fn type.");
+			return null;
+		}
+
+		if(valType instanceof Type.ObjType) {
+			System.out.println("rigid objType");
+
+			Type.ObjType objType = (Type.ObjType) valType;
+
+			HashMap<Identifier, Value> newVals = new HashMap<>();
+
+			for(Identifier id : objType.identifiers) {
+				newVals.put(id, Value.newValFromType(id.type));
+			}
+
+			return new ObjVal(newVals, objType);
+		}
+
+		System.out.println("Internal error: Unimplemented type: " + valType.toString());
+		return null;
 	}
 }
