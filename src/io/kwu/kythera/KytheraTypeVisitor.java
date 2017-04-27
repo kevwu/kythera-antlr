@@ -18,26 +18,28 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 
 	@Override
 	public Type visitType(KytheraParser.TypeContext ctx) {
-		String typeString = ctx.getText();
-
-		if (typeString.equals("int")) {
+		if (ctx.INT() != null) {
 			return Type.intType;
 		}
 
-		if (typeString.equals("float")) {
+		if (ctx.FLOAT() != null) {
 			return Type.floatType;
 		}
 
-		if (typeString.equals("str")) {
+		if (ctx.STR() != null) {
 			return Type.strType;
 		}
 
-		if (typeString.equals("bool")) {
-			return Type.strType;
+		if (ctx.BOOL() != null) {
+			return Type.boolType;
 		}
 
-		if (typeString.equals("null")) {
+		if (ctx.NULL() != null) {
 			return Type.nullType;
+		}
+
+		if(ctx.OBJ() != null) {
+			return Type.objBaseType;
 		}
 
 		if (ctx.fnType() != null) {
@@ -48,8 +50,8 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 			return ctx.objType().accept(this);
 		}
 
-		if (this.visitor.currentScope.hasName(typeString)) {
-			return this.visitor.currentScope.getName(typeString);
+		if (this.visitor.currentScope.hasName(ctx.getText())) {
+			return this.visitor.currentScope.getName(ctx.getText());
 		}
 
 		System.out.println("Internal error: Unhandled type");

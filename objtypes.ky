@@ -3,12 +3,18 @@ let objViaLiteral = {
     b = new str
 }
 
+// should be just obj
 typeof objViaLiteral
 
+let objViaNewObj = new obj
+typeof objViaNewObj // should be just obj
+
 let looseObjViaNew = {}
+typeof looseObjViaNew // should be just obj
 
 let objViaNew = new obj{ int a str b}
 objViaNew
+typeof objViaNew // should be obj{ int a str b}
 
 name myObjType obj{
     int a

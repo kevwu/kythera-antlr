@@ -318,6 +318,11 @@ public abstract class Value<V> implements Comparable<Value> {
 			return new ObjVal(newVals, objType);
 		}
 
+		// check for base type AFTER rigid type, since all rigid types also satisfy this
+		if(valType.equals(Type.objBaseType)) {
+			return new Value.ObjVal(new HashMap<>());
+		}
+
 		System.out.println("Internal error: Unimplemented type: " + valType.toString());
 		return null;
 	}
