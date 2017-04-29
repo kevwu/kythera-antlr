@@ -60,6 +60,56 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return ctx.fnCallExpression().accept(this);
 		}
 
+		if (ctx.TYPEOF() != null) {
+			Value val = ctx.expression(0).accept(this);
+			return new Value.TypeVal(val.type);
+		}
+
+		if(ctx.AS() != null) {
+			System.out.println("Type cast");
+			Type targetType = ctx.type().accept(this.typeVisitor);
+			Value origVal = ctx.expression(0).accept(this);
+
+			// built-in int -> float typecasting
+			if(origVal instanceof Value.IntVal && targetType.equals(Type.floatType)){
+				return new Value.FloatVal(((Value.IntVal) origVal).value.doubleValue());
+			}
+
+			// built-in float -> int typecasting
+			if(origVal instanceof Value.FloatVal && targetType.equals(Type.intType)) {
+				return new Value.IntVal(((Value.FloatVal) origVal).value.intValue());
+			}
+
+			// rigid to freeform object typecasting
+			if(origVal.type instanceof Type.ObjType && targetType.equals(Type.objBaseType)) {
+				// create new obj value
+				System.out.println("Casting rigid obj to freeform.");
+				return null;
+			}
+
+			// freeform to rigid object typecasting
+			// must be checked after rigid-to-freeform
+			if(origVal.type.equals(Type.objBaseType) && targetType instanceof Type.ObjType) {
+				System.out.println("Casting freeform obj to rigid: " + targetType.toString());
+				// check that origin object matches fields and field types from target type
+				Type.ObjType targetObjType = (Type.ObjType) targetType;
+				Value.ObjVal origObjVal = (Value.ObjVal) origVal;
+
+				for(Identifier id : targetObjType.identifiers) {
+					if (!origObjVal.hasVal(id.name) || !origObjVal.identifiers().get(id.name).equals(id)) {
+						System.out.println("Cannot cast to " + targetObjType + ": missing field " + id.name + " (" + id.type + ")");
+						return null;
+					}
+				}
+
+				// create new value
+				return new Value.ObjVal((HashMap<Identifier, Value>) origObjVal.value.clone(), targetObjType);
+			}
+
+			System.out.println("This type cast is not supported yet.");
+			return null;
+		}
+
 		if (ctx.BOOLEAN_COMPARISON() != null) {
 			// there is no sub-rule for a boolean op, handle it here
 			Value lhs = visit(ctx.expression(0));
@@ -119,7 +169,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 
-			if(!lhs.type.equals(Type.boolType) && !rhs.type.equals(Type.boolType)){
+			if(!(lhs instanceof Value.BoolVal) && !(rhs instanceof Value.BoolVal)){
 				System.out.println("ERROR: Boolean expected, got " + lhs.type.toString() + ", " + rhs.type.toString());
 				return null;
 			}
@@ -160,7 +210,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				return null;
 			}
 
-			if(!lhs.type.equals(Type.intType) && !lhs.type.equals(Type.floatType)) {
+			if(!(lhs instanceof Value.IntVal) && !(lhs instanceof Value.FloatVal)) {
 				System.out.println("Operator overloading is not yet implemented.");
 				// TODO throw exception
 				System.out.println("ERROR: Cannot use " + ctx.ARITH_OPERATOR().getText() + " on type " + lhs.type.toString());
@@ -250,6 +300,16 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
+		if (ctx.identifier() != null) {
+			if (this.currentScope.hasVar(ctx.identifier().getText())) {
+				return this.currentScope.getVar(ctx.identifier().getText());
+			} else {
+				// TODO throw a proper exception
+				System.out.println("ERROR: Accessing a variable that is not set: " + ctx.identifier().getText());
+				return null;
+			}
+		}
+
 		if(ctx.objAccess() != null) {
 			return ctx.objAccess().accept(this);
 		}
@@ -297,21 +357,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return null;
 		}
 
-		if (ctx.identifier() != null) {
-			if (this.currentScope.hasVar(ctx.identifier().getText())) {
-				return this.currentScope.getVar(ctx.identifier().getText());
-			} else {
-				// TODO throw a proper exception
-				System.out.println("ERROR: Accessing a variable that is not set: " + ctx.identifier().getText());
-				return null;
-			}
-		}
-
-		if (ctx.TYPEOF() != null) {
-			Value val = ctx.expression(0).accept(this);
-			return new Value.TypeVal(val.type);
-		}
-
+		// parenthetical expression
 		if(ctx.expression().size() == 1) {
 			return ctx.expression(0).accept(this);
 		}
@@ -370,7 +416,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		if (!this.currentScope.hasVar(identifier)) {
 			// TODO throw actual exception
-			System.out.println("ERROR: Assigning to variable that does not exist" + identifier);
+			System.out.println("ERROR: Assigning to variable that does not exist: " + identifier);
 			return null;
 		} else {
 			// TODO type check before assignment. Do shallow type check only

@@ -128,6 +128,7 @@ public abstract class Type {
 		}
 
 		// check fields and names in addition to raw type
+/*
 		public boolean subtypeEquals(Object other) {
 			if(!this.equals(other)) {
 				return false;
@@ -135,6 +136,7 @@ public abstract class Type {
 
 			return this.identifiers.equals(((ObjType) other).identifiers);
 		}
+*/
 
 		@Override
 		public String toString() {
@@ -147,6 +149,17 @@ public abstract class Type {
 			out.append("}");
 
 			return out.toString();
+		}
+
+		// warning: this is NOT symmetric with Type's .equals()
+		// TODO fix or address that
+		@Override
+		public boolean equals(Object other) {
+			if(!(other instanceof Type.ObjType)) {
+				return false;
+			}
+
+			return this.identifiers.equals(((ObjType) other).identifiers);
 		}
 	}
 }

@@ -266,6 +266,10 @@ public abstract class Value<V> implements Comparable<Value> {
 			return this.value.get(id);
 		}
 
+		public HashMap<String, Identifier> identifiers() {
+			return this.identifiers;
+		}
+
 		public void putVal(String identifier, Value value) {
 
 		}

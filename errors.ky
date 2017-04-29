@@ -1,7 +1,0 @@
-// testing for errors
-let a = fn(int a) [null] {
-    a
-}
-
-// not allowed
-a = "string"

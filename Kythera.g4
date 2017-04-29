@@ -34,8 +34,8 @@ RETURN: 'return';
 BREAK: 'break';
 CONTINUE: 'continue';
 
-// built-in types
 NEW: 'new';
+AS: 'as';
 
 BOOL: 'bool';
 INT: 'int';
@@ -116,6 +116,7 @@ Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
 expression
     :   fnCallExpression
     |   TYPEOF expression
+    |   expression AS type
     |   expression BOOLEAN_COMPARISON expression // boolean expression
     |   expression BOOLEAN_OPERATOR expression
     |   expression ARITH_OPERATOR expression // arithmetic
