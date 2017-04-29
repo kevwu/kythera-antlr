@@ -1,6 +1,6 @@
 let myObj = {
-    a = new int
-    b = new str
+    a = 99
+    b = "beep"
 }
 
 typeof myObj
@@ -14,3 +14,11 @@ let myCastedObj = myObj as myObjType
 typeof myCastedObj
 
 typeof myCastedObj == typeof (myObj as myObjType)
+
+let mySpecificFn = fn(myObjType a): null {
+    a.a
+    return null
+}
+
+mySpecificFn(myObj as myObjType)
+mySpecificFn(myCastedObj)

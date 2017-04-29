@@ -23,6 +23,12 @@ public abstract class Type {
 			return false;
 		}
 
+		// ObjType's implementation of .equals() is not symmetric
+		// this is a fix for that
+		if(other instanceof ObjType) {
+			return (((ObjType) other).equals(this));
+		}
+
 		return ((Type) other).type.equals(this.type);
 	}
 
@@ -151,8 +157,6 @@ public abstract class Type {
 			return out.toString();
 		}
 
-		// warning: this is NOT symmetric with Type's .equals()
-		// TODO fix or address that
 		@Override
 		public boolean equals(Object other) {
 			if(!(other instanceof Type.ObjType)) {
