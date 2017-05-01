@@ -1,28 +1,3 @@
-// line comment
-/* Block level
-multi line
-comment */
-
-
-// boolean literal
-let myBool = false
-myBool
-myBool = true
-myBool
-
-// integer literal
-let myInt = 99
-myInt
-myInt + 10
-
-// float literal
-let myFloat = 3.14159
-myFloat
-
-// string literal
-let myStr = "hello"
-myStr
-
 // object literal
 let myObj = {
     a = new int

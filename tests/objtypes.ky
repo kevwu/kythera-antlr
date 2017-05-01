@@ -1,0 +1,4 @@
+let myObj = new obj{
+    int a
+    str b
+}

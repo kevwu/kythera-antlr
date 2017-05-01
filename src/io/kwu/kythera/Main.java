@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 		if(args.length == 1) {
 			try {
-				KytheraLexer lexer = new KytheraLexer(new ANTLRFileStream(args[0]));
+				KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName(args[0]));
 				lexer.addErrorListener(new ANTLRErrorListener() {
 					@Override
 					public void syntaxError(Recognizer<?, ?> recognizer, Object o, int i, int i1, String s, RecognitionException e) {

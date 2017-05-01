@@ -31,6 +31,12 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 
 		Value otherVal = (Value) other;
+		// for nulls, type equality is enough. the actual values are null
+
+		if(otherVal.type.equals(Type.nullType) && this.type.equals(Type.nullType)) {
+			return true;
+		}
+
 		return value.equals(otherVal.value) && type.equals(otherVal.type);
 	}
 

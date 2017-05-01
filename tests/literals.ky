@@ -1,0 +1,25 @@
+// int
+10
+typeof 10
+
+// float
+3.14159
+typeof 3.14159
+
+// null
+null
+typeof null
+
+// string literal
+"hello"
+typeof "hello"
+
+// object
+{
+    a = new int
+    b = "asdf"
+}
+typeof {
+    a = new int
+    b = "asdf"
+}

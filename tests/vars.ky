@@ -1,0 +1,24 @@
+// boolean variable
+let myBool = false
+myBool
+myBool = true
+myBool
+
+// integer variable
+let myInt = 99
+myInt
+myInt + 10
+myInt = 3
+
+// float variable
+let myFloat = 3.14159
+myFloat
+
+// string variable
+let myStr = "hello"
+myStr
+
+// fn variable
+let myFn = fn(int a): str {
+    return "abc"
+}
