@@ -261,7 +261,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if(ctx.NOT_OPERATOR() != null) {
-			System.out.println("Boolean operator");
 			assert(ctx.expression().size() == 1);
 
 			Value val = ctx.expression(0).accept(this);

@@ -44,6 +44,3 @@ a == 3
 // boolean negation
 myBool
 !myBool
-
-!false
-!true

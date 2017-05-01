@@ -14,7 +14,7 @@ typeof null
 "hello"
 typeof "hello"
 
-// object
+// object base type
 {
     a = new int
     b = "asdf"
@@ -27,3 +27,13 @@ typeof {
 // arithmetic
 2 + 2
 3.14159 + 2.71828
+
+// boolean operations
+!false
+!true
+
+true && true
+true && false
+
+true || true
+true || false

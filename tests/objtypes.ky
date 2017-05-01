@@ -3,6 +3,9 @@ let myObj = {
     b = "beep"
 }
 
+myObj.a
+myObj.b
+
 typeof myObj
 
 name myObjType obj{
@@ -15,8 +18,9 @@ typeof myCastedObj
 
 typeof myCastedObj == typeof (myObj as myObjType)
 
-let mySpecificFn = fn(myObjType a): null {
-    a.a
+let mySpecificFn = fn(myObjType object): null {
+    object.a
+    object.b
     return 10
 }
 

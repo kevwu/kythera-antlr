@@ -64,6 +64,17 @@ public class KytheraTest {
 			// arithmetic
 			assertEquals(new Value.IntVal(4), program.expression(i++).accept(visitor));
 			assertEquals(new Value.FloatVal(5.85987), program.expression(i++).accept(visitor));
+
+			// boolean operations
+			assertEquals(Values.TRUE, program.expression(i++).accept(visitor));
+			assertEquals(Values.FALSE, program.expression(i++).accept(visitor));
+
+			assertEquals(Values.TRUE, program.expression(i++).accept(visitor));
+			assertEquals(Values.FALSE, program.expression(i++).accept(visitor));
+
+			assertEquals(Values.TRUE, program.expression(i++).accept(visitor));
+			assertEquals(Values.TRUE, program.expression(i++).accept(visitor));
+
 		} catch(IOException e) {
 			e.printStackTrace();
 			fail();
