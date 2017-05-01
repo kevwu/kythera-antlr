@@ -174,6 +174,10 @@ public abstract class Value<V> implements Comparable<Value> {
 
 			if(fnScope.returnFlag) {
 				returnVal = visitor.currentScope.returnVal;
+				if(!returnVal.type.equals(this.returnType)) {
+					System.out.println("ERROR: Fn returned a " + returnVal.type + " but should have returned " + this.returnType);
+					return null;
+				}
 			}
 
 			// return scope to before
