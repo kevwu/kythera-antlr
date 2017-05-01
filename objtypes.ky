@@ -17,7 +17,7 @@ typeof myCastedObj == typeof (myObj as myObjType)
 
 let mySpecificFn = fn(myObjType a): null {
     a.a
-    return null
+    return 10
 }
 
 mySpecificFn(myObj as myObjType)

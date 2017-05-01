@@ -14,7 +14,6 @@ options {
     package io.kwu.kythera.antlr;
 }
 
-
 COMMENT
     :   ( '//' ~('\r' | '\n')* '\r'? '\n'
         | '/*' .*? '*/'
@@ -85,14 +84,12 @@ objLiteral: '{' (objLiteralEntry)*? '}';
 
 objLiteralEntry: identifier ASSIGNMENT_OPERATOR expression;
 
-objAccess: identifier '.' identifier;
+objAccess: Identifier '.' Identifier;
 
 // multiple returns are not yet supported.
 fnLiteral: FN '(' fnLiteralArg (',' fnLiteralArg)* ')' ':' type expBlock;
 
-fnLiteralArg: type identifier;
-
-//arrLiteral: type '[' (literal)*? ']';
+fnLiteralArg: type Identifier;
 
 NULL: 'null';
 
@@ -101,8 +98,7 @@ literal: IntLiteral | FloatLiteral | StrLiteral | NULL | TRUE | FALSE | objLiter
 /* Type */
 type: BOOL | INT | FLOAT | STR | NULL | OBJ | fnType | objType | Identifier ;
 
-identifier: Identifier;
-//identifier: Identifier | Identifier '[' IntLiteral ']' | Identifier '.' Identifier
+identifier: Identifier | objAccess;
 
 // lexically, identifiers are the same as types
 Identifier: ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '0'..'9' | '_')*;
@@ -124,7 +120,6 @@ expression
     |   NEW type
     |   statement // statements evaluate as expressions
     |   identifier
-    |   objAccess
     |   literal
     |   '(' expression ')'
     ;
@@ -153,14 +148,7 @@ variableStatement: declarationStatement | assignmentStatement | nameStatement;
 declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
 assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
 
-nameStatement // like "typedef" in C/C++
-    : NAME identifier type
-    // OOP not supported yet
-//    | NAME identifier IMPLEMENTS (identifier)+ type
-//    | NAME identifier EXTENDS identifier type
-//    | NAME identifier EXTENDS identifier IMPLEMENTS (identifier)+ type
-//    | NAME identifier INTERFACE identifier objType
-    ;
+nameStatement: NAME identifier type;
 
 // control flow statements
 controlFlowStatement: ifStatement | whileStatement | breakStatement | continueStatement | returnStatement;

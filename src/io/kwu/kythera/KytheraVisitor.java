@@ -301,6 +301,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if (ctx.identifier() != null) {
+			if(ctx.identifier().objAccess() != null) {
+				return ctx.identifier().objAccess().accept(this);
+			}
+
 			if (this.currentScope.hasVar(ctx.identifier().getText())) {
 				return this.currentScope.getVar(ctx.identifier().getText());
 			} else {
@@ -308,10 +312,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 				System.out.println("ERROR: Accessing a variable that is not set: " + ctx.identifier().getText());
 				return null;
 			}
-		}
-
-		if(ctx.objAccess() != null) {
-			return ctx.objAccess().accept(this);
 		}
 
 		// check for literals/raw expression last
@@ -385,22 +385,22 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	public Value visitObjAccess(KytheraParser.ObjAccessContext ctx) {
 		System.out.println("Accessing object member.");
 
-		assert(ctx.identifier().size() == 2);
+		assert(ctx.Identifier().size() == 2);
 
 		// first identifier is the object
-		Value objRaw = this.currentScope.getVar(ctx.identifier(0).getText());
+		Value objRaw = this.currentScope.getVar(ctx.Identifier(0).getText());
 
 		if(!(objRaw.type.type.equals("obj"))) {
-			System.out.println("ERROR: " + ctx.identifier(0).getText() + " is not an object!");
+			System.out.println("ERROR: " + ctx.Identifier(0).getText() + " is not an object!");
 			return null;
 		}
 
 		Value.ObjVal obj = (Value.ObjVal) objRaw;
 
-		String member = ctx.identifier(1).getText();
+		String member = ctx.Identifier(1).getText();
 
 		if(!obj.hasVal(member)) {
-			System.out.println("ERROR: " + ctx.identifier(0).getText() + " does not contain member " + member);
+			System.out.println("ERROR: " + ctx.Identifier(0).getText() + " does not contain member " + member);
 			return null;
 		}
 
@@ -588,9 +588,9 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		ArrayList<Identifier> arguments = new ArrayList<>();
 		if(ctx.fnLiteralArg() != null && ctx.fnLiteralArg().size() != 0) {
 			for(KytheraParser.FnLiteralArgContext fnArg : ctx.fnLiteralArg()) {
-				assert(fnArg.identifier() != null);
+				assert(fnArg.Identifier() != null);
 				assert(fnArg.type() != null);
-				arguments.add(new Identifier(fnArg.identifier().getText(), fnArg.type().accept(this.typeVisitor)));
+				arguments.add(new Identifier(fnArg.Identifier().getText(), fnArg.type().accept(this.typeVisitor)));
 			}
 		}
 
@@ -609,6 +609,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		Value.FnVal function = null;
 
 		if(ctx.identifier() != null) {
+
+			// accessing object member
+			if(ctx.identifier().objAccess() != null) {
+				return ctx.identifier().objAccess().accept(this);
+			}
+
 			if(!this.currentScope.hasVar(ctx.identifier().getText())) {
 				// TODO throw exception
 				System.out.println("ERROR: Calling a function identifier that has not been defined.");
