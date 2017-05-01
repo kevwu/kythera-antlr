@@ -23,3 +23,7 @@ typeof {
     a = new int
     b = "asdf"
 }
+
+// arithmetic
+2 + 2
+3.14159 + 2.71828

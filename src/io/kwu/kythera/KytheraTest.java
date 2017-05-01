@@ -58,6 +58,12 @@ public class KytheraTest {
 			assertEquals(new Value.TypeVal(Type.strType), program.expression(i++).accept(visitor));
 
 			// obj literal
+			// skip for now
+			i += 2;
+
+			// arithmetic
+			assertEquals(new Value.IntVal(4), program.expression(i++).accept(visitor));
+			assertEquals(new Value.FloatVal(5.85987), program.expression(i++).accept(visitor));
 		} catch(IOException e) {
 			e.printStackTrace();
 			fail();
@@ -120,6 +126,22 @@ public class KytheraTest {
 			// read
 			assertEquals(new Value.StrVal("hello"), program.expression(i++).accept(visitor));
 
+			/* null */
+			assertEquals(Values.NULL, program.expression(i++).accept(visitor));
+			assertEquals(Values.NULL, program.expression(i++).accept(visitor));
+
+			// while we're here - let's make sure that all null values are the same
+			assertEquals(new Value.Null(), Values.NULL);
+
+			/* fn variable */
+			// skip for now
+			i += 1;
+
+			/* Using "new" */
+			assertEquals(new Value.IntVal(0), program.expression(i++).accept(visitor));
+			assertEquals(new Value.FloatVal(0.0), program.expression(i++).accept(visitor));
+			assertEquals(new Value.BoolVal(false), program.expression(i++).accept(visitor));
+			assertEquals(new Value.StrVal(""), program.expression(i++).accept(visitor));
 
 			// TODO test for proper exception thrown for wrong assignment
 		} catch(IOException e) {
@@ -165,6 +187,26 @@ public class KytheraTest {
 	public void objTypeTest() {
 		try {
 			KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName("tests/objtypes.ky"));
+			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+			KytheraParser parser = new KytheraParser(tokenStream);
+			parser.addErrorListener(new TestErrorListener());
+
+			KytheraVisitor visitor = new KytheraVisitor(parser);
+
+			KytheraParser.ProgramContext program = parser.program();
+		} catch(IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
+	/**
+	 * Function behavior, calls, and scoping
+	 */
+	@Test
+	public void fnTest() {
+		try {
+			KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName("tests/fn.ky"));
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			KytheraParser parser = new KytheraParser(tokenStream);
 			parser.addErrorListener(new TestErrorListener());

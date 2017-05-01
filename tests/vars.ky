@@ -18,7 +18,32 @@ myFloat
 let myStr = "hello"
 myStr
 
+// null
+let myNull = null
+myNull
+
 // fn variable
 let myFn = fn(int a): str {
     return "abc"
 }
+
+/* using "new" */
+let myNewInt = new int
+let myNewFloat = new float
+let myNewBool = new bool
+let myNewStr = new str
+
+// boolean expression
+let a = 0
+let b = 1
+a = 3
+a == b
+a == a
+a == 3
+
+// boolean negation
+myBool
+!myBool
+
+!false
+!true

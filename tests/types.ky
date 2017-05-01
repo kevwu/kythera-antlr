@@ -3,3 +3,31 @@ new int
 new float
 new str
 new null
+
+// name statements
+name myType int
+name myFnType fn(int) : str
+name myObjType obj{
+    int ab
+    str b
+}
+
+let myCustomFnInstance = new myFnType
+
+myCustomFnInstance = fn(int a): str {
+    return "helo"
+}
+
+myCustomFnInstance("asdf")
+
+let myCustomObjInstance = new myObjType
+
+myCustomObjInstance = {
+    b = "asdf"
+    ab = 2
+    c = "zzz"
+}
+
+myCustomObjInstance.b
+
+typeof a

@@ -1,4 +1,24 @@
-let myObj = new obj{
+let myObj = {
+    a = 99
+    b = "beep"
+}
+
+typeof myObj
+
+name myObjType obj{
     int a
     str b
 }
+
+let myCastedObj = myObj as myObjType
+typeof myCastedObj
+
+typeof myCastedObj == typeof (myObj as myObjType)
+
+let mySpecificFn = fn(myObjType a): null {
+    a.a
+    return 10
+}
+
+mySpecificFn(myObj as myObjType)
+mySpecificFn(myCastedObj)
