@@ -238,7 +238,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 					resultVal = lhsVal - rhsVal;
 					break;
 				case "*":
-					resultVal = lhsVal - rhsVal;
+					resultVal = lhsVal * rhsVal;
 					break;
 				case "/":
 					// integer division SHOULD be preserved when converting back
@@ -412,6 +412,11 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		assert (ctx.expression() != null);
 
 		String identifier = ctx.identifier().getText();
+
+		if(ctx.identifier().objAccess() != null) {
+			System.out.println("Assigning to object member");
+			return null;
+		}
 
 		if (!this.currentScope.hasVar(identifier)) {
 			// TODO throw actual exception

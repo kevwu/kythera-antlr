@@ -7,11 +7,42 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 
+import java.io.IOException;
+import java.nio.CharBuffer;
 import java.util.BitSet;
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		if(args.length == 1) {
+		if(args.length == 0) {
+			// REPL
+			try {
+				KytheraLexer lexer = new KytheraLexer(CharStreams.fromString(""));
+				CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+				KytheraParser parser = new KytheraParser(tokenStream);
+				KytheraVisitor visitor = new KytheraVisitor(parser);
+
+				Scanner kb = new Scanner(System.in);
+				while(true) {
+					String line = kb.nextLine();
+
+					lexer = new KytheraLexer(CharStreams.fromString(line));
+					tokenStream = new CommonTokenStream(lexer);
+					parser.setTokenStream(tokenStream);
+
+					Value result = visitor.visitExpression(parser.expression());
+					if(result != null) {
+						System.out.println(result.toString());
+					} else {
+						System.out.println("Expression resulted in null, probably due to an error.");
+					}
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+
+
+		} else if(args.length == 1) {
 			try {
 				KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName(args[0]));
 				lexer.addErrorListener(new ANTLRErrorListener() {
