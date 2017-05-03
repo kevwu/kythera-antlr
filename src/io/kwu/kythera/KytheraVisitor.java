@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/* TODO consider separating each visitor into its own class
-(did this at first, was messier, may be more useful as complexity increases)
- */
 public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	private KytheraParser parser;
 	protected Scope rootScope;
@@ -84,7 +81,10 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			if(origVal.type instanceof Type.ObjType && targetType.equals(Type.objBaseType)) {
 				// create new obj value
 				System.out.println("Casting rigid obj to freeform.");
-				return null;
+
+				Value.ObjVal origObjVal = (Value.ObjVal) origVal;
+
+				return new Value.ObjVal(origObjVal.value);
 			}
 
 			// freeform to rigid object typecasting

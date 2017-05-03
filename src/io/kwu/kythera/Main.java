@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
+		// if no file loaded, use REPL
 		if(args.length == 0) {
-			// REPL
 			try {
 				KytheraLexer lexer = new KytheraLexer(CharStreams.fromString(""));
 				CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -40,8 +40,6 @@ public class Main {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-
-
 		} else if(args.length == 1) {
 			try {
 				KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName(args[0]));
