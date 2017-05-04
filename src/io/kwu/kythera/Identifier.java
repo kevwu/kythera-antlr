@@ -20,4 +20,14 @@ public class Identifier {
 
 		return this.name.equals(otherId.name) && this.type.equals(otherId.type);
 	}
+
+	@Override
+	public int hashCode() {
+		return this.name.hashCode() + this.type.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return type.toString() + " " + name;
+	}
 }

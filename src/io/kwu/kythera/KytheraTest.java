@@ -11,7 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.HashSet;
 
 public class KytheraTest {
 	@Before
@@ -185,6 +188,21 @@ public class KytheraTest {
 			assertEquals(Type.floatType, program.expression(i++).type().accept(typeVisitor));
 			assertEquals(Type.strType, program.expression(i++).type().accept(typeVisitor));
 			assertEquals(Type.nullType, program.expression(i++).type().accept(typeVisitor));
+
+
+			assertEquals(new Value.TypeVal(Type.intType), program.expression(i++).accept(visitor));
+			assertEquals(new Value.TypeVal(new Type.FnType(
+				new ArrayList(Arrays.asList(Type.intType)),
+				Type.strType
+			)), program.expression(i++).accept(visitor));
+			assertEquals(new Value.TypeVal(new Type.ObjType(
+				new HashSet<Identifier>(
+					Arrays.asList(
+						new Identifier("a", Type.intType),
+						new Identifier("b", Type.strType)
+					)
+				)
+			)), program.expression(i++).accept(visitor));
 		} catch(IOException e) {
 			e.printStackTrace();
 			fail();

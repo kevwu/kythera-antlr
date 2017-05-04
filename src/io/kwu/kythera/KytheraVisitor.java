@@ -495,8 +495,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitNameStatement(KytheraParser.NameStatementContext ctx) {
-		System.out.println("Name Statement");
-
 		String name = ctx.identifier().getText();
 
 		if(this.currentScope.hasName(name)) {

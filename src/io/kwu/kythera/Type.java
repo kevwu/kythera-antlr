@@ -123,11 +123,6 @@ public abstract class Type {
 	public static class ObjType extends Type {
 		final HashSet<Identifier> identifiers;
 
-		public ObjType() {
-			super("obj");
-			this.identifiers = new HashSet<>();
-		}
-
 		public ObjType(Set<Identifier> identifiers) {
 			super("obj");
 			this.identifiers = new HashSet<>(identifiers);
@@ -163,7 +158,9 @@ public abstract class Type {
 				return false;
 			}
 
-			return this.identifiers.equals(((ObjType) other).identifiers);
+			ObjType otherObj = (ObjType) other;
+
+			return this.identifiers.equals(otherObj.identifiers);
 		}
 	}
 }

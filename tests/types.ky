@@ -5,10 +5,10 @@ new str
 new null
 
 // name statements
-name myType int
+name myIntType int
 name myFnType fn(int) : str
 name myObjType obj{
-    int ab
+    int a
     str b
 }
 
