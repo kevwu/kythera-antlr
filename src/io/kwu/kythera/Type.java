@@ -23,10 +23,10 @@ public abstract class Type {
 			return false;
 		}
 
-		// ObjType's implementation of .equals() is not symmetric
+		// ObjRigidType's implementation of .equals() is not symmetric
 		// this is a fix for that
-		if(other instanceof ObjType) {
-			return (((ObjType) other).equals(this));
+		if(other instanceof ObjRigidType) {
+			return (((ObjRigidType) other).equals(this));
 		}
 
 		return ((Type) other).type.equals(this.type);
@@ -55,7 +55,7 @@ public abstract class Type {
 	// base types are for shallow type comparison.
 	public static Type fnBaseType = new Type("fn") {};
 
-	public static Type objBaseType = new Type("obj") {};
+	public static Type objFreeformType = new Type("obj") {};
 
 	public static class FnType extends Type {
 		final ArrayList<Type> argList;
@@ -120,10 +120,10 @@ public abstract class Type {
 		}
 	}
 
-	public static class ObjType extends Type {
+	public static class ObjRigidType extends Type {
 		final HashSet<Identifier> identifiers;
 
-		public ObjType(Set<Identifier> identifiers) {
+		public ObjRigidType(Set<Identifier> identifiers) {
 			super("obj");
 			this.identifiers = new HashSet<>(identifiers);
 		}
@@ -143,11 +143,11 @@ public abstract class Type {
 
 		@Override
 		public boolean equals(Object other) {
-			if(!(other instanceof Type.ObjType)) {
+			if(!(other instanceof ObjRigidType)) {
 				return false;
 			}
 
-			ObjType otherObj = (ObjType) other;
+			ObjRigidType otherObj = (ObjRigidType) other;
 
 			return this.identifiers.equals(otherObj.identifiers);
 		}

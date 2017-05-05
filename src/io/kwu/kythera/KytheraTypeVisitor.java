@@ -4,7 +4,6 @@ import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -39,15 +38,15 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 		}
 
 		if(ctx.OBJ() != null) {
-			return Type.objBaseType;
+			return Type.objFreeformType;
 		}
 
 		if (ctx.fnType() != null) {
 			return ctx.fnType().accept(this);
 		}
 
-		if (ctx.objType() != null) {
-			return ctx.objType().accept(this);
+		if (ctx.objRigidType() != null) {
+			return ctx.objRigidType().accept(this);
 		}
 
 		if (this.visitor.currentScope.hasName(ctx.getText())) {
@@ -59,7 +58,7 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 	}
 
 	@Override
-	public Type visitObjType(KytheraParser.ObjTypeContext ctx) {
+	public Type visitObjRigidType(KytheraParser.ObjRigidTypeContext ctx) {
 		List<KytheraParser.ObjTypeEntryContext> entryContexts = ctx.objTypeEntry();
 
 		HashSet<Identifier> identifiers = new HashSet<>();
@@ -75,7 +74,7 @@ public class KytheraTypeVisitor extends KytheraBaseVisitor<Type> {
 			identifiers.add(id);
 		}
 
-		return new Type.ObjType(identifiers);
+		return new Type.ObjRigidType(identifiers);
 	}
 
 	@Override

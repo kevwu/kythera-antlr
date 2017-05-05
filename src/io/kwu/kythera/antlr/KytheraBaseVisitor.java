@@ -19,7 +19,7 @@ public class KytheraBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitObjType(KytheraParser.ObjTypeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitObjRigidType(KytheraParser.ObjRigidTypeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

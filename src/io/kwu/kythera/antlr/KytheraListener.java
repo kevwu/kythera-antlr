@@ -10,15 +10,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface KytheraListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#objType}.
+	 * Enter a parse tree produced by {@link KytheraParser#objRigidType}.
 	 * @param ctx the parse tree
 	 */
-	void enterObjType(KytheraParser.ObjTypeContext ctx);
+	void enterObjRigidType(KytheraParser.ObjRigidTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link KytheraParser#objType}.
+	 * Exit a parse tree produced by {@link KytheraParser#objRigidType}.
 	 * @param ctx the parse tree
 	 */
-	void exitObjType(KytheraParser.ObjTypeContext ctx);
+	void exitObjRigidType(KytheraParser.ObjRigidTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#objTypeEntry}.
 	 * @param ctx the parse tree

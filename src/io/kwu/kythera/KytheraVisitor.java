@@ -16,7 +16,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	private KytheraTypeVisitor typeVisitor;
 
-
 	public KytheraVisitor(KytheraParser parser) {
 		this.parser = parser;
 
@@ -53,19 +52,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
-		// object member operations
-		if (ctx.DOT() != null) {
-			// the order of checking here is important
-			if(ctx.LET() != null) {
-				System.out.println("Object member declaration");
-			} else if(ctx.ASSIGNMENT_OPERATOR() != null) {
-				System.out.println("Object member assignment");
-			} else {
-				System.out.println("Object member access");
-				return null;
-			}
-		}
-
 		if (ctx.fnCallParamList() != null) {
 			// function call
 			System.out.println("Function call expression.");
@@ -101,6 +87,12 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			Type targetType = ctx.type().accept(this.typeVisitor);
 			Value origVal = ctx.expression(0).accept(this);
 
+			// no-op
+			if(origVal.type.equals(targetType)) {
+				System.out.println("Value unchanged.");
+				return origVal;
+			}
+
 			// built-in int -> float typecasting
 			if(origVal instanceof Value.IntVal && targetType.equals(Type.floatType)){
 				return new Value.FloatVal(((Value.IntVal) origVal).value.doubleValue());
@@ -112,7 +104,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 
 			// rigid to freeform object typecasting
-			if(origVal.type instanceof Type.ObjType && targetType.equals(Type.objBaseType)) {
+			if(origVal.type instanceof Type.ObjRigidType && targetType.equals(Type.objFreeformType)) {
 				// create new obj value
 				System.out.println("Casting rigid obj to freeform.");
 
@@ -123,30 +115,34 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 			// freeform to rigid object typecasting
 			// must be checked after rigid-to-freeform
-			if(origVal.type.equals(Type.objBaseType) && targetType instanceof Type.ObjType) {
+			if(origVal.type.equals(Type.objFreeformType) && targetType instanceof Type.ObjRigidType) {
 				System.out.println("Casting freeform obj to rigid: " + targetType.toString());
 				// check that origin object matches fields and field types from target type
-				Type.ObjType targetObjType = (Type.ObjType) targetType;
+				Type.ObjRigidType targetObjRigidType = (Type.ObjRigidType) targetType;
 				Value.ObjVal origObjVal = (Value.ObjVal) origVal;
 
-				for(Identifier id : targetObjType.identifiers) {
+				for(Identifier id : targetObjRigidType.identifiers) {
 					if (!origObjVal.hasVal(id.name) || !origObjVal.identifiers().get(id.name).equals(id)) {
-						System.out.println("Cannot cast to " + targetObjType + ": missing field " + id.name + " (" + id.type + ")");
+						System.out.println("Cannot cast to " + targetObjRigidType + ": missing field " + id.name + " (" + id.type + ")");
 						return null;
 					}
 				}
 
 				// create new value
-				return new Value.ObjVal((HashMap<Identifier, Value>) origObjVal.value.clone(), targetObjType);
+				return new Value.ObjVal((HashMap<Identifier, Value>) origObjVal.value.clone(), targetObjRigidType);
 			}
 
 			System.out.println("This type cast is not supported yet.");
 			return null;
 		}
 
+		if(ctx.NEW() != null) {
+			assert (ctx.type() != null);
+			Type valType = ctx.type().accept(this.typeVisitor);
+			return Value.newValFromType(valType);
+		}
 
 		if (ctx.BOOLEAN_COMPARISON() != null) {
-			// there is no sub-rule for a boolean op, handle it here
 			Value lhs = visit(ctx.expression(0));
 			Value rhs = visit(ctx.expression(1));
 
@@ -313,11 +309,42 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			}
 		}
 
-		if(ctx.NEW() != null) {
-			assert (ctx.type() != null);
-//			Value result = ctx.type().accept(this);
-			Type valType = ctx.type().accept(this.typeVisitor);
-			return Value.newValFromType(valType);
+		// object member operations
+		if (ctx.DOT() != null) {
+			// there must be at least one expression, which should evaluate to the object we are accessing
+			assert(ctx.expression().size() >= 1);
+
+			Value possibleTargetObj = ctx.expression(0).accept(this);
+
+			if(!(possibleTargetObj instanceof Value.ObjVal)) {
+				System.out.println("ERROR: " + ctx.expression(0).getText() + " is not an object.");
+				return null;
+			}
+
+			Value.ObjVal targetObj = (Value.ObjVal) possibleTargetObj;
+			// member identifier
+			String identifier = ctx.Identifier().getText();
+
+			if(ctx.LET() != null) { // object member declaration
+				Value newVal = ctx.expression(1).accept(this);
+
+				if(targetObj.addVal(identifier, newVal)) {
+					return newVal;
+				} else {
+					return null;
+				}
+			} else if(ctx.ASSIGNMENT_OPERATOR() != null) { // object member assignment
+				Value newVal = ctx.expression(1).accept(this);
+
+				if(targetObj.setVal(identifier, newVal)) {
+					return newVal;
+				} else {
+					return null;
+				}
+
+			} else { // object member access
+				return targetObj.getVal(identifier);
+			}
 		}
 
 		if (ctx.assignmentStatement() != null) {
@@ -436,9 +463,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			System.out.println("ERROR: Assigning to variable that does not exist: " + identifier);
 			return null;
 		} else {
-			// TODO type check before assignment. Do shallow type check only
 			Value currentValue = this.currentScope.getVar(identifier);
-
 
 			if (!currentValue.type.equals(newValue.type)) {
 				System.out.println("ERROR: Assigning type " + newValue.type.toString() + " to variable of type " + currentValue.type.toString());

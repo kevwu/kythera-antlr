@@ -18,13 +18,13 @@ public class KytheraBaseListener implements KytheraListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObjType(KytheraParser.ObjTypeContext ctx) { }
+	@Override public void enterObjRigidType(KytheraParser.ObjRigidTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObjType(KytheraParser.ObjTypeContext ctx) { }
+	@Override public void exitObjRigidType(KytheraParser.ObjRigidTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

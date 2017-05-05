@@ -1,6 +1,5 @@
 package io.kwu.kythera;
 
-import io.kwu.kythera.antlr.KytheraBaseVisitor;
 import io.kwu.kythera.antlr.KytheraParser;
 
 import java.util.*;
@@ -204,8 +203,8 @@ public abstract class Value<V> implements Comparable<Value> {
 		private HashMap<String, Identifier> identifiers;
 
 		public ObjVal(HashMap<Identifier, Value> values) {
-//			super(new Type.ObjType(values.keySet()), values);
-			super(Type.objBaseType, values);
+//			super(new Type.ObjRigidType(values.keySet()), values);
+			super(Type.objFreeformType, values);
 			// create mapping from identifier names to Identifiers (easier when retrieving)
 			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
 
@@ -217,7 +216,7 @@ public abstract class Value<V> implements Comparable<Value> {
 			}
 		}
 
-		public ObjVal(HashMap<Identifier, Value> values, Type.ObjType rigidType) {
+		public ObjVal(HashMap<Identifier, Value> values, Type.ObjRigidType rigidType) {
 			super(rigidType, values);
 			// create mapping from identifier names to Identifiers (easier when retrieving)
 			HashSet<Identifier> identifiers = new HashSet<>(values.keySet());
@@ -269,6 +268,7 @@ public abstract class Value<V> implements Comparable<Value> {
 
 		public Value getVal(String member) {
 			if(!this.hasVal(member)) {
+				System.out.println("ERROR: object has no member " + member);
 				return null;
 			}
 
@@ -284,7 +284,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		public boolean setVal(String member, Value newVal) {
 			// check for hasVal
 			if(!this.identifiers.containsKey(member)) {
-				System.out.println("Warning: Tried to set member " + member + " that does not exist, aborting");
+				System.out.println("ERROR: Tried to set member " + member + ", which does not exist");
 				return false;
 			}
 
@@ -295,7 +295,7 @@ public abstract class Value<V> implements Comparable<Value> {
 				return false;
 			}
 
-			// identifier is already up to date, no need to change
+			// identifiers map is already up to date, no need to change
 
 			// update value
 			this.value.put(identif, newVal);
@@ -303,17 +303,25 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 
 		// separate for now, can possibly be combined with setVal later
-		public void addVal(String identifier, Value value) {
-			if(!(this.type instanceof Type.ObjType)) {
-				System.out.println("Warning: Tried to add value to rigid object.");
-				return;
+		public boolean addVal(String identifier, Value value) {
+			if(this.type instanceof Type.ObjRigidType) {
+				System.out.println("ERROR: Cannot add new member to a rigid object.");
+				return false;
 			}
 
-			// type check incoming value
+			// check if value already exists
+			if(this.hasVal(identifier)) {
+				System.out.println("ERROR: Object member " + identifier + " already exists");
+				return false;
+			}
 
 			// update identifiers
+			Identifier newIdentif = new Identifier(identifier, value.type);
+			this.identifiers.put(identifier, newIdentif);
 
 			// update value
+			this.value.put(newIdentif, value);
+			return true;
 		}
 	}
 
@@ -350,22 +358,22 @@ public abstract class Value<V> implements Comparable<Value> {
 			return null;
 		}
 
-		if(valType instanceof Type.ObjType) {
-			System.out.println("rigid objType");
+		if(valType instanceof Type.ObjRigidType) {
+			System.out.println("rigid objRigidType");
 
-			Type.ObjType objType = (Type.ObjType) valType;
+			Type.ObjRigidType objRigidType = (Type.ObjRigidType) valType;
 
 			HashMap<Identifier, Value> newVals = new HashMap<>();
 
-			for(Identifier id : objType.identifiers) {
+			for(Identifier id : objRigidType.identifiers) {
 				newVals.put(id, Value.newValFromType(id.type));
 			}
 
-			return new ObjVal(newVals, objType);
+			return new ObjVal(newVals, objRigidType);
 		}
 
 		// check for base type AFTER rigid type, since all rigid types also satisfy this
-		if(valType.equals(Type.objBaseType)) {
+		if(valType.equals(Type.objFreeformType)) {
 			return new Value.ObjVal(new HashMap<>());
 		}
 

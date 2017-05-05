@@ -13,11 +13,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#objType}.
+	 * Visit a parse tree produced by {@link KytheraParser#objRigidType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitObjType(KytheraParser.ObjTypeContext ctx);
+	T visitObjRigidType(KytheraParser.ObjRigidTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link KytheraParser#objTypeEntry}.
 	 * @param ctx the parse tree

@@ -48,7 +48,7 @@ OBJ: 'obj';
 ARR: 'arr';
 
 // object type
-objType: OBJ '{' (objTypeEntry)*? '}';
+objRigidType: OBJ '{' (objTypeEntry)*? '}';
 objTypeEntry: type identifier;
 
 // function type
@@ -99,7 +99,7 @@ fnLiteralArg: type Identifier;
 literal: IntLiteral | FloatLiteral | StrLiteral | NULL | TRUE | FALSE | objLiteral | fnLiteral;
 
 /* Type */
-type: BOOL | INT | FLOAT | STR | NULL | OBJ | fnType | objType | Identifier ;
+type: BOOL | INT | FLOAT | STR | NULL | OBJ | fnType | objRigidType | Identifier ;
 
 identifier: Identifier;
 
@@ -116,17 +116,17 @@ expression
     :   expression '(' fnCallParamList ')'
     |   TYPEOF expression
     |   expression AS type
+    |   NEW type
     |   expression BOOLEAN_COMPARISON expression // > < == etc
     |   expression BOOLEAN_OPERATOR expression // &&, ||
     |   expression ARITH_OPERATOR expression // arithmetic
     |   NOT_OPERATOR expression // !
-    |   NEW type
     // object member retrieval
-    |   expression DOT identifier
+    |   expression DOT Identifier
     // object member declaration
-    |   LET expression DOT identifier ASSIGNMENT_OPERATOR expression
+    |   LET expression DOT Identifier ASSIGNMENT_OPERATOR expression
     // object member assignment
-    |   expression DOT identifier ASSIGNMENT_OPERATOR expression
+    |   expression DOT Identifier ASSIGNMENT_OPERATOR expression
     |   declarationStatement
     |   assignmentStatement
     |   nameStatement

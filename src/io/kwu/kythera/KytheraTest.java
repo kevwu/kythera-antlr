@@ -195,7 +195,7 @@ public class KytheraTest {
 				new ArrayList(Arrays.asList(Type.intType)),
 				Type.strType
 			)), program.expression(i++).accept(visitor));
-			assertEquals(new Value.TypeVal(new Type.ObjType(
+			assertEquals(new Value.TypeVal(new Type.ObjRigidType(
 				new HashSet<Identifier>(
 					Arrays.asList(
 						new Identifier("a", Type.intType),
