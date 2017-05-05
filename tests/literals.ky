@@ -17,11 +17,9 @@ typeof "hello"
 // object base type
 {
     a = new int
-    b = "asdf"
 }
 typeof {
     a = new int
-    b = "asdf"
 }
 
 // arithmetic

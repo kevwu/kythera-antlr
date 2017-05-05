@@ -11,10 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashSet;
+import java.util.*;
 
 public class KytheraTest {
 	@Before
@@ -61,8 +58,11 @@ public class KytheraTest {
 			assertEquals(new Value.TypeVal(Type.strType), program.expression(i++).accept(visitor));
 
 			// obj literal
-			// skip for now
-			i += 2;
+			HashMap<Identifier, Value> objMap = new HashMap<>();
+			objMap.put(new Identifier("a", Type.intType), Value.newValFromType(Type.intType));
+
+			assertEquals(new Value.ObjVal(objMap), program.expression(i++).accept(visitor));
+			assertEquals(new Value.TypeVal(Type.objFreeformType), program.expression(i++).accept(visitor));
 
 			// arithmetic
 			assertEquals(new Value.IntVal(4), program.expression(i++).accept(visitor));
@@ -189,40 +189,33 @@ public class KytheraTest {
 			assertEquals(Type.strType, program.expression(i++).type().accept(typeVisitor));
 			assertEquals(Type.nullType, program.expression(i++).type().accept(typeVisitor));
 
-
+			// name statements
 			assertEquals(new Value.TypeVal(Type.intType), program.expression(i++).accept(visitor));
 			assertEquals(new Value.TypeVal(new Type.FnType(
 				new ArrayList(Arrays.asList(Type.intType)),
 				Type.strType
 			)), program.expression(i++).accept(visitor));
-			assertEquals(new Value.TypeVal(new Type.ObjRigidType(
-				new HashSet<Identifier>(
-					Arrays.asList(
-						new Identifier("a", Type.intType),
-						new Identifier("b", Type.strType)
-					)
-				)
-			)), program.expression(i++).accept(visitor));
-		} catch(IOException e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
 
-	/**
-	 * Object type casting and type comparison
-	 */
-	@Test
-	public void objTypeTest() {
-		try {
-			KytheraLexer lexer = new KytheraLexer(CharStreams.fromFileName("tests/objtypes.ky"));
-			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-			KytheraParser parser = new KytheraParser(tokenStream);
-			parser.addErrorListener(new TestErrorListener());
 
-			KytheraVisitor visitor = new KytheraVisitor(parser);
+			Type.ObjRigidType myObjTypeVal = new Type.ObjRigidType(
+				new HashSet<Identifier>(Arrays.asList(
+					new Identifier("a", Type.intType),
+					new Identifier("b", Type.strType)
+				))
+			);
+			assertEquals(new Value.TypeVal(myObjTypeVal), program.expression(i++).accept(visitor));
 
-			KytheraParser.ProgramContext program = parser.program();
+			HashMap<Identifier, Value> objMap = new HashMap<>();
+			objMap.put(new Identifier("a", Type.intType), new Value.IntVal(99));
+			objMap.put(new Identifier("b", Type.strType), new Value.StrVal("beep"));
+			assertEquals(new Value.ObjVal(objMap), program.expression(i++).accept(visitor));
+
+			assertEquals(new Value.IntVal(99), program.expression(i++).accept(visitor));
+			assertEquals(new Value.StrVal("beep"), program.expression(i++).accept(visitor));
+
+			assertEquals(new Value.TypeVal(Type.objFreeformType), program.expression(i++).accept(visitor));
+
+			assertEquals(new Value.ObjVal(objMap, myObjTypeVal), program.expression(i++).accept(visitor));
 		} catch(IOException e) {
 			e.printStackTrace();
 			fail();

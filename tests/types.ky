@@ -12,22 +12,28 @@ name myObjType obj{
     str b
 }
 
-let myCustomFnInstance = new myFnType
-
-myCustomFnInstance = fn(int a): str {
-    return "helo"
+let myObj = {
+    a = 99
+    b = "beep"
 }
 
-myCustomFnInstance("asdf")
+myObj.a
+myObj.b
 
-let myCustomObjInstance = new myObjType
+typeof myObj
 
-myCustomObjInstance = {
-    b = "asdf"
-    ab = 2
-    c = "zzz"
+let myCastedObj = myObj as myObjType
+typeof myCastedObj
+
+typeof myCastedObj == typeof myObj
+typeof myCastedObj == typeof (myObj as myObjType)
+
+// rigid object type use in function
+let mySpecificFn = fn(myObjType object): null {
+    object.a
+    object.b
+    return 10
 }
 
-myCustomObjInstance.b
-
-typeof a
+mySpecificFn(myObj as myObjType)
+mySpecificFn(myCastedObj)
