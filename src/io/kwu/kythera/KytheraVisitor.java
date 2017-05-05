@@ -53,8 +53,42 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitExpression(KytheraParser.ExpressionContext ctx) {
-		if (ctx.fnCallExpression() != null) {
-			return ctx.fnCallExpression().accept(this);
+		// object member operations
+		if (ctx.DOT() != null) {
+			// the order of checking here is important
+			if(ctx.LET() != null) {
+				System.out.println("Object member declaration");
+			} else if(ctx.ASSIGNMENT_OPERATOR() != null) {
+				System.out.println("Object member assignment");
+			} else {
+				System.out.println("Object member access");
+				return null;
+			}
+		}
+
+		if (ctx.fnCallParamList() != null) {
+			// function call
+			System.out.println("Function call expression.");
+
+			// we don't know if the expression is a valid fn yet
+			Value possibleFnVal = ctx.expression(0).accept(this);
+			if(!(possibleFnVal instanceof Value.FnVal)) {
+				System.out.println("ERROR: " + ctx.expression(0).getText() + " is not a function");
+				return null;
+			}
+
+			Value.FnVal function = (Value.FnVal) possibleFnVal;
+
+			ArrayList<Value> argList = new ArrayList<>();
+
+			// build argument list
+			if(ctx.fnCallParamList() != null && ctx.fnCallParamList().expression().size() != 0) {
+				for(KytheraParser.ExpressionContext expr : ctx.fnCallParamList().expression()) {
+					argList.add(expr.accept(this));
+				}
+			}
+
+			return function.call(argList, this);
 		}
 
 		if (ctx.TYPEOF() != null) {
@@ -109,6 +143,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			System.out.println("This type cast is not supported yet.");
 			return null;
 		}
+
 
 		if (ctx.BOOLEAN_COMPARISON() != null) {
 			// there is no sub-rule for a boolean op, handle it here
@@ -300,10 +335,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		}
 
 		if (ctx.identifier() != null) {
-			if(ctx.identifier().objAccess() != null) {
-				return ctx.identifier().objAccess().accept(this);
-			}
-
 			if (this.currentScope.hasVar(ctx.identifier().getText())) {
 				return this.currentScope.getVar(ctx.identifier().getText());
 			} else {
@@ -381,32 +412,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	}
 
 	@Override
-	public Value visitObjAccess(KytheraParser.ObjAccessContext ctx) {
-		System.out.println("Accessing object member.");
-
-		assert(ctx.Identifier().size() == 2);
-
-		// first identifier is the object
-		Value objRaw = this.currentScope.getVar(ctx.Identifier(0).getText());
-
-		if(!(objRaw.type.type.equals("obj"))) {
-			System.out.println("ERROR: " + ctx.Identifier(0).getText() + " is not an object!");
-			return null;
-		}
-
-		Value.ObjVal obj = (Value.ObjVal) objRaw;
-
-		String member = ctx.Identifier(1).getText();
-
-		if(!obj.hasVal(member)) {
-			System.out.println("ERROR: " + ctx.Identifier(0).getText() + " does not contain member " + member);
-			return null;
-		}
-
-		return obj.getVal(member);
-	}
-
-	@Override
 	public Value visitAssignmentStatement(KytheraParser.AssignmentStatementContext ctx) {
 		assert (ctx.identifier() != null);
 		assert (ctx.expression() != null);
@@ -415,26 +420,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		Value newValue = ctx.expression().accept(this);
 
-		if(ctx.identifier().objAccess() != null) {
-			System.out.println("Assigning to object member");
-
-			Value.ObjVal objVal = (Value.ObjVal) this.currentScope.getVar(ctx.identifier().objAccess().Identifier(0).getText());
-
-			String member = ctx.identifier().objAccess().Identifier(1).getText();
-
-			if(!objVal.hasVal(member)) {
-				System.out.println("Error: Setting object member that does not exist (to create, use 'let' instead.)");
-				return null;
-			}
-
-			if(objVal.setVal(member, newValue)) {
-				System.out.println("Successfully set obj member");
-				return objVal.getVal(member);
-			} else {
-				System.out.println("Failed to set obj member");
-				return null;
-			}
-		}
 
 		if (!this.currentScope.hasVar(identifier)) {
 			// TODO throw actual exception
@@ -480,11 +465,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		assert (ctx.LET() != null);
 		String identifier = ctx.identifier().getText();
 
-		if(ctx.identifier().objAccess() != null) {
-			System.out.println("Declaring new object member.");
-
-		}
-
 		if(this.currentScope.hasVar(identifier)) {
 			System.out.println("ERROR: Identifier " + identifier + " has already been declared.");
 			return null;
@@ -517,7 +497,7 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 	@Override
 	public Value visitNameStatement(KytheraParser.NameStatementContext ctx) {
-		String name = ctx.identifier().getText();
+		String name = ctx.Identifier().getText();
 
 		if(this.currentScope.hasName(name)) {
 			System.out.println("ERROR: Name " + name + " is already set.");
@@ -624,49 +604,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 		Type returnType = ctx.type().accept(this.typeVisitor);
 
 		return new Value.FnVal(arguments, ctx.expBlock(), returnType);
-	}
-
-	@Override
-	public Value visitFnCallExpression(KytheraParser.FnCallExpressionContext ctx) {
-		System.out.println("Function call expression.");
-
-		Value.FnVal function = null;
-
-		if(ctx.identifier() != null) {
-
-			// accessing object member
-			if(ctx.identifier().objAccess() != null) {
-				return ctx.identifier().objAccess().accept(this);
-			}
-
-			if(!this.currentScope.hasVar(ctx.identifier().getText())) {
-				// TODO throw exception
-				System.out.println("ERROR: Calling a function identifier that has not been defined.");
-				return null;
-			}
-			function = (Value.FnVal) this.currentScope.getVar(ctx.identifier().getText());
-			if(!((Type.FnType) function.type).baseTypeEquals(Type.fnBaseType)) {
-				System.out.println("ERROR: " + ctx.identifier().getText() + " is not a function");
-				return null;
-			}
-		} else if(ctx.fnLiteral() != null) {
-			function = (Value.FnVal) ctx.fnLiteral().accept(this);
-		}
-
-		ArrayList<Value> argList = new ArrayList<>();
-
-		if(ctx.fnCallParamList() != null && ctx.fnCallParamList().expression().size() != 0) {
-			for(KytheraParser.ExpressionContext expr : ctx.fnCallParamList().expression()) {
-				argList.add(expr.accept(this));
-			}
-		}
-
-		if(function != null) {
-			return function.call(argList, this);
-		} else {
-			System.out.println("Function was somehow not set...");
-			return null;
-		}
 	}
 
 	@Override

@@ -55,12 +55,6 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObjLiteralEntry(KytheraParser.ObjLiteralEntryContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#objAccess}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitObjAccess(KytheraParser.ObjAccessContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link KytheraParser#fnLiteral}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -96,12 +90,6 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpression(KytheraParser.ExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#fnCallExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFnCallExpression(KytheraParser.FnCallExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link KytheraParser#fnCallParamList}.
 	 * @param ctx the parse tree
