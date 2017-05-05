@@ -84,6 +84,7 @@ objLiteral: '{' (objLiteralEntry)*? '}';
 
 objLiteralEntry: identifier ASSIGNMENT_OPERATOR expression;
 
+// TODO get object from expression, not Identifier
 objAccess: Identifier '.' Identifier;
 
 // multiple returns are not yet supported.

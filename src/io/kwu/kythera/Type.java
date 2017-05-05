@@ -128,17 +128,6 @@ public abstract class Type {
 			this.identifiers = new HashSet<>(identifiers);
 		}
 
-		// check fields and names in addition to raw type
-/*
-		public boolean subtypeEquals(Object other) {
-			if(!this.equals(other)) {
-				return false;
-			}
-
-			return this.identifiers.equals(((ObjType) other).identifiers);
-		}
-*/
-
 		@Override
 		public String toString() {
 			StringBuilder out = new StringBuilder("obj: {\n");

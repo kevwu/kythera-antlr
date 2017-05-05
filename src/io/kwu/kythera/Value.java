@@ -268,7 +268,7 @@ public abstract class Value<V> implements Comparable<Value> {
 		}
 
 		public Value getVal(String member) {
-			if(!this.identifiers.containsKey(member)) {
+			if(!this.hasVal(member)) {
 				return null;
 			}
 
@@ -280,8 +280,40 @@ public abstract class Value<V> implements Comparable<Value> {
 			return this.identifiers;
 		}
 
-		public void putVal(String identifier, Value value) {
+		// true/false on success
+		public boolean setVal(String member, Value newVal) {
+			// check for hasVal
+			if(!this.identifiers.containsKey(member)) {
+				System.out.println("Warning: Tried to set member " + member + " that does not exist, aborting");
+				return false;
+			}
 
+			// type check incoming value vs identifier type
+			Identifier identif = this.identifiers.get(member);
+			if(!identif.type.equals(newVal.type)) {
+				System.out.println("ERROR: New object member does not match original type: " + identif.type + " vs " + newVal.type);
+				return false;
+			}
+
+			// identifier is already up to date, no need to change
+
+			// update value
+			this.value.put(identif, newVal);
+			return true;
+		}
+
+		// separate for now, can possibly be combined with setVal later
+		public void addVal(String identifier, Value value) {
+			if(!(this.type instanceof Type.ObjType)) {
+				System.out.println("Warning: Tried to add value to rigid object.");
+				return;
+			}
+
+			// type check incoming value
+
+			// update identifiers
+
+			// update value
 		}
 	}
 

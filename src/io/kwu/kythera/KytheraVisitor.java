@@ -413,9 +413,27 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		String identifier = ctx.identifier().getText();
 
+		Value newValue = ctx.expression().accept(this);
+
 		if(ctx.identifier().objAccess() != null) {
 			System.out.println("Assigning to object member");
-			return null;
+
+			Value.ObjVal objVal = (Value.ObjVal) this.currentScope.getVar(ctx.identifier().objAccess().Identifier(0).getText());
+
+			String member = ctx.identifier().objAccess().Identifier(1).getText();
+
+			if(!objVal.hasVal(member)) {
+				System.out.println("Error: Setting object member that does not exist (to create, use 'let' instead.)");
+				return null;
+			}
+
+			if(objVal.setVal(member, newValue)) {
+				System.out.println("Successfully set obj member");
+				return objVal.getVal(member);
+			} else {
+				System.out.println("Failed to set obj member");
+				return null;
+			}
 		}
 
 		if (!this.currentScope.hasVar(identifier)) {
@@ -426,7 +444,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			// TODO type check before assignment. Do shallow type check only
 			Value currentValue = this.currentScope.getVar(identifier);
 
-			Value newValue = ctx.expression().accept(this);
 
 			if (!currentValue.type.equals(newValue.type)) {
 				System.out.println("ERROR: Assigning type " + newValue.type.toString() + " to variable of type " + currentValue.type.toString());
@@ -459,16 +476,21 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	}
 
 	@Override
-	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext declStatement) {
-		assert (declStatement.LET() != null);
-		String identifier = declStatement.identifier().getText();
+	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext ctx) {
+		assert (ctx.LET() != null);
+		String identifier = ctx.identifier().getText();
+
+		if(ctx.identifier().objAccess() != null) {
+			System.out.println("Declaring new object member.");
+
+		}
 
 		if(this.currentScope.hasVar(identifier)) {
 			System.out.println("ERROR: Identifier " + identifier + " has already been declared.");
 			return null;
 		}
 
-		Value result = declStatement.expression().accept(this);
+		Value result = ctx.expression().accept(this);
 
 		this.currentScope.setVar(identifier, result);
 
