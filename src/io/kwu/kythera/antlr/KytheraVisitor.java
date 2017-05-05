@@ -103,42 +103,6 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpBlock(KytheraParser.ExpBlockContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStatement(KytheraParser.StatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#packageStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPackageStatement(KytheraParser.PackageStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#importStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitImportStatement(KytheraParser.ImportStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#includeStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIncludeStatement(KytheraParser.IncludeStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#exportStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExportStatement(KytheraParser.ExportStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link KytheraParser#variableStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariableStatement(KytheraParser.VariableStatementContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link KytheraParser#declarationStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -157,11 +121,23 @@ public interface KytheraVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNameStatement(KytheraParser.NameStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link KytheraParser#controlFlowStatement}.
+	 * Visit a parse tree produced by {@link KytheraParser#importStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx);
+	T visitImportStatement(KytheraParser.ImportStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link KytheraParser#includeStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIncludeStatement(KytheraParser.IncludeStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link KytheraParser#exportStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExportStatement(KytheraParser.ExportStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link KytheraParser#ifStatement}.
 	 * @param ctx the parse tree

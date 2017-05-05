@@ -320,18 +320,28 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 			return Value.newValFromType(valType);
 		}
 
-		if (ctx.statement() != null) {
-			KytheraParser.StatementContext statement = ctx.statement();
-			if (statement.variableStatement() != null) {
-				return statement.variableStatement().accept(this);
-			} else if (statement.controlFlowStatement() != null) {
-				return statement.controlFlowStatement().accept(this);
-			} else if (statement.packageStatement() != null) {
-				return statement.packageStatement().accept(this);
-			} else {
-				System.out.println("Unhandled statement.");
-				return null;
-			}
+		if (ctx.assignmentStatement() != null) {
+			return ctx.assignmentStatement().accept(this);
+		}
+
+		if (ctx.declarationStatement() != null) {
+			return ctx.declarationStatement().accept(this);
+		}
+
+		if (ctx.nameStatement() != null) {
+			return ctx.nameStatement().accept(this);
+		}
+
+		if(ctx.returnStatement() != null) {
+			return ctx.returnStatement().accept(this);
+		}
+
+		if(ctx.ifStatement() != null) {
+			return ctx.ifStatement().accept(this);
+		}
+
+		if(ctx.whileStatement() != null) {
+			return ctx.whileStatement().accept(this);
 		}
 
 		if (ctx.identifier() != null) {
@@ -443,24 +453,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 	}
 
 	@Override
-	public Value visitVariableStatement(KytheraParser.VariableStatementContext ctx) {
-		if (ctx.assignmentStatement() != null) {
-			return ctx.assignmentStatement().accept(this);
-		}
-
-		if (ctx.declarationStatement() != null) {
-			return ctx.declarationStatement().accept(this);
-		}
-
-		if (ctx.nameStatement() != null) {
-			return ctx.nameStatement().accept(this);
-		}
-
-		System.out.println("Unhandled variable statement: " + ctx.getText());
-		return null;
-	}
-
-	@Override
 	public Value visitDeclarationStatement(KytheraParser.DeclarationStatementContext ctx) {
 		assert (ctx.LET() != null);
 		String identifier = ctx.identifier().getText();
@@ -476,23 +468,6 @@ public class KytheraVisitor extends KytheraBaseVisitor<Value> {
 
 		// a declaration statement (as an expression) evaluates to the value that the newborn variable was set to.
 		return result;
-	}
-
-	@Override
-	public Value visitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx) {
-		if(ctx.returnStatement() != null) {
-			return ctx.returnStatement().accept(this);
-		}
-
-		if(ctx.ifStatement() != null) {
-			return ctx.ifStatement().accept(this);
-		}
-
-		if(ctx.whileStatement() != null) {
-			return ctx.whileStatement().accept(this);
-		}
-
-		return null;
 	}
 
 	@Override

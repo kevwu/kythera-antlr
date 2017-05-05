@@ -127,7 +127,17 @@ expression
     |   LET expression DOT identifier ASSIGNMENT_OPERATOR expression
     // object member assignment
     |   expression DOT identifier ASSIGNMENT_OPERATOR expression
-    |   statement // statements evaluate as expressions
+    |   declarationStatement
+    |   assignmentStatement
+    |   nameStatement
+    |   ifStatement
+    |   whileStatement
+    |   breakStatement
+    |   continueStatement
+    |   returnStatement
+    |   importStatement
+    |   exportStatement
+    |   includeStatement
     |   identifier
     |   literal
     // parenthetical expression
@@ -138,28 +148,17 @@ fnCallParamList: ((expression) (',' expression)*?)?;
 
 expBlock: '{' (expression)+ '}';
 
-// statements
-statement
-    :   variableStatement
-    |   controlFlowStatement
-    |   packageStatement
-    ;
+// statements involving variables
+declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
+assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
+nameStatement: NAME Identifier type;
 
 // package management statements
-packageStatement: importStatement | includeStatement | exportStatement;
 importStatement: IMPORT StrLiteral;
 includeStatement: INCLUDE StrLiteral;
 exportStatement: EXPORT identifier;
 
-// statements involving variables
-variableStatement: declarationStatement | assignmentStatement | nameStatement ;
-declarationStatement: LET identifier ASSIGNMENT_OPERATOR expression;
-assignmentStatement: identifier ASSIGNMENT_OPERATOR expression;
-
-nameStatement: NAME Identifier type;
-
 // control flow statements
-controlFlowStatement: ifStatement | whileStatement | breakStatement | continueStatement | returnStatement;
 ifStatement:
     IF expression
     expBlock

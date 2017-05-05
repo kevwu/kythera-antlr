@@ -160,66 +160,6 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitExpBlock(KytheraParser.ExpBlockContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#statement}.
-	 * @param ctx the parse tree
-	 */
-	void enterStatement(KytheraParser.StatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#statement}.
-	 * @param ctx the parse tree
-	 */
-	void exitStatement(KytheraParser.StatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#packageStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterPackageStatement(KytheraParser.PackageStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#packageStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitPackageStatement(KytheraParser.PackageStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#importStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterImportStatement(KytheraParser.ImportStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#importStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitImportStatement(KytheraParser.ImportStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#includeStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterIncludeStatement(KytheraParser.IncludeStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#includeStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitIncludeStatement(KytheraParser.IncludeStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#exportStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterExportStatement(KytheraParser.ExportStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#exportStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitExportStatement(KytheraParser.ExportStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link KytheraParser#variableStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableStatement(KytheraParser.VariableStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link KytheraParser#variableStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableStatement(KytheraParser.VariableStatementContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link KytheraParser#declarationStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -250,15 +190,35 @@ public interface KytheraListener extends ParseTreeListener {
 	 */
 	void exitNameStatement(KytheraParser.NameStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link KytheraParser#controlFlowStatement}.
+	 * Enter a parse tree produced by {@link KytheraParser#importStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx);
+	void enterImportStatement(KytheraParser.ImportStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link KytheraParser#controlFlowStatement}.
+	 * Exit a parse tree produced by {@link KytheraParser#importStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitControlFlowStatement(KytheraParser.ControlFlowStatementContext ctx);
+	void exitImportStatement(KytheraParser.ImportStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#includeStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIncludeStatement(KytheraParser.IncludeStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#includeStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIncludeStatement(KytheraParser.IncludeStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link KytheraParser#exportStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterExportStatement(KytheraParser.ExportStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link KytheraParser#exportStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitExportStatement(KytheraParser.ExportStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link KytheraParser#ifStatement}.
 	 * @param ctx the parse tree
